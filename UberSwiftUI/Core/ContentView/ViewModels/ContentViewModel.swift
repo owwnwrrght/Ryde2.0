@@ -10,19 +10,22 @@ import CoreLocation
 import GeoFireUtils
 import Firebase
 
-class ContentViewModel {
+class ContentViewModel: ObservableObject {
     
-    let latitude = 51.5074
-    let longitude = 0.12780
+    @Published var drivers = [User]()
+    
+    let latitude = 37.3346
+    let longitude = -122.0090
     var location: CLLocationCoordinate2D
-    let radius: Double = 50 * 1000
     let db = Firestore.firestore()
-    
-    var matchingDocs = [QueryDocumentSnapshot]()
+        
+    let radius: Double = 50 * 1000
+    var didExecuteFetchDrivers = false
     
     init() {
+        print("DEBUG: Did init view model..")
         self.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        fetchNearbyCities()
+        fetchNearbyDrivers(withCoordinates: self.location)
     }
     
     func uploadData() {
@@ -37,11 +40,12 @@ class ContentViewModel {
         ref.setData(documentData)
     }
     
-    func fetchNearbyCities() {
-        let queryBounds = GFUtils.queryBounds(forLocation: location, withRadius: radius)
+    func fetchNearbyDrivers(withCoordinates coordinates: CLLocationCoordinate2D) {
+        let queryBounds = GFUtils.queryBounds(forLocation: coordinates, withRadius: radius)
+        didExecuteFetchDrivers = true
         
         let queries = queryBounds.map { bound -> Query in
-            return db.collection("cities")
+            return COLLECTION_USERS
                 .order(by: "geohash")
                 .start(at: [bound.startValue])
                 .end(at: [bound.endValue])
@@ -56,21 +60,15 @@ class ContentViewModel {
         guard let documents = snapshot?.documents else { return }
         
         documents.forEach { doc in
-            print("DEBUG: Doc is \(doc.data())")
-            
-            let lat = doc.data()["lat"] as? Double ?? 0
-            let lng = doc.data()["lng"] as? Double ?? 0
-            let coordinates = CLLocation(latitude: lat, longitude: lng)
+            guard let driver = try? doc.data(as: User.self), driver.accountType == .driver else { return }
+            let coordinates = CLLocation(latitude: driver.coordinates.latitude, longitude: driver.coordinates.longitude)
             let centerPoint = CLLocation(latitude: location.latitude, longitude: location.longitude)
             
             let distance = GFUtils.distance(from: centerPoint, to: coordinates)
             
-            
-            
-            if distance < radius {
-                matchingDocs.append(doc)
+            if distance <= radius {
+                self.drivers.append(driver)
             }
         }
     }
-    
 }

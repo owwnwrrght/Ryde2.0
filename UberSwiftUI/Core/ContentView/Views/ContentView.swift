@@ -20,9 +20,11 @@ struct ContentView: View {
     @State private var showLocationInputView = false
     @State private var showSideMenu = false
     @State private var mapState = MapViewState.noInput
+    @Namespace var animation
+    
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
-    @Namespace var animation
+    @EnvironmentObject var contentViewModel: ContentViewModel
     
     @StateObject var locationManager = LocationManager.shared
     
@@ -78,6 +80,10 @@ struct ContentView: View {
                                     self.mapState = .locationSelected
                                 }
                             }
+                        })
+                        .onReceive(locationManager.$userLocation, perform: { userLocation in
+                            guard let userLocation = userLocation, !contentViewModel.didExecuteFetchDrivers else { return }
+                            contentViewModel.fetchNearbyDrivers(withCoordinates: userLocation.coordinate)
                         })
                         .ignoresSafeArea()
                     }

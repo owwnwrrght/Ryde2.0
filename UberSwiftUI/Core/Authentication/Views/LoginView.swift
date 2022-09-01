@@ -72,7 +72,7 @@ struct LoginView: View {
                         .background((Color.white))
                         .cornerRadius(10)
                     }
-                    .padding(.bottom, 56)
+                    .padding(.bottom, 32)
 
                     
                     NavigationLink(

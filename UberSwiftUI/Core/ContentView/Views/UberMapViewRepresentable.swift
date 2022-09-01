@@ -7,13 +7,15 @@
 
 import MapKit
 import SwiftUI
+import GeoFireUtils
+import Firebase
 
 struct UberMapViewRepresentable: UIViewRepresentable {
     
     // MARK: - Properties
     
     @Binding var mapState: MapViewState
-    @ObservedObject var locationManager = LocationManager.shared
+    @EnvironmentObject var contentViewModel: ContentViewModel
     @EnvironmentObject var viewModel: LocationSearchViewModel
     
     let mapView = MKMapView()
@@ -28,6 +30,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: "driver")
+                
         return mapView
     }
         
@@ -37,6 +40,10 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         if let selectedLocation = viewModel.selectedLocation {
             context.coordinator.addAnnotationAndGeneratePolyline(forSearchResult: selectedLocation)
             return
+        }
+        
+        if !contentViewModel.drivers.isEmpty {
+            context.coordinator.addDriversToMap(contentViewModel.drivers)
         }
                 
         if mapState == .noInput {
@@ -54,18 +61,16 @@ extension UberMapViewRepresentable {
 
     class MapCoordinator: NSObject, MKMapViewDelegate {
         let parent: UberMapViewRepresentable
-        var driverAnno: DriverAnnotation!
         var currentRegion: MKCoordinateRegion?
         var userLocation: MKUserLocation?
+        
+        private var drivers = [User]()
         
         // MARK: - Lifecycle
         
         init(parent: UberMapViewRepresentable) {
             self.parent = parent
             super.init()
-        
-//            let tap = UITapGestureRecognizer(target: self, action: #selector(moveDriverLocation))
-//            parent.mapView.addGestureRecognizer(tap)
         }
         
         // MARK: - MKMapViewDelegate
@@ -92,35 +97,17 @@ extension UberMapViewRepresentable {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             guard !annotation.isKind(of: MKUserLocation.self) else { return nil }
             
-            var annotationView: MKAnnotationView?
-            
             if let annotation = annotation as? DriverAnnotation {
-                print("DEBUG: Add driver anno")
-                annotationView = configureDriverAnnotationView(for: annotation, on: mapView)
+                let view = MKAnnotationView(annotation: annotation, reuseIdentifier: "driver")
+                view.image = UIImage(named: "chevron-sign-to-right")
+                return view
             }
             
-            return annotationView
+            return nil
         }
         
         // MARK: - Helpers
         
-        @objc func moveDriverLocation() {
-            print("DEBUG: Driver coordinate is \(driverAnno.coordinate)")
-            let newLat = driverAnno.coordinate.latitude + 0.002
-            let newLong = driverAnno.coordinate.longitude + 0.002
-
-            driverAnno.updatePosition(withCoordinate: CLLocationCoordinate2D(latitude: newLat, longitude: newLong))
-        }
-        
-        func configureDriverAnnotationView(for annotation: DriverAnnotation, on mapView: MKMapView) -> MKAnnotationView {
-            let anno = mapView.dequeueReusableAnnotationView(withIdentifier: "driver", for: annotation)
-            anno.image = UIImage(named: "chevron-sign-to-right")
-            
-           
-
-            return anno
-        }
-
         func generatePolyline(forPlacemark placemark: MKPlacemark) {
             guard let userLocation = self.userLocation else { return }
             let userPlacemark = MKPlacemark(coordinate: userLocation.coordinate)
@@ -162,12 +149,24 @@ extension UberMapViewRepresentable {
         }
         
         func clearMapView() {
-            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            let annotations = parent.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
+            parent.mapView.removeAnnotations(annotations)
             parent.mapView.removeOverlays(parent.mapView.overlays)
             
             if let currentRegion = currentRegion {
                 parent.mapView.setRegion(currentRegion, animated: true)
             }
+        }
+        
+        func addDriversToMap(_ drivers: [User]) {
+            let driverAnnotations = drivers.map({
+                DriverAnnotation(
+                    uid: $0.id ?? NSUUID().uuidString,
+                    coordinate: CLLocationCoordinate2D(latitude: $0.coordinates.latitude,longitude: $0.coordinates.longitude)
+                )
+            })
+            
+            self.parent.mapView.addAnnotations(driverAnnotations)
         }
     }
 }

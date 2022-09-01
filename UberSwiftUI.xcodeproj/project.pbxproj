@@ -358,7 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				23C30576273F84BF005A64A4 /* Map */,
-				23C30571273F4D3C005A64A4 /* ContentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -377,9 +376,8 @@
 		23C30553273F47CC005A64A4 /* ContentView */ = {
 			isa = PBXGroup;
 			children = (
-				23C3056F273F4BB0005A64A4 /* UberMapViewRepresentable.swift */,
-				23147EFF275190A900758446 /* MapViewActionButton.swift */,
-				23C30542273F476B005A64A4 /* ContentView.swift */,
+				2B91C81728C148820097B73E /* ViewModels */,
+				2B91C81628C148770097B73E /* Views */,
 			);
 			path = ContentView;
 			sourceTree = "<group>";
@@ -469,6 +467,24 @@
 				2B91C81428C031430097B73E /* RideDetailsViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2B91C81628C148770097B73E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				23C3056F273F4BB0005A64A4 /* UberMapViewRepresentable.swift */,
+				23147EFF275190A900758446 /* MapViewActionButton.swift */,
+				23C30542273F476B005A64A4 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2B91C81728C148820097B73E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				23C30571273F4D3C005A64A4 /* ContentViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

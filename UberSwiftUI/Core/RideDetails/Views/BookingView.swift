@@ -46,7 +46,7 @@ struct BookingView: View {
                                     Text(rideType.description)
                                         .font(.system(size: 14, weight: .semibold))
                                     
-                                    Text(rideType.price(for: 4.0).currencyString)
+                                    Text(rideType.price(for: viewModel.distanceInMeters).currencyString)
                                         .font(.system(size: 14, weight: .semibold))
                                 }
                                 .padding(.vertical, 8)

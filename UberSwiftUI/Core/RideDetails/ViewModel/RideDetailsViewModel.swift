@@ -19,14 +19,17 @@ class RideDetailsViewModel: ObservableObject {
     @Published var pickupTime: String?
     @Published var dropOffTime: String?
     
+    let distanceInMeters: Double
+    
     init(userLocation: CLLocation, selectedLocation: UberLocation) {
         self.startLocationString = "Current location"
         self.endLocationString = selectedLocation.title
         self.userLocation = userLocation
         self.dropOffLocation = selectedLocation
         
-        let distanceInMeters = userLocation.distance(from: CLLocation(latitude: selectedLocation.coordinate.latitude,
-                                                                      longitude: selectedLocation.coordinate.longitude))
+        self.distanceInMeters =  userLocation.distance(from: CLLocation(latitude: selectedLocation.coordinate.latitude,
+                                                       longitude: selectedLocation.coordinate.longitude))
+        
         
         calculateTripTime(forDistance: distanceInMeters)
     }
@@ -54,7 +57,7 @@ class RideDetailsViewModel: ObservableObject {
     
     func configurePickupAndDropOffTime(with expectedTravelTime: Double) {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm a"
+        formatter.dateFormat = "hh:mm a"
         
         self.pickupTime = formatter.string(from: Date())
         self.dropOffTime = formatter.string(from: Date() + expectedTravelTime)

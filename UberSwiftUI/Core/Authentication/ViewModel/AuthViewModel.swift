@@ -9,6 +9,7 @@ import SwiftUI
 import GoogleSignIn
 import Firebase
 import FirebaseFirestoreSwift
+import GeoFireUtils
 
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
@@ -32,7 +33,11 @@ class AuthViewModel: ObservableObject {
             print(snapshot.data())
             self.user = try? snapshot.data(as: User.self)
             
-            print("DEBUG: User data \(self.user)")
+//            print("DEBUG: User data \(self.user)")
+//
+//            guard let coordinates = self.user?.coordinates else { return }
+//            let hash = GFUtils.geoHash(forLocation: CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude))
+//            print("DEBUG: Hash \(hash)")
         }
     }
     

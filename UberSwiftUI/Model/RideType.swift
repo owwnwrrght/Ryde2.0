@@ -12,27 +12,39 @@ enum RideType: CaseIterable {
     case black
     case uberXL
     
+    var currentGasPricePerGallon: Double { return 4.3 }
+    
     var description: String {
         switch self {
         case .uberX:return "UberX"
         case .black:return "Uber Black"
-        case .uberXL:return "Uber XL"
+        case .uberXL:return "UberXL"
         }
     }
     
     var imageName: String {
         switch self {
-        case .uberX:return "uber-x"
-        case .black:return "uber-black"
-        case .uberXL:return "uber-x"
+        case .uberX: return "uber-x"
+        case .black: return "uber-black"
+        case .uberXL: return "uber-x"
         }
     }
     
-    func price(for distance: Double) -> Double {
+    var baseFare: Double {
         switch self {
-        case .uberX:return distance * 1.5
-        case .black: return distance * 1.75
-        case .uberXL:return distance * 2
+        case .uberX: return 5
+        case .black: return 25
+        case .uberXL: return 10
+        }
+    }
+    
+    func price(for distanceInMeters: Double) -> Double {
+        let distanceInMiles = distanceInMeters / 1600
+        
+        switch self {
+        case .uberX: return distanceInMiles * 1.5 + baseFare
+        case .black: return distanceInMiles * 1.75 + baseFare
+        case .uberXL: return distanceInMiles * 2 + baseFare
         }
     }
 }
