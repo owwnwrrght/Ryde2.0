@@ -20,14 +20,15 @@ struct ContentView: View {
     @State private var showLocationInputView = false
     @State private var showSideMenu = false
     @State private var mapState = MapViewState.noInput
+    @State private var userLocation: CLLocation?
     @Namespace var animation
     
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var contentViewModel: ContentViewModel
     
-    @StateObject var locationManager = LocationManager.shared
-    
+//    @StateObject var locationManager = LocationManager.shared
+        
     var body: some View {
         Group {
             if authViewModel.userSession == nil {
@@ -66,8 +67,10 @@ struct ContentView: View {
                             
                             if mapState == .locationSelected,
                                 let location = locationViewModel.selectedUberLocation,
-                               let userLocation = locationManager.userLocation {
-                                BookingView(userLocation: userLocation, selectedLocation: location)
+                               let userLocation = userLocation {
+                                BookingView(userLocation: userLocation,
+                                            selectedLocation: location,
+                                            nearbyDrivers: contentViewModel.drivers)
                                     .transition(.move(edge: .bottom))
                             }
                         }
@@ -81,7 +84,8 @@ struct ContentView: View {
                                 }
                             }
                         })
-                        .onReceive(locationManager.$userLocation, perform: { userLocation in
+                        .onReceive(LocationManager.shared.$userLocation, perform: { userLocation in
+                            self.userLocation = userLocation
                             guard let userLocation = userLocation, !contentViewModel.didExecuteFetchDrivers else { return }
                             contentViewModel.fetchNearbyDrivers(withCoordinates: userLocation.coordinate)
                         })

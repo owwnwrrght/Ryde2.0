@@ -30,11 +30,11 @@ class AuthViewModel: ObservableObject {
         
         COLLECTION_USERS.document(uid).getDocument { snapshot, _ in
             guard let snapshot = snapshot else { return }
-            print(snapshot.data())
             self.user = try? snapshot.data(as: User.self)
             
-//            print("DEBUG: User data \(self.user)")
-//
+            print("DEBUG: User data \(self.user)")
+            self.observeTripRequests()
+
 //            guard let coordinates = self.user?.coordinates else { return }
 //            let hash = GFUtils.geoHash(forLocation: CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude))
 //            print("DEBUG: Hash \(hash)")
@@ -137,6 +137,17 @@ class AuthViewModel: ObservableObject {
     private func uploadUserData(user: FirebaseAuth.User, data: [String: Any]) {
         COLLECTION_USERS.document(user.uid).setData(data) { _ in
             self.fetchUser()
+        }
+    }
+    
+    func observeTripRequests() {
+        guard let currentUser = self.user, currentUser.accountType == .driver else { return }
+        guard let uid = currentUser.id else { return }
+        
+        COLLECTION_RIDES.document(uid).addSnapshotListener { snapshot, error in
+            guard let data = snapshot?.data() else { return }
+            
+            print("DEBUG: Data is \(data)")
         }
     }
 }

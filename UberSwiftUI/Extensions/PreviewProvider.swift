@@ -23,7 +23,8 @@ class DeveloperPreview {
     let rideDetailsViewModel = RideDetailsViewModel(
         userLocation: CLLocation(latitude: 37.75, longitude: -122.432),
         selectedLocation: UberLocation(title: "Starbucks",
-                                       coordinate: CLLocationCoordinate2D(latitude: 37.6, longitude: -122.43))
+                                       coordinate: CLLocationCoordinate2D(latitude: 37.6, longitude: -122.43)),
+        nearbyDrivers: [User]()
     )
     
     let userLocation = CLLocation(latitude: 37.75, longitude: -122.432)

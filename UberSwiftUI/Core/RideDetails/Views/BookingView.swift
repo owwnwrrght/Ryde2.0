@@ -11,8 +11,10 @@ import MapKit
 struct BookingView: View {
     @ObservedObject var viewModel: RideDetailsViewModel
     
-    init(userLocation: CLLocation, selectedLocation: UberLocation) {
-        self.viewModel = RideDetailsViewModel(userLocation: userLocation, selectedLocation: selectedLocation)
+    init(userLocation: CLLocation, selectedLocation: UberLocation, nearbyDrivers: [User]) {
+        self.viewModel = RideDetailsViewModel(userLocation: userLocation,
+                                              selectedLocation: selectedLocation,
+                                              nearbyDrivers: nearbyDrivers)
     }
     
     var body: some View {
@@ -87,7 +89,7 @@ struct BookingView: View {
             }
             
             Button {
-                print("Book now")
+                viewModel.requestRide()
             } label: {
                 Text("CONFIRM RIDE")
                     .fontWeight(.bold)
@@ -110,6 +112,6 @@ struct BookingView: View {
 
 struct BookingView_Previews: PreviewProvider {
     static var previews: some View {
-        BookingView(userLocation: dev.userLocation, selectedLocation: dev.mockSelectedLocation)
+        BookingView(userLocation: dev.userLocation, selectedLocation: dev.mockSelectedLocation, nearbyDrivers: [User]())
     }
 }

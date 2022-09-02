@@ -35,7 +35,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     }
         
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        print("DEBUG: Updating view...")
+//        print("DEBUG: Updating view...")
         
         if let selectedLocation = viewModel.selectedLocation {
             context.coordinator.addAnnotationAndGeneratePolyline(forSearchResult: selectedLocation)
