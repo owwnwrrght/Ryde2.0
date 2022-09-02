@@ -73,7 +73,10 @@ struct ContentView: View {
                                             mapState: $mapState)
                                 .transition(.move(edge: .bottom))
                             } else if mapState == .tripRequested {
-                                
+                                withAnimation(.spring()) {
+                                    TripLoadingView()
+                                        .transition(.move(edge: .bottom))
+                                }
                             } else if mapState == .tripAccepted {
                                 TripInProgressView()
                                     .transition(.move(edge: .bottom))
