@@ -8,10 +8,11 @@
 import SwiftUI
 import MapKit
 
-enum MapViewState {
+enum MapViewState: Int {
     case noInput
     case searchingForLocation
     case locationSelected
+    case tripRequested
     case tripAccepted
     case transitioning
 }
@@ -26,9 +27,7 @@ struct ContentView: View {
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var contentViewModel: ContentViewModel
-    
-//    @StateObject var locationManager = LocationManager.shared
-        
+            
     var body: some View {
         Group {
             if authViewModel.userSession == nil {
@@ -66,11 +65,17 @@ struct ContentView: View {
                             }
                             
                             if mapState == .locationSelected,
-                                let location = locationViewModel.selectedUberLocation,
+                               let location = locationViewModel.selectedUberLocation,
                                let userLocation = userLocation {
                                 BookingView(userLocation: userLocation,
                                             selectedLocation: location,
-                                            nearbyDrivers: contentViewModel.drivers)
+                                            nearbyDrivers: contentViewModel.drivers,
+                                            mapState: $mapState)
+                                .transition(.move(edge: .bottom))
+                            } else if mapState == .tripRequested {
+                                
+                            } else if mapState == .tripAccepted {
+                                TripInProgressView()
                                     .transition(.move(edge: .bottom))
                             }
                         }
@@ -107,6 +112,9 @@ struct ContentView: View {
         case .searchingForLocation:
             mapState = .noInput
         case .locationSelected:
+            mapState = .noInput
+            locationViewModel.selectedLocation = nil
+        case .tripRequested:
             mapState = .noInput
             locationViewModel.selectedLocation = nil
         default: break

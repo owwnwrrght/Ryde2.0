@@ -140,7 +140,7 @@ struct TripInProgressView: View {
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 600)
+        .frame(height: 500)
     }
 }
 

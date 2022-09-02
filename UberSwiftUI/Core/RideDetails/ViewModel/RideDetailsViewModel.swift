@@ -8,13 +8,16 @@
 import Foundation
 import MapKit
 import Firebase
+import SwiftUI
 
-enum TripState: Int {
-    case requested
-    case accepted
-    case inProgress
-    case completed
-}
+//enum TripState: Int {
+//    case none
+//    case locationSelected
+//    case requested
+//    case accepted
+//    case inProgress
+//    case completed
+//}
 
 class RideDetailsViewModel: ObservableObject {
         
@@ -28,22 +31,22 @@ class RideDetailsViewModel: ObservableObject {
     
     @Published var pickupTime: String?
     @Published var dropOffTime: String?
+    @Binding var mapState: MapViewState
     
     let distanceInMeters: Double
     
-    init(userLocation: CLLocation, selectedLocation: UberLocation, nearbyDrivers: [User]) {
+    init(userLocation: CLLocation, selectedLocation: UberLocation, nearbyDrivers: [User], mapState: Binding<MapViewState>) {
         self.startLocationString = "Current location"
         self.endLocationString = selectedLocation.title
         self.userLocation = userLocation
         self.dropOffLocation = selectedLocation
         self.nearbyDrivers = nearbyDrivers
         self.selectedLocation = selectedLocation
+        self._mapState = mapState
         
         self.distanceInMeters =  userLocation.distance(from: CLLocation(latitude: selectedLocation.coordinate.latitude,
-                                                       longitude: selectedLocation.coordinate.longitude))
-        
-        print("DEBUG: Nearby drivers\(self.nearbyDrivers)")
-        
+                                                                        longitude: selectedLocation.coordinate.longitude))
+                
         
         calculateTripTime(forDistance: distanceInMeters)
     }
@@ -78,16 +81,16 @@ class RideDetailsViewModel: ObservableObject {
     }
     
     func requestRide() {
-        guard let closestDriver = nearbyDrivers.first else { return }
-        sendRideRequestToDriver(closestDriver)
+//        guard let closestDriver = nearbyDrivers.first else { return }
+//        sendRideRequestToDriver(closestDriver)
+        
+        self.mapState = .tripRequested
     }
     
     func sendRideRequestToDriver(_ driver: User) {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         guard let driverId = driver.id else { return }
-        
-        print("DEUBG: Sending request..")
-        
+                
         let pickupGeoPoint = GeoPoint(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         let dropoffGeoPoint = GeoPoint(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
         
@@ -95,11 +98,12 @@ class RideDetailsViewModel: ObservableObject {
             "passengerId": currentUid,
             "pickupLocation": pickupGeoPoint,
             "dropoffLocation": dropoffGeoPoint,
-            "tripState": TripState.requested.rawValue
+            "tripState": MapViewState.tripRequested.rawValue
         ]
         
         COLLECTION_RIDES.document(driverId).setData(data) { _ in
             print("DEBUG: Did upload trip...")
+//            self.tripState = .requested
         }
     }
 }

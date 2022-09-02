@@ -68,6 +68,8 @@
 		23F6F56E27515B36002C7733 /* RideArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F6F56D27515B36002C7733 /* RideArrivalView.swift */; };
 		2B0E3FB128BFD430002DFDA8 /* RideType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0E3FB028BFD430002DFDA8 /* RideType.swift */; };
 		2B0E3FB428BFD6D0002DFDA8 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0E3FB328BFD6D0002DFDA8 /* Double.swift */; };
+		2B368B0428C1B151008D42CE /* TripLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0328C1B151008D42CE /* TripLoadingView.swift */; };
+		2B368B0628C1B2BB008D42CE /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0528C1B2BB008D42CE /* LoadingSpinner.swift */; };
 		2B91C80F28BFDD630097B73E /* RideDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C80E28BFDD630097B73E /* RideDetails.swift */; };
 		2B91C81128BFDE050097B73E /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C81028BFDE050097B73E /* PreviewProvider.swift */; };
 		2B91C81528C031430097B73E /* RideDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C81428C031430097B73E /* RideDetailsViewModel.swift */; };
@@ -127,6 +129,8 @@
 		23F6F56D27515B36002C7733 /* RideArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideArrivalView.swift; sourceTree = "<group>"; };
 		2B0E3FB028BFD430002DFDA8 /* RideType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideType.swift; sourceTree = "<group>"; };
 		2B0E3FB328BFD6D0002DFDA8 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		2B368B0328C1B151008D42CE /* TripLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLoadingView.swift; sourceTree = "<group>"; };
+		2B368B0528C1B2BB008D42CE /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
 		2B91C80E28BFDD630097B73E /* RideDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetails.swift; sourceTree = "<group>"; };
 		2B91C81028BFDE050097B73E /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		2B91C81428C031430097B73E /* RideDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -423,6 +427,7 @@
 				235568172751CAD900D54406 /* TextFields */,
 				23F6F56B274F0D60002C7733 /* RoundedShape.swift */,
 				235D731B275B2FAA000A366E /* CustomProgressView.swift */,
+				2B368B0528C1B2BB008D42CE /* LoadingSpinner.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -457,6 +462,7 @@
 				23F6F56D27515B36002C7733 /* RideArrivalView.swift */,
 				23147F012751918B00758446 /* TripInProgressView.swift */,
 				2355680C27519C8F00D54406 /* TripLocationsView.swift */,
+				2B368B0328C1B151008D42CE /* TripLoadingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -576,6 +582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B368B0428C1B151008D42CE /* TripLoadingView.swift in Sources */,
 				2355681F2751E6FB00D54406 /* AuthViewModel.swift in Sources */,
 				235D73072755B665000A366E /* UserProfileView.swift in Sources */,
 				235D73122755C692000A366E /* EditProfileView.swift in Sources */,
@@ -618,6 +625,7 @@
 				2355682E2751F5D600D54406 /* SideMenuView.swift in Sources */,
 				235568192751CD3A00D54406 /* RegistrationView.swift in Sources */,
 				235568282751F53B00D54406 /* SideMenuOptionView.swift in Sources */,
+				2B368B0628C1B2BB008D42CE /* LoadingSpinner.swift in Sources */,
 				235D7324275B3A93000A366E /* LocationInputHeaderView.swift in Sources */,
 				23147F022751918B00758446 /* TripInProgressView.swift in Sources */,
 				235D7332275C9EE5000A366E /* TripInfoView.swift in Sources */,

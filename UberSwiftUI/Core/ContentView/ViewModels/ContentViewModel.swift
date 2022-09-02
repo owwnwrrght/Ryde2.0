@@ -13,6 +13,7 @@ import Firebase
 class ContentViewModel: ObservableObject {
     
     @Published var drivers = [User]()
+//    @Published var mapState = MapViewState.noInput
     
     let latitude = 37.3346
     let longitude = -122.0090
@@ -27,6 +28,8 @@ class ContentViewModel: ObservableObject {
         self.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         fetchNearbyDrivers(withCoordinates: self.location)
     }
+    
+
     
     func uploadData() {
         let hash = GFUtils.geoHash(forLocation: location)

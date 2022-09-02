@@ -31,7 +31,11 @@ struct MapViewActionButton: View {
     
     func imageNameForState(state: MapViewState) -> String {
         switch state {
-        case .searchingForLocation, .locationSelected,.transitioning, .tripAccepted:
+        case .searchingForLocation,
+                .locationSelected,
+                .transitioning,
+                .tripAccepted,
+                .tripRequested:
             return "arrow.left"
         case .noInput:
             return "line.3.horizontal"

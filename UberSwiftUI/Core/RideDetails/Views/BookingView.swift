@@ -10,11 +10,14 @@ import MapKit
 
 struct BookingView: View {
     @ObservedObject var viewModel: RideDetailsViewModel
+    @Binding var mapState: MapViewState
     
-    init(userLocation: CLLocation, selectedLocation: UberLocation, nearbyDrivers: [User]) {
+    init(userLocation: CLLocation, selectedLocation: UberLocation, nearbyDrivers: [User], mapState: Binding<MapViewState>) {
         self.viewModel = RideDetailsViewModel(userLocation: userLocation,
                                               selectedLocation: selectedLocation,
-                                              nearbyDrivers: nearbyDrivers)
+                                              nearbyDrivers: nearbyDrivers,
+                                              mapState: mapState)
+        self._mapState = mapState
     }
     
     var body: some View {
@@ -112,6 +115,6 @@ struct BookingView: View {
 
 struct BookingView_Previews: PreviewProvider {
     static var previews: some View {
-        BookingView(userLocation: dev.userLocation, selectedLocation: dev.mockSelectedLocation, nearbyDrivers: [User]())
+        BookingView(userLocation: dev.userLocation, selectedLocation: dev.mockSelectedLocation, nearbyDrivers: [User](), mapState: .constant(.noInput))
     }
 }

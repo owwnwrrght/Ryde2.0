@@ -24,7 +24,8 @@ class DeveloperPreview {
         userLocation: CLLocation(latitude: 37.75, longitude: -122.432),
         selectedLocation: UberLocation(title: "Starbucks",
                                        coordinate: CLLocationCoordinate2D(latitude: 37.6, longitude: -122.43)),
-        nearbyDrivers: [User]()
+        nearbyDrivers: [User](),
+        mapState: .constant(.tripRequested)
     )
     
     let userLocation = CLLocation(latitude: 37.75, longitude: -122.432)
