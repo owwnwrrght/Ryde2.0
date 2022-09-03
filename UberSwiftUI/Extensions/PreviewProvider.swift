@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import Firebase
 
 extension PreviewProvider {
     
@@ -20,12 +21,18 @@ class DeveloperPreview {
     
     let mockSelectedLocation = UberLocation(title: "Starbucks", coordinate: CLLocationCoordinate2D(latitude: 37.6, longitude: -122.43))
     
+    let mockTrip = Trip(driverUid: NSUUID().uuidString,
+                        passengerUid: NSUUID().uuidString,
+                        pickupLocation: GeoPoint(latitude: 37.6, longitude: -122.43),
+                        dropoffLocation: GeoPoint(latitude: 37.55, longitude: -122.4),
+                        dropoffLocationName: "Starbucks",
+                        tripCost: 40.00,
+                        tripState: .inProgress)
+        
     let rideDetailsViewModel = RideDetailsViewModel(
         userLocation: CLLocation(latitude: 37.75, longitude: -122.432),
         selectedLocation: UberLocation(title: "Starbucks",
-                                       coordinate: CLLocationCoordinate2D(latitude: 37.6, longitude: -122.43)),
-        nearbyDrivers: [User](),
-        mapState: .constant(.tripRequested)
+                                       coordinate: CLLocationCoordinate2D(latitude: 37.6, longitude: -122.43))
     )
     
     let userLocation = CLLocation(latitude: 37.75, longitude: -122.432)

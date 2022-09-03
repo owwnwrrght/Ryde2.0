@@ -1,5 +1,5 @@
 //
-//  RideArrivalView.swift
+//  TripArrivalView.swift
 //  UberSwiftUI
 //
 //  Created by Stephen Dowless on 11/26/21.
@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct RideArrivalView: View {
+struct TripArrivalView: View {
+    @ObservedObject var viewModel: RideDetailsViewModel
+    
     var body: some View {
         VStack {
             Capsule()
@@ -30,7 +32,7 @@ struct RideArrivalView: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-//                TripLocationsView()
+                TripLocationsView(viewModel: viewModel)
                 
                 Divider()
             }
@@ -72,6 +74,6 @@ struct RideArrivalView: View {
 
 struct RideArrivalView_Previews: PreviewProvider {
     static var previews: some View {
-        RideArrivalView()
+        TripArrivalView(viewModel: dev.rideDetailsViewModel)
     }
 }

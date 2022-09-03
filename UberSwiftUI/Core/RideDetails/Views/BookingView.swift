@@ -10,14 +10,10 @@ import MapKit
 
 struct BookingView: View {
     @ObservedObject var viewModel: RideDetailsViewModel
-    @Binding var mapState: MapViewState
+    @EnvironmentObject var contentViewModel: ContentViewModel
     
-    init(userLocation: CLLocation, selectedLocation: UberLocation, nearbyDrivers: [User], mapState: Binding<MapViewState>) {
-        self.viewModel = RideDetailsViewModel(userLocation: userLocation,
-                                              selectedLocation: selectedLocation,
-                                              nearbyDrivers: nearbyDrivers,
-                                              mapState: mapState)
-        self._mapState = mapState
+    init(userLocation: CLLocation, selectedLocation: UberLocation) {
+        self.viewModel = RideDetailsViewModel(userLocation: userLocation,selectedLocation: selectedLocation)
     }
     
     var body: some View {
@@ -32,8 +28,10 @@ struct BookingView: View {
                 TripLocationsView(viewModel: viewModel)
                     .padding(.horizontal)
                 
+                Divider()
+                
                 Text("SUGGESTED RIDES")
-                    .font(.body)
+                    .font(.subheadline)
                     .fontWeight(.semibold)
                     .padding(.leading)
                     .foregroundColor(Color(.darkGray))
@@ -92,7 +90,7 @@ struct BookingView: View {
             }
             
             Button {
-                viewModel.requestRide()
+                contentViewModel.requestRide()
             } label: {
                 Text("CONFIRM RIDE")
                     .fontWeight(.bold)
@@ -105,7 +103,7 @@ struct BookingView: View {
             Spacer()
         }
         .background(Color.white)
-        .frame(height: 500)
+        .frame(height: 516)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
@@ -115,6 +113,6 @@ struct BookingView: View {
 
 struct BookingView_Previews: PreviewProvider {
     static var previews: some View {
-        BookingView(userLocation: dev.userLocation, selectedLocation: dev.mockSelectedLocation, nearbyDrivers: [User](), mapState: .constant(.noInput))
+        BookingView(userLocation: dev.userLocation, selectedLocation: dev.mockSelectedLocation)
     }
 }

@@ -6,6 +6,9 @@ struct Spinner: View {
     let animationTime: Double = 1.9 // Sum of all animation times
     let fullRotation: Angle = .degrees(360)
     static let initialDegree: Angle = .degrees(270)
+    let lineWidth: CGFloat
+    let height: CGFloat
+    let width: CGFloat
 
     @State var spinnerStart: CGFloat = 0.0
     @State var spinnerEndS1: CGFloat = 0.03
@@ -20,15 +23,16 @@ struct Spinner: View {
 
             ZStack {
                 // S3
-                SpinnerCircle(start: spinnerStart, end: spinnerEndS2S3, rotation: rotationDegreeS3, color: .blue)
+                SpinnerCircle(start: spinnerStart, end: spinnerEndS2S3, rotation: rotationDegreeS3, color: .blue, lineWidth: lineWidth)
 
                 // S2
-                SpinnerCircle(start: spinnerStart, end: spinnerEndS2S3, rotation: rotationDegreeS2, color: .blue)
+                SpinnerCircle(start: spinnerStart, end: spinnerEndS2S3, rotation: rotationDegreeS2, color: .blue, lineWidth: lineWidth)
 
                 // S1
-                SpinnerCircle(start: spinnerStart, end: spinnerEndS1, rotation: rotationDegreeS1, color: .black)
+                SpinnerCircle(start: spinnerStart, end: spinnerEndS1, rotation: rotationDegreeS1, color: .black, lineWidth: lineWidth)
 
-            }.frame(width: 120, height: 120)
+            }
+            .frame(width: width, height: height)
         }
         .onAppear() {
             self.animateSpinner()
@@ -72,11 +76,12 @@ struct SpinnerCircle: View {
     var end: CGFloat
     var rotation: Angle
     var color: Color
+    let lineWidth: CGFloat
 
     var body: some View {
         Circle()
             .trim(from: start, to: end)
-            .stroke(style: StrokeStyle(lineWidth: 12, lineCap: .round))
+            .stroke(style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
             .fill(color)
             .rotationEffect(rotation)
     }
@@ -85,7 +90,7 @@ struct SpinnerCircle: View {
 struct Spinner_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Spinner()
+            Spinner(lineWidth: 12, height: 120, width: 120)
         }
     }
 }

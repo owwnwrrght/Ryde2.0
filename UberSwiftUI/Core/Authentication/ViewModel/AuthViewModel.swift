@@ -24,22 +24,6 @@ class AuthViewModel: ObservableObject {
         userSession = Auth.auth().currentUser
         fetchUser()
     }
-        
-    func fetchUser() {
-        guard let uid = userSession?.uid else { return }
-        
-        COLLECTION_USERS.document(uid).getDocument { snapshot, _ in
-            guard let snapshot = snapshot else { return }
-            self.user = try? snapshot.data(as: User.self)
-            
-            print("DEBUG: User data \(self.user)")
-            self.observeTripRequests()
-
-//            guard let coordinates = self.user?.coordinates else { return }
-//            let hash = GFUtils.geoHash(forLocation: CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude))
-//            print("DEBUG: Hash \(hash)")
-        }
-    }
     
     func signIn(withEmail email: String, password: String) {
         self.isAuthenticating = true
@@ -140,14 +124,9 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func observeTripRequests() {
-        guard let currentUser = self.user, currentUser.accountType == .driver else { return }
-        guard let uid = currentUser.id else { return }
-        
-        COLLECTION_RIDES.document(uid).addSnapshotListener { snapshot, error in
-            guard let data = snapshot?.data() else { return }
-            
-            print("DEBUG: Data is \(data)")
+    func fetchUser() {
+        UserService.fetchUser { user in
+            self.user = user
         }
     }
 }

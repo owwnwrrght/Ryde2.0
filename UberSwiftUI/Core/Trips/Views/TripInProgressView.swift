@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TripInProgressView: View {
+    @ObservedObject var viewModel: RideDetailsViewModel
+    
     var body: some View {
         VStack {
             Capsule()
@@ -51,7 +53,7 @@ struct TripInProgressView: View {
                     VStack(alignment: .trailing) {
                         Image("uber-x")
                             .resizable()
-                            .frame(width: 72, height: 56)
+                            .scaledToFit()
                         
                         HStack(spacing: 2) {
                             Text("Mercedes S -")
@@ -74,7 +76,7 @@ struct TripInProgressView: View {
                         .fontWeight(.semibold)
                         .font(.body)
                     
-//                    TripLocationsView()
+                    TripLocationsView(viewModel: viewModel)
                     
                     Divider()
                 }
@@ -89,32 +91,32 @@ struct TripInProgressView: View {
                         .font(.title)
                         .fontWeight(.bold)
                     
-                    HStack(spacing: 12) {
-                        
-                        Text("VISA")
-                            .fontWeight(.semibold)
-                            .padding(8)
-                            .background(Color(.systemBlue))
-                            .cornerRadius(4)
-                            .foregroundColor(.white)
-                            .padding(.leading)
-                        
-                        VStack(alignment: .leading) {
-                            Text("**** **** **** 1234")
-                                .font(.system(size: 20))
-                                .fontWeight(.bold)
-                            
-                            Text("Expires 10/25")
-                                .foregroundColor(.gray)
-                                .font(.footnote)
-                        }
-                        
-                        Spacer()
-                        
-                        Image(systemName: "chevron.right")
-                            .imageScale(.medium)
-                            .padding()
-                    }
+//                    HStack(spacing: 12) {
+//                        
+//                        Text("VISA")
+//                            .fontWeight(.semibold)
+//                            .padding(8)
+//                            .background(Color(.systemBlue))
+//                            .cornerRadius(4)
+//                            .foregroundColor(.white)
+//                            .padding(.leading)
+//                        
+//                        VStack(alignment: .leading) {
+//                            Text("**** **** **** 1234")
+//                                .font(.system(size: 20))
+//                                .fontWeight(.bold)
+//                            
+//                            Text("Expires 10/25")
+//                                .foregroundColor(.gray)
+//                                .font(.footnote)
+//                        }
+//                        
+//                        Spacer()
+//                        
+//                        Image(systemName: "chevron.right")
+//                            .imageScale(.medium)
+//                            .padding()
+//                    }
                     .padding(8)
                     .overlay(
                             RoundedRectangle(cornerRadius: 10)
@@ -146,7 +148,7 @@ struct TripInProgressView: View {
 
 struct TripInProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        TripInProgressView()
+        TripInProgressView(viewModel: dev.rideDetailsViewModel)
     }
 }
 

@@ -20,7 +20,6 @@ enum MapViewState: Int {
 struct ContentView: View {
     @State private var showLocationInputView = false
     @State private var showSideMenu = false
-    @State private var mapState = MapViewState.noInput
     @State private var userLocation: CLLocation?
     @Namespace var animation
     
@@ -32,70 +31,76 @@ struct ContentView: View {
         Group {
             if authViewModel.userSession == nil {
                 LoginView()
-            } else {
+            } else if let user = authViewModel.user {
                 NavigationView {
                     ZStack {
                         if showSideMenu {
-                            if let user = authViewModel.user {
-                                SideMenuView(isShowing: $showSideMenu, user: user)
-                            }
+                            SideMenuView(isShowing: $showSideMenu, user: user)
                         }
                         
                         ZStack(alignment: .bottom) {
                             ZStack(alignment: .top) {
-                                UberMapViewRepresentable(mapState: $mapState)
+                                UberMapViewRepresentable(mapState: $contentViewModel.mapState)
                                 
-                                if mapState == .noInput {
+                                if contentViewModel.mapState == .noInput {
                                     LocationInputActivationView(animation: animation)
                                         .matchedGeometryEffect(id: "LocationInput", in: animation)
                                         .onTapGesture {
                                             withAnimation(.spring()) {
-                                                self.mapState = .searchingForLocation
+                                                self.contentViewModel.mapState = .searchingForLocation
                                             }
                                         }
-                                } else if mapState == .searchingForLocation {
+                                } else if contentViewModel.mapState == .searchingForLocation {
                                     RideLocationInputView(show: $showLocationInputView, animation: animation)
                                 }
                                 
-                                MapViewActionButton(state: mapState, action: {
+                                MapViewActionButton(state: contentViewModel.mapState, action: {
                                     withAnimation(.spring()) {
-                                        actionForState(state: mapState)
+                                        actionForState(state: contentViewModel.mapState)
                                     }
                                 })
                             }
                             
-                            if mapState == .locationSelected,
-                               let location = locationViewModel.selectedUberLocation,
-                               let userLocation = userLocation {
-                                BookingView(userLocation: userLocation,
-                                            selectedLocation: location,
-                                            nearbyDrivers: contentViewModel.drivers,
-                                            mapState: $mapState)
-                                .transition(.move(edge: .bottom))
-                            } else if mapState == .tripRequested {
-                                withAnimation(.spring()) {
-                                    TripLoadingView()
+                            if let userLocation = userLocation {
+                                if contentViewModel.mapState == .locationSelected, let location = locationViewModel.selectedUberLocation {
+                                    BookingView(userLocation: userLocation, selectedLocation: location)
+                                        .transition(.move(edge: .bottom))
+                                } else if contentViewModel.mapState == .tripRequested {
+                                    if user.accountType == .passenger {
+                                        withAnimation(.spring()) {
+                                            TripLoadingView()
+                                                .transition(.move(edge: .bottom))
+                                        }
+                                    } else {
+                                        withAnimation(.spring()) {
+                                            AcceptTripView()
+                                                .transition(.move(edge: .bottom))
+                                        }
+                                    }
+                                } else if contentViewModel.mapState == .tripAccepted, let location = locationViewModel.selectedUberLocation {
+                                    TripInProgressView(viewModel: RideDetailsViewModel(userLocation: userLocation, selectedLocation: location))
                                         .transition(.move(edge: .bottom))
                                 }
-                            } else if mapState == .tripAccepted {
-                                TripInProgressView()
-                                    .transition(.move(edge: .bottom))
                             }
                         }
                         .offset(x: showSideMenu ? 300 : 0, y: 0)
-                        .onReceive(locationViewModel.$selectedLocation, perform: { location in
+                        .onReceive(locationViewModel.$selectedUberLocation, perform: { location in
                             if location != nil {
-                                self.mapState = .transitioning
+                                self.contentViewModel.selectedLocation = location
                                 
                                 DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
-                                    self.mapState = .locationSelected
+                                    self.contentViewModel.mapState = .locationSelected
                                 }
                             }
                         })
                         .onReceive(LocationManager.shared.$userLocation, perform: { userLocation in
                             self.userLocation = userLocation
+                            contentViewModel.userLocation = userLocation?.coordinate
                             guard let userLocation = userLocation, !contentViewModel.didExecuteFetchDrivers else { return }
-                            contentViewModel.fetchNearbyDrivers(withCoordinates: userLocation.coordinate)
+                            
+                            if user.accountType == .passenger {
+                                contentViewModel.fetchNearbyDrivers(withCoordinates: userLocation.coordinate)
+                            }
                         })
                         .ignoresSafeArea()
                     }
@@ -113,12 +118,12 @@ struct ContentView: View {
         case .noInput:
             showSideMenu.toggle()
         case .searchingForLocation:
-            mapState = .noInput
+            contentViewModel.mapState = .noInput
         case .locationSelected:
-            mapState = .noInput
+            contentViewModel.mapState = .noInput
             locationViewModel.selectedLocation = nil
         case .tripRequested:
-            mapState = .noInput
+            contentViewModel.mapState = .noInput
             locationViewModel.selectedLocation = nil
         default: break
         }
@@ -131,5 +136,3 @@ struct ContentView_Previews: PreviewProvider {
             .environmentObject(AuthViewModel(window: UIWindow()))
     }
 }
-
-

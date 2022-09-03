@@ -13,8 +13,7 @@ struct TripLoadingView: View {
             Capsule()
                 .foregroundColor(Color(.systemGray5))
                 .frame(width: 48, height: 6)
-                .padding()
-            
+                .padding(.top, 8)
             
             Spacer()
             
@@ -34,7 +33,7 @@ struct TripLoadingView: View {
             .padding()
             .frame(maxWidth :.infinity, alignment: .leading)
             
-            Spinner()
+            Spinner(lineWidth: 12, height: 120, width: 120)
                 .padding(.vertical, 16)
                 .padding(.bottom, 16)
             
@@ -44,7 +43,7 @@ struct TripLoadingView: View {
         .ignoresSafeArea()
         .background(.white)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(maxHeight: 330)
+        .frame(maxHeight: 320)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }
