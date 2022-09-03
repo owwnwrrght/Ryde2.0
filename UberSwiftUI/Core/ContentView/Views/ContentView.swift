@@ -89,7 +89,9 @@ struct ContentView: View {
                                 self.contentViewModel.selectedLocation = location
                                 
                                 DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
-                                    self.contentViewModel.mapState = .locationSelected
+                                    DispatchQueue.main.async {
+                                        self.contentViewModel.mapState = .locationSelected
+                                    }
                                 }
                             }
                         })

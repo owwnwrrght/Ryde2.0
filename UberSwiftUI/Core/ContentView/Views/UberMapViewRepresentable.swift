@@ -38,12 +38,13 @@ struct UberMapViewRepresentable: UIViewRepresentable {
 //        print("DEBUG: Updating view...")
         //FIXME: Use map state to prevent updates when trip state is updated
         
-        if let selectedLocation = viewModel.selectedLocation {
-            context.coordinator.addAnnotationAndGeneratePolyline(forSearchResult: selectedLocation)
+        if mapState == .locationSelected {
+            print("DEBUG: Generating polyline")
+            context.coordinator.addAnnotationAndGeneratePolyline()
             return
         }
         
-        if !contentViewModel.drivers.isEmpty {
+        if !contentViewModel.drivers.isEmpty && mapState == .noInput {
             context.coordinator.addDriversToMap(contentViewModel.drivers)
         }
                 
@@ -134,19 +135,17 @@ extension UberMapViewRepresentable {
             }
         }
         
-        func addAnnotationAndGeneratePolyline(forSearchResult result: MKLocalSearchCompletion) {
+        func addAnnotationAndGeneratePolyline() {
+            guard let destinationCoordinate = parent.viewModel.selectedUberLocation?.coordinate else { return }
             self.parent.mapView.removeAnnotations(parent.mapView.annotations)
+            let anno = MKPointAnnotation()
+            anno.coordinate = destinationCoordinate
+            let placemark = MKPlacemark(coordinate: destinationCoordinate)
             
-            parent.viewModel.locationSearch(forLocalSearchCompletion: result) { response, error in
-                guard let item = response?.mapItems.first else { return }
-                let anno = MKPointAnnotation()
-                anno.coordinate = item.placemark.coordinate
-                
-                self.parent.mapView.addAnnotation(anno)
-                self.parent.mapView.selectAnnotation(anno, animated: true)
-                
-                self.generatePolyline(forPlacemark: item.placemark)
-            }
+            self.parent.mapView.addAnnotation(anno)
+            self.parent.mapView.selectAnnotation(anno, animated: true)
+            
+            self.generatePolyline(forPlacemark: placemark)
         }
         
         func clearMapView() {

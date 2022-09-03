@@ -44,7 +44,7 @@ class ContentViewModel: ObservableObject {
             
             switch user.accountType {
             case .driver:
-                self.observeTripRequests()
+                self.observeTripRequestsForDriver()
             case .passenger:
                 self.addTripObserverForPassenger()
             }
@@ -59,7 +59,7 @@ class ContentViewModel: ObservableObject {
 // MARK: - Driver API
 
 extension ContentViewModel {
-    func observeTripRequests() {
+    func observeTripRequestsForDriver() {
         guard let currentUser = self.user, currentUser.accountType == .driver else { return }
         guard let uid = currentUser.id else { return }
 
@@ -114,7 +114,7 @@ extension ContentViewModel {
                     self.mapState = .tripAccepted
                 }
             case .removed:
-                print("DEBUG: Trip rejected by driver, send next request..")
+                print("DEBUG: Trip cancelled by passenger, send next request..")
             }
         }
     }
@@ -124,13 +124,13 @@ extension ContentViewModel {
             guard let trip = trip else { return }
             updateTripState(trip, state: .rejectedByAllDrivers) { _ in
                 self.mapState = .noInput
+                self.selectedLocation = nil
+                self.deleteTrip(trip, completion: nil)
             }
-            
-            return
+        } else {
+            let driver = driverQueue.removeFirst()
+            sendRideRequestToDriver(driver)
         }
-        
-        let driver = driverQueue.removeFirst()
-        sendRideRequestToDriver(driver)
     }
     
     private func sendRideRequestToDriver(_ driver: User) {
@@ -157,7 +157,7 @@ extension ContentViewModel {
                 "dropoffLocation": dropoffGeoPoint,
                 "tripCost": 0.0,
                 "dropoffLocationName": selectedLocation.title,
-                "tripState": MapViewState.tripRequested.rawValue
+                "tripState": TripState.requested.rawValue
             ]
             
             COLLECTION_RIDES.document().setData(data) { _ in
@@ -202,5 +202,9 @@ extension ContentViewModel {
         self.drivers.append(contentsOf: drivers)
         self.driverQueue = self.drivers
         print("DEBUG: Drivers array \(self.drivers)")
+    }
+    
+    func deleteTrip(_ trip: Trip, completion: ((Error?) -> Void)?) {
+        COLLECTION_RIDES.document(trip.tripId).delete(completion: completion)
     }
 }
