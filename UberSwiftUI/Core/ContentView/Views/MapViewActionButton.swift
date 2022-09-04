@@ -39,6 +39,8 @@ struct MapViewActionButton: View {
             return "arrow.left"
         case .noInput, .tripCancelled:
             return "line.3.horizontal"
+        default:
+            return "line.3.horizontal"
         }
     }
 }

@@ -45,7 +45,9 @@ enum TripState: Int, Codable {
     case rejectedByAllDrivers
     case requested // value has to equal 3 to correspond to mapView tripRequested state
     case accepted
+    case driverArrived
     case inProgress
+    case arrivedAtDestination
     case complete
     case cancelled
 }

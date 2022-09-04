@@ -156,8 +156,9 @@ extension ContentViewModel {
                 self.trip = trip
                 self.tripService.trip = trip
                 
-                // dont need to set selected location every time trip updates
-                self.selectedLocation = UberLocation(title: trip.dropoffLocationName, coordinate: trip.dropoffLocationCoordinates)
+                if self.selectedLocation == nil {
+                    self.selectedLocation = UberLocation(title: trip.dropoffLocationName, coordinate: trip.dropoffLocationCoordinates)
+                }
                 
                 if trip.tripState == .rejectedByDriver {
                     self.requestRide()
