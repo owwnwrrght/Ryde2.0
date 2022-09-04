@@ -7,6 +7,7 @@
 
 import FirebaseFirestoreSwift
 import Firebase
+import CoreLocation
 
 struct Trip: Codable, Identifiable {
     @DocumentID var id: String?
@@ -15,10 +16,23 @@ struct Trip: Codable, Identifiable {
     let pickupLocation: GeoPoint
     let dropoffLocation: GeoPoint
     let dropoffLocationName: String
+    let pickupLocationName: String
     let tripCost: Double
     let tripState: TripState
     
     var tripId: String { return id ?? "" }
+    
+    var dropoffLocationCoordinates: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: dropoffLocation.latitude, longitude: dropoffLocation.longitude)
+    }
+    
+    var pickupLocationCoordiantes: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: pickupLocation.latitude, longitude: pickupLocation.longitude)
+    }
+    
+    var dropoffUberLocation: UberLocation {
+        return UberLocation(title: dropoffLocationName, coordinate: dropoffLocationCoordinates)
+    }
 }
 
 /*
@@ -33,4 +47,5 @@ enum TripState: Int, Codable {
     case accepted
     case inProgress
     case complete
+    case cancelled
 }

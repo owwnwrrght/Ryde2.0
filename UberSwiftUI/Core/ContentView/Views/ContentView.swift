@@ -14,7 +14,8 @@ enum MapViewState: Int {
     case locationSelected
     case tripRequested
     case tripAccepted
-    case transitioning
+    case tripCompleted
+    case tripCancelled
 }
 
 struct ContentView: View {
@@ -77,8 +78,11 @@ struct ContentView: View {
                                                 .transition(.move(edge: .bottom))
                                         }
                                     }
-                                } else if contentViewModel.mapState == .tripAccepted, let location = locationViewModel.selectedUberLocation {
-                                    TripInProgressView(viewModel: RideDetailsViewModel(userLocation: userLocation, selectedLocation: location))
+                                } else if contentViewModel.mapState == .tripAccepted, let trip = contentViewModel.trip {
+                                    TripInProgressView(
+                                        viewModel: RideDetailsViewModel(userLocation: userLocation,
+                                                                        selectedLocation: trip.dropoffUberLocation)
+                                    )
                                         .transition(.move(edge: .bottom))
                                 }
                             }
@@ -102,6 +106,18 @@ struct ContentView: View {
                             
                             if user.accountType == .passenger {
                                 contentViewModel.fetchNearbyDrivers(withCoordinates: userLocation.coordinate)
+                            }
+                        })
+                        .onReceive(LocationManager.shared.$didEnterPickupRegion, perform: { didEnterPickupRegion in
+                            if didEnterPickupRegion {
+                                // update trip state to notify passenger that driver has arrived
+                                
+                                print("DEBUG: Update state to driver arrived")
+                            }
+                        })
+                        .onReceive(LocationManager.shared.$didEnterDropoffRegion, perform: { didEnterDropoffRegion in
+                            if didEnterDropoffRegion {
+                                print("DEBUG: Update state to drop off passenger")
                             }
                         })
                         .ignoresSafeArea()

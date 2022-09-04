@@ -77,6 +77,7 @@
 		2B91C80F28BFDD630097B73E /* RideDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C80E28BFDD630097B73E /* RideDetails.swift */; };
 		2B91C81128BFDE050097B73E /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C81028BFDE050097B73E /* PreviewProvider.swift */; };
 		2B91C81528C031430097B73E /* RideDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C81428C031430097B73E /* RideDetailsViewModel.swift */; };
+		2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5828C53B5E002ACFAE /* TripService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +143,7 @@
 		2B91C80E28BFDD630097B73E /* RideDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetails.swift; sourceTree = "<group>"; };
 		2B91C81028BFDE050097B73E /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		2B91C81428C031430097B73E /* RideDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetailsViewModel.swift; sourceTree = "<group>"; };
+		2BEC6B5828C53B5E002ACFAE /* TripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -475,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				2B368B1328C2A33E008D42CE /* UserService.swift */,
+				2BEC6B5828C53B5E002ACFAE /* TripService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				235D731A275B2F3B000A366E /* SocialSignUpView.swift in Sources */,
 				2B91C81528C031430097B73E /* RideDetailsViewModel.swift in Sources */,
 				2355682E2751F5D600D54406 /* SideMenuView.swift in Sources */,
+				2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */,
 				235568192751CD3A00D54406 /* RegistrationView.swift in Sources */,
 				235568282751F53B00D54406 /* SideMenuOptionView.swift in Sources */,
 				2B368B0628C1B2BB008D42CE /* LoadingSpinner.swift in Sources */,

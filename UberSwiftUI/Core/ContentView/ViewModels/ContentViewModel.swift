@@ -22,29 +22,65 @@ import Firebase
 
 class ContentViewModel: ObservableObject {
     
+    // MARK: - Properties
+    
     @Published var drivers = [User]()
     @Published var trip: Trip?
     @Published var mapState = MapViewState.noInput
     
     let radius: Double = 50 * 1000
     var didExecuteFetchDrivers = false
+    var userLocation: CLLocationCoordinate2D?
+    var selectedLocation: UberLocation?
     
     private var user: User?
     private var driverQueue = [User]()
-    var userLocation: CLLocationCoordinate2D?
-    var selectedLocation: UberLocation?
+    private var tripService = TripService()
+
+    // MARK: - Lifecycle
     
     init() {
         fetchUser()
     }
     
-    func fetchUser() {
+    // MARK: - Helpers
+        
+    private func reset() {
+        self.mapState = .noInput
+        self.selectedLocation = nil
+        self.trip = nil
+    }
+    
+    func getPlacemark(forLocation location: CLLocation, completion: @escaping (CLPlacemark?, Error?) -> Void) {
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: { placemarks, error in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            guard let placemark = placemarks?.first else { return }
+            completion(placemark, nil)
+        })
+    }
+    
+    func createPickupAndDropoffRegionsForTrip() {
+        guard let trip = trip else { return }
+        LocationManager.shared.createPickupRegionForTrip(trip)
+        LocationManager.shared.createDropoffRegionForTrip(trip)
+    }
+}
+
+// MARK: - Shared API
+
+extension ContentViewModel {
+    private func fetchUser() {
         UserService.fetchUser { user in
             self.user = user
+            self.tripService.user = user
             
             switch user.accountType {
             case .driver:
-                self.observeTripRequestsForDriver()
+                self.addTripObserverForDriver()
             case .passenger:
                 self.addTripObserverForPassenger()
             }
@@ -54,42 +90,55 @@ class ContentViewModel: ObservableObject {
     private func updateTripState(_ trip: Trip, state: TripState, completion: ((Error?) -> Void)?) {
         COLLECTION_RIDES.document(trip.tripId).updateData(["tripState": state.rawValue], completion: completion)
     }
+    
+    private func deleteTrip() {
+        guard let trip = trip else { return }
+        
+        COLLECTION_RIDES.document(trip.tripId).delete { _ in
+            self.reset()
+        }
+    }
 }
 
 // MARK: - Driver API
 
 extension ContentViewModel {
-    func observeTripRequestsForDriver() {
-        guard let currentUser = self.user, currentUser.accountType == .driver else { return }
-        guard let uid = currentUser.id else { return }
-
-        COLLECTION_RIDES.whereField("driverUid", isEqualTo: uid).addSnapshotListener { snapshot, error in
-            guard let change = snapshot?.documentChanges.first, change.type == .added else { return }
+    func addTripObserverForDriver() {
+        tripService.addTripObserverForDriver { snapshot, error in
+            guard let change = snapshot?.documentChanges.first else { return }
             guard let trip = try? change.document.data(as: Trip.self) else { return }
             self.trip = trip
-
-            self.mapState = .tripRequested
+            self.tripService.trip = trip
+            
+            switch change.type {
+            case .added, .modified:
+                if trip.tripState == .requested {
+                    self.mapState = .tripRequested
+                } else if trip.tripState == .cancelled {
+                    self.mapState = .tripCancelled
+                    self.deleteTrip()
+                }
+                
+            case .removed:
+                self.mapState = .tripCancelled
+            }
         }
     }
     
     func acceptTrip() {
         guard let trip = trip else { return }
-        guard let user = user, user.accountType == .driver else { return }
+        self.selectedLocation = UberLocation(title: trip.dropoffLocationName, coordinate: trip.dropoffLocationCoordinates)
         
-        COLLECTION_RIDES
-            .document(trip.tripId)
-            .updateData(["tripState": MapViewState.tripAccepted.rawValue]) { _ in
-                self.mapState = .tripAccepted
+        tripService.acceptTrip { _ in
+            self.createPickupAndDropoffRegionsForTrip()
+            self.mapState = .tripAccepted
         }
     }
     
     func rejectTrip() {
-        guard let trip = trip else { return }
-        
-        updateTripState(trip, state: .rejectedByDriver) { _ in
+        tripService.rejectTrip { _ in
             self.mapState = .noInput
         }
-        
     }
 }
 
@@ -105,13 +154,17 @@ extension ContentViewModel {
             case .added, .modified:
                 guard let trip = try? change.document.data(as: Trip.self) else { return }
                 self.trip = trip
+                self.tripService.trip = trip
+                
+                // dont need to set selected location every time trip updates
+                self.selectedLocation = UberLocation(title: trip.dropoffLocationName, coordinate: trip.dropoffLocationCoordinates)
                 
                 if trip.tripState == .rejectedByDriver {
                     self.requestRide()
-                }
-                
-                if trip.tripState == .accepted {
+                } else if trip.tripState == .accepted {
+                    self.createPickupAndDropoffRegionsForTrip()
                     self.mapState = .tripAccepted
+                    
                 }
             case .removed:
                 print("DEBUG: Trip cancelled by passenger, send next request..")
@@ -123,13 +176,19 @@ extension ContentViewModel {
         if driverQueue.isEmpty {
             guard let trip = trip else { return }
             updateTripState(trip, state: .rejectedByAllDrivers) { _ in
-                self.mapState = .noInput
-                self.selectedLocation = nil
-                self.deleteTrip(trip, completion: nil)
+                self.deleteTrip()
             }
         } else {
             let driver = driverQueue.removeFirst()
             sendRideRequestToDriver(driver)
+        }
+    }
+    
+    func cancelTrip() {
+        guard let trip = trip else { return }
+        
+        updateTripState(trip, state: .cancelled) { _ in
+            self.reset()
         }
     }
     
@@ -150,18 +209,21 @@ extension ContentViewModel {
             let pickupGeoPoint = GeoPoint(latitude: userLocation.latitude, longitude: userLocation.longitude)
             let dropoffGeoPoint = GeoPoint(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
             
-            let data: [String: Any] = [
-                "driverUid": driverUid,
-                "passengerUid": currentUid,
-                "pickupLocation": pickupGeoPoint,
-                "dropoffLocation": dropoffGeoPoint,
-                "tripCost": 0.0,
-                "dropoffLocationName": selectedLocation.title,
-                "tripState": TripState.requested.rawValue
-            ]
-            
-            COLLECTION_RIDES.document().setData(data) { _ in
-                self.mapState = .tripRequested
+            getPlacemark(forLocation: CLLocation(latitude: pickupGeoPoint.latitude, longitude: pickupGeoPoint.longitude)) { placemark, error in
+                let data: [String: Any] = [
+                    "driverUid": driverUid,
+                    "passengerUid": currentUid,
+                    "pickupLocation": pickupGeoPoint,
+                    "dropoffLocation": dropoffGeoPoint,
+                    "tripCost": 0.0,
+                    "dropoffLocationName": selectedLocation.title,
+                    "pickupLocationName": placemark?.name ?? "Current location",
+                    "tripState": TripState.requested.rawValue
+                ]
+                
+                COLLECTION_RIDES.document().setData(data) { _ in
+                    self.mapState = .tripRequested
+                }
             }
         }
     }
@@ -201,10 +263,5 @@ extension ContentViewModel {
         
         self.drivers.append(contentsOf: drivers)
         self.driverQueue = self.drivers
-        print("DEBUG: Drivers array \(self.drivers)")
-    }
-    
-    func deleteTrip(_ trip: Trip, completion: ((Error?) -> Void)?) {
-        COLLECTION_RIDES.document(trip.tripId).delete(completion: completion)
     }
 }

@@ -39,7 +39,6 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         //FIXME: Use map state to prevent updates when trip state is updated
         
         if mapState == .locationSelected {
-            print("DEBUG: Generating polyline")
             context.coordinator.addAnnotationAndGeneratePolyline()
             return
         }
@@ -159,17 +158,13 @@ extension UberMapViewRepresentable {
         }
         
         func addDriversToMap(_ drivers: [User]) {
-            print("DEBUG: Drivers count \(drivers.count)")
-            
             let driverAnnotations = drivers.map({
                 DriverAnnotation(
                     uid: $0.id ?? NSUUID().uuidString,
                     coordinate: CLLocationCoordinate2D(latitude: $0.coordinates.latitude,longitude: $0.coordinates.longitude)
                 )
             })
-            
-            print("DEBUG: Driver annotations \(driverAnnotations)")
-            
+                        
             self.parent.mapView.addAnnotations(driverAnnotations)
         }
     }

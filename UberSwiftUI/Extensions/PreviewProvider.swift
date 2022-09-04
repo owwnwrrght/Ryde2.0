@@ -26,6 +26,7 @@ class DeveloperPreview {
                         pickupLocation: GeoPoint(latitude: 37.6, longitude: -122.43),
                         dropoffLocation: GeoPoint(latitude: 37.55, longitude: -122.4),
                         dropoffLocationName: "Starbucks",
+                        pickupLocationName: "123 Main St",
                         tripCost: 40.00,
                         tripState: .inProgress)
         

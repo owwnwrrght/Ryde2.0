@@ -33,11 +33,11 @@ struct MapViewActionButton: View {
         switch state {
         case .searchingForLocation,
                 .locationSelected,
-                .transitioning,
                 .tripAccepted,
-                .tripRequested:
+                .tripRequested,
+                .tripCompleted:
             return "arrow.left"
-        case .noInput:
+        case .noInput, .tripCancelled:
             return "line.3.horizontal"
         }
     }
