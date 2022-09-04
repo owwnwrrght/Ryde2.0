@@ -18,7 +18,7 @@ struct TripService {
         
     // MARK: - Helpers
     
-    func updateTripState(_ trip: Trip, state: TripState, completion: FirestoreCompletion) {
+    private func updateTripState(_ trip: Trip, state: TripState, completion: FirestoreCompletion) {
         COLLECTION_RIDES.document(trip.tripId).updateData(["tripState": state.rawValue], completion: completion)
     }
     
@@ -46,5 +46,10 @@ extension TripService {
     func rejectTrip(completion: FirestoreCompletion) {
         guard let trip = trip else { return }
         updateTripState(trip, state: .rejectedByDriver, completion: completion)
+    }
+    
+    func didArriveAtPickupLocation(completion: FirestoreCompletion) {
+        guard let trip = trip else { return }
+        updateTripState(trip, state: .driverArrived, completion: completion)
     }
 }

@@ -1,14 +1,15 @@
 //
-//  TripArrivalView.swift
+//  SwiftUIView.swift
 //  UberSwiftUI
 //
-//  Created by Stephen Dowless on 11/26/21.
+//  Created by Stephan Dowless on 9/4/22.
 //
 
 import SwiftUI
 
-struct TripArrivalView: View {
+struct PickupPassengerView: View {
     @ObservedObject var viewModel: RideDetailsViewModel
+    @EnvironmentObject var contentViewModel: ContentViewModel
     
     var body: some View {
         VStack {
@@ -38,43 +39,27 @@ struct TripArrivalView: View {
             }
             .padding()
             
-            VStack(spacing: 6) {
-                Text("HOW WAS YOUR TRIP?")
-                    .font(.body)
+            Button {
+                print("DEBUG: Pickup passenger")
+            } label: {
+                Text("PICKUP JOHN")
                     .fontWeight(.bold)
-                    .padding(.top, 16)
-                
-                Text("Your feedback will help up provide a better driving experience")
-                    .multilineTextAlignment(.center)
-                    .font(.system(size: 15))
-                    .padding(8)
-                    .padding(.horizontal, 4)
-                    .foregroundColor(.gray)
+                    .frame(width: UIScreen.main.bounds.width - 64, height: 50)
+                    .background(.blue)
+                    .cornerRadius(10)
+                    .foregroundColor(.white)
             }
-            
-            
-            HStack {
-                ForEach(1 ... 5, id: \.self) { index in
-                    Image(systemName: "star.fill")
-                        .font(.title)
-                        .imageScale(.large)
-                        .foregroundColor(Color(.systemGray4))
-                    
-                }
-            }
-            .padding(.top, 8)
-            
-            Spacer()
+            .padding()
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 520)
+        .frame(height: 420)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }
 
-struct RideArrivalView_Previews: PreviewProvider {
+struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        TripArrivalView(viewModel: dev.rideDetailsViewModel)
+        PickupPassengerView(viewModel: dev.rideDetailsViewModel)
     }
 }

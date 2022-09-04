@@ -29,7 +29,6 @@ struct TripInfoView: View {
                     Text("4.8")
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.gray)
-                    
                 }
             }
             

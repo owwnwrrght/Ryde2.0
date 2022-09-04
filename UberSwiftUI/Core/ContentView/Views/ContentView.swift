@@ -7,20 +7,6 @@
 
 import SwiftUI
 import MapKit
-/*
- enum TripState: Int, Codable {
-     case driversUnavailable
-     case rejectedByDriver
-     case rejectedByAllDrivers
-     case requested // value has to equal 3 to correspond to mapView tripRequested state
-     case accepted
-     case driverArrived
-     case inProgress
-     case arrivedAtDestination
-     case complete
-     case cancelled
- }
-*/
 
 enum MapViewState: Int {
     case noInput

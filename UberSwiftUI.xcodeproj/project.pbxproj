@@ -78,6 +78,7 @@
 		2B91C81128BFDE050097B73E /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C81028BFDE050097B73E /* PreviewProvider.swift */; };
 		2B91C81528C031430097B73E /* RideDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C81428C031430097B73E /* RideDetailsViewModel.swift */; };
 		2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5828C53B5E002ACFAE /* TripService.swift */; };
+		2BEC6B5B28C55794002ACFAE /* PickupPassengerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,6 +145,7 @@
 		2B91C81028BFDE050097B73E /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		2B91C81428C031430097B73E /* RideDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetailsViewModel.swift; sourceTree = "<group>"; };
 		2BEC6B5828C53B5E002ACFAE /* TripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripService.swift; sourceTree = "<group>"; };
+		2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupPassengerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -469,6 +471,7 @@
 			isa = PBXGroup;
 			children = (
 				2B368B0E28C2769A008D42CE /* AcceptTripView.swift */,
+				2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */,
 			);
 			path = Drivers;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				238E84BF274B4D8200359D7E /* LocationSearchViewModel.swift in Sources */,
 				2B368B1128C283BD008D42CE /* CountdownCircle.swift in Sources */,
 				235D7318275736A3000A366E /* DriverAnnotation.swift in Sources */,
+				2BEC6B5B28C55794002ACFAE /* PickupPassengerView.swift in Sources */,
 				235D7330275C9BFC000A366E /* MyTripsView.swift in Sources */,
 				23C30572273F4D3C005A64A4 /* ContentViewModel.swift in Sources */,
 				235D7322275B3A79000A366E /* LocationCell.swift in Sources */,

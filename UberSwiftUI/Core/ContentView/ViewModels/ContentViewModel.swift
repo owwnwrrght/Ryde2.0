@@ -140,6 +140,12 @@ extension ContentViewModel {
             self.mapState = .noInput
         }
     }
+    
+    func updateTripStateToArrived() {
+        tripService.didArriveAtPickupLocation { _ in
+            self.mapState = .driverArrived
+        }
+    }
 }
 
 // MARK: - Passenger API
@@ -165,7 +171,8 @@ extension ContentViewModel {
                 } else if trip.tripState == .accepted {
                     self.createPickupAndDropoffRegionsForTrip()
                     self.mapState = .tripAccepted
-                    
+                } else if trip.tripState == .driverArrived {
+                    self.mapState = .driverArrived
                 }
             case .removed:
                 print("DEBUG: Trip cancelled by passenger, send next request..")
@@ -229,6 +236,7 @@ extension ContentViewModel {
         }
     }
     
+    //TODO: Extract to PassengerService
     func fetchNearbyDrivers(withCoordinates coordinates: CLLocationCoordinate2D) {
         let queryBounds = GFUtils.queryBounds(forLocation: coordinates, withRadius: radius)
         didExecuteFetchDrivers = true
