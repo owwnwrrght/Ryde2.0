@@ -72,11 +72,7 @@ struct ContentView: View {
                                     RideLocationInputView(show: $showLocationInputView, animation: animation)
                                 }
                                 
-                                MapViewActionButton(state: contentViewModel.mapState, action: {
-                                    withAnimation(.spring()) {
-                                        actionForState(state: contentViewModel.mapState)
-                                    }
-                                })
+                                MapViewActionButton(state: $contentViewModel.mapState, showSideMenu: $showSideMenu)
                             }
                             
                             if let userLocation = userLocation {
@@ -108,12 +104,7 @@ struct ContentView: View {
                         .onReceive(locationViewModel.$selectedUberLocation, perform: { location in
                             if location != nil {
                                 self.contentViewModel.selectedLocation = location
-                                
-                                DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
-                                    DispatchQueue.main.async {
-                                        self.contentViewModel.mapState = .locationSelected
-                                    }
-                                }
+                                self.contentViewModel.mapState = .locationSelected
                             }
                         })
                         .onReceive(LocationManager.shared.$userLocation, perform: { userLocation in
@@ -145,22 +136,6 @@ struct ContentView: View {
                     .navigationBarHidden(true)
                 }
             }
-        }
-    }
-    
-    func actionForState(state: MapViewState) {
-        switch state {
-        case .noInput:
-            showSideMenu.toggle()
-        case .searchingForLocation:
-            contentViewModel.mapState = .noInput
-        case .locationSelected:
-            contentViewModel.mapState = .noInput
-            locationViewModel.selectedLocation = nil
-        case .tripRequested:
-            contentViewModel.mapState = .noInput
-            locationViewModel.selectedLocation = nil
-        default: break
         }
     }
 }

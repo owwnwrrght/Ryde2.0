@@ -8,12 +8,17 @@
 import SwiftUI
 
 struct MapViewActionButton: View {
-    let state: MapViewState
-    let action: () -> Void
-    
+    @Binding var state: MapViewState
+    @Binding var showSideMenu: Bool
+    @EnvironmentObject var viewModel: LocationSearchViewModel
+        
     var body: some View {
         HStack {
-            Button(action: action, label: {
+            Button {
+                withAnimation(.spring()) {
+                    actionForState()
+                }
+            } label: {
                 Image(systemName: imageNameForState(state: state))
                     .font(.title2)
                     .foregroundColor(.black)
@@ -21,7 +26,7 @@ struct MapViewActionButton: View {
                     .background(Color.white)
                     .clipShape((Circle()))
                     .shadow(color: .black, radius: 5, x: 0, y: 0)
-            })
+            }
             .padding(12)
             .padding(.top, 32)
             
@@ -41,6 +46,22 @@ struct MapViewActionButton: View {
             return "line.3.horizontal"
         default:
             return "line.3.horizontal"
+        }
+    }
+    
+    func actionForState() {
+        switch state {
+        case .noInput:
+            showSideMenu.toggle()
+        case .searchingForLocation:
+            state = .noInput
+        case .locationSelected:
+            state = .noInput
+            viewModel.selectedLocation = nil
+        case .tripRequested:
+            state = .noInput
+            viewModel.selectedLocation = nil
+        default: break
         }
     }
 }
