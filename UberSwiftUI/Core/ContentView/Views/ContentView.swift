@@ -83,6 +83,20 @@ struct ContentView: View {
                                                                         selectedLocation: trip.dropoffUberLocation)
                                     )
                                         .transition(.move(edge: .bottom))
+                                } else if contentViewModel.mapState == .driverArrived, let trip = contentViewModel.trip {
+                                    if user.accountType == .passenger {
+                                        withAnimation(.spring()) {
+                                            DriverArrivalView(viewModel: RideDetailsViewModel(userLocation: userLocation,
+                                                                                              selectedLocation: trip.dropoffUberLocation))
+                                                .transition(.move(edge: .bottom))
+                                        }
+                                    } else {
+                                        withAnimation(.spring()) {
+                                            PickupPassengerView(viewModel: RideDetailsViewModel(userLocation: userLocation,
+                                                                                                selectedLocation: trip.dropoffUberLocation))
+                                                .transition(.move(edge: .bottom))
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -103,10 +117,9 @@ struct ContentView: View {
                             }
                         })
                         .onReceive(LocationManager.shared.$didEnterPickupRegion, perform: { didEnterPickupRegion in
-                            if didEnterPickupRegion {
+                            if didEnterPickupRegion && user.accountType == .driver {
                                 // update trip state to notify passenger that driver has arrived
-                                
-                                print("DEBUG: Update state to driver arrived")
+                                contentViewModel.updateTripStateToArrived()
                             }
                         })
                         .onReceive(LocationManager.shared.$didEnterDropoffRegion, perform: { didEnterDropoffRegion in

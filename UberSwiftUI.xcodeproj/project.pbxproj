@@ -79,6 +79,7 @@
 		2B91C81528C031430097B73E /* RideDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C81428C031430097B73E /* RideDetailsViewModel.swift */; };
 		2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5828C53B5E002ACFAE /* TripService.swift */; };
 		2BEC6B5B28C55794002ACFAE /* PickupPassengerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */; };
+		2BEC6B5E28C55931002ACFAE /* DriverArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -146,6 +147,7 @@
 		2B91C81428C031430097B73E /* RideDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetailsViewModel.swift; sourceTree = "<group>"; };
 		2BEC6B5828C53B5E002ACFAE /* TripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripService.swift; sourceTree = "<group>"; };
 		2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupPassengerView.swift; sourceTree = "<group>"; };
+		2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverArrivalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -447,6 +449,7 @@
 		2B368B0B28C27504008D42CE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2BEC6B5C28C5590F002ACFAE /* Passenger */,
 				2B368B0D28C2768D008D42CE /* Drivers */,
 				23F6F56D27515B36002C7733 /* TripArrivalView.swift */,
 				235D732F275C9BFC000A366E /* MyTripsView.swift */,
@@ -517,6 +520,14 @@
 				23C30571273F4D3C005A64A4 /* ContentViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2BEC6B5C28C5590F002ACFAE /* Passenger */ = {
+			isa = PBXGroup;
+			children = (
+				2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */,
+			);
+			path = Passenger;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -634,6 +645,7 @@
 				235568212751EA6700D54406 /* SceneDelegate.swift in Sources */,
 				23C3057A273F8CFF005A64A4 /* LocationInputActivationView.swift in Sources */,
 				235568142751C93900D54406 /* CustomTextField.swift in Sources */,
+				2BEC6B5E28C55931002ACFAE /* DriverArrivalView.swift in Sources */,
 				235D73162755C949000A366E /* UserProfileViewModel.swift in Sources */,
 				2B368B0F28C2769A008D42CE /* AcceptTripView.swift in Sources */,
 				235D7334275CA02B000A366E /* CompletedTripCell.swift in Sources */,
