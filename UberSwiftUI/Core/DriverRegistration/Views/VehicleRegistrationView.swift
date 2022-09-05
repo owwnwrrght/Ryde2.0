@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct VehicleRegistrationView: View {
-    @State private var vehicleName = ""
+    @State private var make = ""
+    @State private var model = ""
+    @State private var year = ""
+    @State private var licensePlate = ""
+    @State private var color = ""
+    @State private var type = ""
     
     var body: some View {
         ScrollView {
@@ -20,15 +25,18 @@ struct VehicleRegistrationView: View {
                     .padding()
                 
                 VStack(spacing: 32) {
-                    VehicleInputField(text: $vehicleName, title: "Vehicle Make", placeholder: "Enter make..")
+                    VehicleInputField(text: $make, title: "Vehicle Make", placeholder: "Enter make..")
                     
-                    VehicleInputField(text: $vehicleName, title: "Vehicle Model", placeholder: "Enter model..")
+                    VehicleInputField(text: $model, title: "Vehicle Model", placeholder: "Enter model..")
                     
-                    VehicleInputField(text: $vehicleName, title: "Vehicle Year", placeholder: "2022")
+                    VehicleInputField(text: $year, title: "Vehicle Year", placeholder: "2022")
                     
-                    VehicleInputField(text: $vehicleName, title: "License Plate", placeholder: "G53XYC")
+                    VehicleInputField(text: $licensePlate, title: "License Plate", placeholder: "G53XYC")
                     
-                    VehicleInputField(text: $vehicleName, title: "Color", placeholder: "Enter color..")
+                    VehicleInputField(text: $color, title: "Color", placeholder: "Enter color..")
+                    
+                    VehicleInputField(text: $type, title: "Vehicle Type", placeholder: "Select type..")
+
                 }
                 .padding()
                 
@@ -42,6 +50,7 @@ struct VehicleRegistrationView: View {
                         .cornerRadius(10)
                         .foregroundColor(.white)
                 }
+                .padding(.top)
             }
         }
     }

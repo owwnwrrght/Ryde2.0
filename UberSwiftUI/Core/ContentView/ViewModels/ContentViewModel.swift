@@ -146,6 +146,24 @@ extension ContentViewModel {
             self.mapState = .driverArrived
         }
     }
+    
+    func updateTripStateToDropoff() {
+        tripService.didArriveAtPickupLocation { _ in
+            self.mapState = .arrivedAtDestination
+        }
+    }
+    
+    func pickupPassenger() {
+        tripService.pickupPassenger { _ in
+            self.mapState = .tripInProgress
+        }
+    }
+    
+    func dropOffPassenger() {
+        tripService.dropoffPassenger { _ in
+            self.mapState = .tripCompleted
+        }
+    }
 }
 
 // MARK: - Passenger API
@@ -166,16 +184,26 @@ extension ContentViewModel {
                     self.selectedLocation = UberLocation(title: trip.dropoffLocationName, coordinate: trip.dropoffLocationCoordinates)
                 }
                 
-                if trip.tripState == .rejectedByDriver {
+                switch trip.tripState {
+                case .rejectedByDriver:
                     self.requestRide()
-                } else if trip.tripState == .accepted {
-                    self.createPickupAndDropoffRegionsForTrip()
+                case .accepted:
                     self.mapState = .tripAccepted
-                } else if trip.tripState == .driverArrived {
+                case .driverArrived:
                     self.mapState = .driverArrived
+                case .inProgress:
+                    self.mapState = .tripInProgress
+                case .arrivedAtDestination:
+                    self.mapState = .arrivedAtDestination
+                case .complete:
+                    self.mapState = .tripCompleted
+                case .cancelled:
+                    self.mapState = .noInput
+                default:
+                    break
                 }
             case .removed:
-                print("DEBUG: Trip cancelled by passenger, send next request..")
+                print("DEBUG: Trip cancelled by driver")
             }
         }
     }
@@ -201,7 +229,7 @@ extension ContentViewModel {
     }
     
     private func sendRideRequestToDriver(_ driver: User) {
-        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        guard let user = user, let currentUid = user.id else { return }
         guard let driverUid = driver.id else { return }
         guard let userLocation = userLocation, let selectedLocation = selectedLocation else { return }
         
@@ -226,7 +254,11 @@ extension ContentViewModel {
                     "tripCost": 0.0,
                     "dropoffLocationName": selectedLocation.title,
                     "pickupLocationName": placemark?.name ?? "Current location",
-                    "tripState": TripState.requested.rawValue
+                    "tripState": TripState.requested.rawValue,
+                    "driverName": driver.fullname,
+                    "passengerName": user.fullname,
+                    "driverImageUrl": "",
+                    "passengerImageUrl": ""
                 ]
                 
                 COLLECTION_RIDES.document().setData(data) { _ in

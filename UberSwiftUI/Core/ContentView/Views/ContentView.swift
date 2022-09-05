@@ -15,7 +15,7 @@ enum MapViewState: Int {
     case tripRequested
     case tripAccepted
     case driverArrived
-    case rideInProgress
+    case tripInProgress
     case arrivedAtDestination
     case tripCompleted
     case tripCancelled
@@ -97,6 +97,13 @@ struct ContentView: View {
                                                 .transition(.move(edge: .bottom))
                                         }
                                     }
+                                } else if contentViewModel.mapState == .arrivedAtDestination, let trip = contentViewModel.trip {
+                                    TripArrivalView(
+                                        viewModel: RideDetailsViewModel(userLocation: userLocation,
+                                                                                    selectedLocation: trip.dropoffUberLocation),
+                                        user: user
+                                    )
+                                    .transition(.move(edge: .bottom))
                                 }
                             }
                         }
@@ -118,13 +125,13 @@ struct ContentView: View {
                         })
                         .onReceive(LocationManager.shared.$didEnterPickupRegion, perform: { didEnterPickupRegion in
                             if didEnterPickupRegion && user.accountType == .driver {
-                                // update trip state to notify passenger that driver has arrived
                                 contentViewModel.updateTripStateToArrived()
                             }
                         })
                         .onReceive(LocationManager.shared.$didEnterDropoffRegion, perform: { didEnterDropoffRegion in
                             if didEnterDropoffRegion {
-                                print("DEBUG: Update state to drop off passenger")
+                                print("DEBUG: Did enter dropoff region")
+                                contentViewModel.updateTripStateToDropoff()
                             }
                         })
                         .ignoresSafeArea()

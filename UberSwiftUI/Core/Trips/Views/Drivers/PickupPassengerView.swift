@@ -25,6 +25,7 @@ struct PickupPassengerView: View {
             Divider()
             
             TripInfoView()
+                .padding(.vertical, 8)
             
             Divider()
             
@@ -36,11 +37,12 @@ struct PickupPassengerView: View {
                 TripLocationsView(viewModel: viewModel)
                 
                 Divider()
+                    .padding(.top)
             }
             .padding()
             
             Button {
-                print("DEBUG: Pickup passenger")
+                contentViewModel.pickupPassenger()
             } label: {
                 Text("PICKUP JOHN")
                     .fontWeight(.bold)
@@ -50,10 +52,13 @@ struct PickupPassengerView: View {
                     .foregroundColor(.white)
             }
             .padding()
+            .padding(.bottom, 4)
+            
+            Spacer()
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 420)
+        .frame(height: 400)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }

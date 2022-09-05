@@ -83,4 +83,15 @@ extension LocationManager: CLLocationManagerDelegate {
             didEnterDropoffRegion = true
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        if region.identifier == RegionType.pickup.rawValue {
+            print("DEBUG: Did exit pickup region")
+            didEnterPickupRegion = false
+        }
+        
+        if region.identifier == RegionType.dropoff.rawValue {
+            didEnterDropoffRegion = false
+        }
+    }
 }

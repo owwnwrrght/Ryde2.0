@@ -45,10 +45,12 @@ struct DriverArrivalView: View {
                 .multilineTextAlignment(.center)
                 .frame(height: 50)
                 .padding(.bottom)
+            
+            Spacer()
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 420)
+        .frame(height: 450)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }
@@ -104,7 +106,7 @@ extension DriverArrivalView {
                 }
                 .frame(width: 120)
             }
-            .padding(.bottom)
+//            .padding(.bottom)
         }
         .padding(.horizontal)
     }

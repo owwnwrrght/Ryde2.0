@@ -111,10 +111,12 @@ struct TripInProgressView: View {
                     .foregroundColor(.white)
             }
             .padding()
+            
+            Spacer()
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 520)
+        .frame(height: 620)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }

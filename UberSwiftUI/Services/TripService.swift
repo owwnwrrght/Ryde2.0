@@ -52,4 +52,19 @@ extension TripService {
         guard let trip = trip else { return }
         updateTripState(trip, state: .driverArrived, completion: completion)
     }
+    
+    func didArriveAtDropffLocation(completion: FirestoreCompletion) {
+        guard let trip = trip else { return }
+        updateTripState(trip, state: .arrivedAtDestination, completion: completion)
+    }
+    
+    func pickupPassenger(completion: FirestoreCompletion) {
+        guard let trip = trip else { return }
+        updateTripState(trip, state: .inProgress, completion: completion)
+    }
+    
+    func dropoffPassenger(completion: FirestoreCompletion) {
+        guard let trip = trip else { return }
+        updateTripState(trip, state: .complete, completion: completion)
+    }
 }

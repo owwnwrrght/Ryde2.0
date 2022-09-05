@@ -64,8 +64,7 @@ class RideDetailsViewModel: ObservableObject {
         self.pickupTime = formatter.string(from: Date())
         self.dropOffTime = formatter.string(from: Date() + expectedTravelTime)
         
-        print("DEBUG: Pickup time \(self.pickupTime)")
-        print("DEBUG: Dropoff time \(self.dropOffTime)")
-
+//        print("DEBUG: Pickup time \(self.pickupTime)")
+//        print("DEBUG: Dropoff time \(self.dropOffTime)")
     }
 }

@@ -19,6 +19,10 @@ struct Trip: Codable, Identifiable {
     let pickupLocationName: String
     let tripCost: Double
     let tripState: TripState
+    let driverName: String
+    let passengerName: String
+    let driverImageUrl: String
+    let passengerImageUrl: String?
     
     var tripId: String { return id ?? "" }
     
@@ -36,7 +40,7 @@ struct Trip: Codable, Identifiable {
 }
 
 /*
-    Need a link between trip state and map state
+  Need a link between trip state and map state
 */
 
 enum TripState: Int, Codable {
