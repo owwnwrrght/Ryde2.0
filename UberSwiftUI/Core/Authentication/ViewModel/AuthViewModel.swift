@@ -42,6 +42,22 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func createUser(withName name: String, email: String ) -> User? {
+        guard let userLocation = LocationManager.shared.userLocation else { return nil }
+        
+        print("DEBUG: User location is \(userLocation.coordinate)")
+        
+        let user = User(
+            fullname: name,
+            email: email,
+            accountType: .passenger,
+            coordinates: GeoPoint(latitude: userLocation.coordinate.latitude,
+                                  longitude: userLocation.coordinate.longitude)
+        )
+        
+        return user
+    }
+    
     func registerUser(withEmail email: String, fullname: String, password: String) {
         self.isAuthenticating = true
         
@@ -53,14 +69,13 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-            guard let user = result?.user else { return }
-            self.userSession = user
+            guard let firebaseUser = result?.user else { return }
+            guard let user = self.createUser(withName: fullname, email: email) else { return }
+                    
+            self.userSession = firebaseUser
             self.isAuthenticating = false
             
-            let data: [String: Any] = ["email": email,
-                                       "fullname": fullname]
-            
-            self.uploadUserData(user: user, data: data)
+            self.uploadUserData(withUid: firebaseUser.uid, user: user)
         }
     }
     
@@ -97,13 +112,11 @@ class AuthViewModel: ObservableObject {
                 }
                 
                 guard let firebaseUser = result?.user else { return }
+                guard let user = self.createUser(withName: profile.name, email: profile.email) else { return }
                 self.userSession = firebaseUser
                 self.isAuthenticating = false
-                
-                let data: [String: Any] = ["email": profile.email,
-                                           "fullname": profile.name]
-                
-                self.uploadUserData(user: firebaseUser, data: data)
+                                
+                self.uploadUserData(withUid: firebaseUser.uid, user: user)
             }
         }
     }
@@ -118,8 +131,10 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    private func uploadUserData(user: FirebaseAuth.User, data: [String: Any]) {
-        COLLECTION_USERS.document(user.uid).setData(data) { _ in
+    private func uploadUserData(withUid uid: String, user: User) {
+        guard let encodedUser = try? Firestore.Encoder().encode(user) else { return }
+        
+        COLLECTION_USERS.document(uid).setData(encodedUser) { _ in
             self.fetchUser()
         }
     }

@@ -17,15 +17,23 @@ struct DriverArrivalView: View {
                 .frame(width: 48, height: 6)
                 .padding(8)
             
-            Text("YOUR DRIVER IS HERE")
-                .fontWeight(.bold)
-                .font(.system(size: 14))
+            VStack {
+                Text("YOUR DRIVER IS HERE")
+                    .fontWeight(.bold)
+                    .font(.system(size: 14))
+                
+                Text("Please check your driver's license \n plate and ensure you have the correct ride")
+                    .font(.subheadline)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
+                    .frame(height: 44)
+            }
             
             Divider()
             
             HStack {
                 if let trip = contentViewModel.trip {
-                    UserImageAndDetailsView(username: trip.driverName.uppercased())
+                    UserImageAndDetailsView(username: trip.driverFirstNameUppercased)
                     
                     Spacer()
                     
@@ -42,23 +50,16 @@ struct DriverArrivalView: View {
                     .font(.body)
                 
                 TripLocationsView()
-                
-                Divider()
             }
             .padding()
             
-            Text("Please check your driver's license \n plate and ensure you have the correct ride")
-                .font(.headline)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-                .frame(height: 50)
-                .padding(.bottom)
+            
             
             Spacer()
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 450)
+        .frame(height: 400)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }
@@ -66,6 +67,6 @@ struct DriverArrivalView: View {
 struct DriverArrivalView_Previews: PreviewProvider {
     static var previews: some View {
         DriverArrivalView()
-            .environmentObject(ContentViewModel())
+            .environmentObject(dev.contentViewModel)
     }
 }

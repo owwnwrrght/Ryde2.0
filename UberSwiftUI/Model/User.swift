@@ -10,7 +10,7 @@ import FirebaseFirestoreSwift
 import CoreLocation
 import Firebase
 
-struct User: Decodable {
+struct User: Codable {
     @DocumentID var id: String?
     let fullname: String
     let email: String
@@ -22,14 +22,14 @@ struct User: Decodable {
     var coordinates: GeoPoint
 }
 
-struct SavedLocation: Decodable {
+struct SavedLocation: Codable {
     let title: String
     let address: String
     let latitude: Double
     let longitude: Double
 }
 
-enum AccountType: Int, Decodable {
+enum AccountType: Int, Codable {
     case passenger
     case driver
 }

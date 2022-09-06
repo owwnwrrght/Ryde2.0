@@ -71,4 +71,12 @@ class DeveloperPreview {
                           workLocation: nil,
                           accountType: .driver,
                           coordinates: GeoPoint(latitude: 37.41, longitude: -122.1))
+    
+    var contentViewModel: ContentViewModel {
+        let vm = ContentViewModel()
+        vm.trip = mockTrip
+        vm.user = mockDriver
+        vm.selectedLocation = mockSelectedLocation
+        return vm
+    }
 }

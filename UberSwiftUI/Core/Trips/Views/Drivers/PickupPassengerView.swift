@@ -44,7 +44,7 @@ struct PickupPassengerView: View {
                 Button {
                     contentViewModel.pickupPassenger()
                 } label: {
-                    Text("PICKUP JOHN")
+                    Text("PICKUP \(trip.passengerFirstNameUppercased)")
                         .fontWeight(.bold)
                         .frame(width: UIScreen.main.bounds.width - 64, height: 50)
                         .background(.blue)
@@ -59,7 +59,7 @@ struct PickupPassengerView: View {
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 400)
+        .frame(height: 440)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }
@@ -67,5 +67,6 @@ struct PickupPassengerView: View {
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         PickupPassengerView()
+            .environmentObject(dev.contentViewModel)
     }
 }

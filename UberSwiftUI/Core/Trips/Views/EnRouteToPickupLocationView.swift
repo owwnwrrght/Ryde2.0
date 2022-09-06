@@ -37,18 +37,7 @@ struct EnRouteToPickupLocationView: View {
                             
                             Spacer()
                             
-                            VStack {
-                                Text("2")
-                                    .bold()
-                                
-                                Text("min")
-                                    .bold()
-                            }
-                            .frame(width: 56, height: 56)
-                            .background(.blue)
-                            .cornerRadius(10)
-                            .foregroundColor(.white)
-                            .padding(.trailing)
+                            EstimatedTimeArrivalView()
                         }
                         
                         Divider()
@@ -96,14 +85,8 @@ struct EnRouteToPickupLocationView: View {
 }
 
 struct EnRouteToPickupLocationView_Previews: PreviewProvider {
-    static var contentViewModel: ContentViewModel {
-        let vm = ContentViewModel()
-        vm.trip = dev.mockTrip
-        vm.user = dev.mockDriver
-        return vm
-    }
     static var previews: some View {
         EnRouteToPickupLocationView()
-            .environmentObject(contentViewModel)
+            .environmentObject(dev.contentViewModel)
     }
 }

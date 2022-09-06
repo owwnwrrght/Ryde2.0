@@ -93,8 +93,9 @@ class ContentViewModel: ObservableObject {
         LocationManager.shared.createDropoffRegionForTrip(trip)
     }
     
-    func getDestinationRoute(_ destinationCoordinate: CLLocationCoordinate2D, completion: @escaping(MKRoute) -> Void) {
-        guard let userLocation = self.userLocation else { return }
+    func getDestinationRoute(from userLocation: CLLocationCoordinate2D,
+                             to destinationCoordinate: CLLocationCoordinate2D,
+                             completion: @escaping(MKRoute) -> Void) {
         let userPlacemark = MKPlacemark(coordinate: userLocation)
         
         let request = MKDirections.Request()
@@ -268,6 +269,7 @@ extension ContentViewModel {
                 }
             case .removed:
                 print("DEBUG: Trip cancelled by driver")
+                self.mapState = .tripCancelled
             }
         }
     }

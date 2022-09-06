@@ -27,18 +27,7 @@ struct TripInProgressView: View {
                         
                         Spacer()
                         
-                        VStack {
-                            Text("2")
-                                .bold()
-                            
-                            Text("min")
-                                .bold()
-                        }
-                        .frame(width: 56, height: 56)
-                        .background(.blue)
-                        .cornerRadius(10)
-                        .foregroundColor(.white)
-                        .padding(.trailing)
+                        EstimatedTimeArrivalView()
                     }
                     
                     Divider()
@@ -71,18 +60,10 @@ struct TripInProgressView: View {
     }
 }
 
-struct TripInProgressView_Previews: PreviewProvider {
-    static var contentViewModel: ContentViewModel {
-        let vm = ContentViewModel()
-        vm.trip = dev.mockTrip
-        vm.user = dev.mockDriver
-        vm.selectedLocation = dev.mockSelectedLocation
-        return vm
-    }
-    
+struct TripInProgressView_Previews: PreviewProvider {    
     static var previews: some View {
         TripInProgressView()
-            .environmentObject(contentViewModel)
+            .environmentObject(dev.contentViewModel)
     }
 }
 

@@ -113,37 +113,10 @@ extension UberMapViewRepresentable {
         
         func configurePolyline() {
             guard let destinationCoordinate = parent.viewModel.selectedUberLocation?.coordinate else { return }
-
-            self.parent.contentViewModel.getDestinationRoute(destinationCoordinate) { route in
-                self.parent.mapState = .polylineAdded
-                self.parent.mapView.addOverlay(route.polyline)
-                let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
-                                                               edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
-                self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
-            }
-        }
-        
-        func generatePolyline(forPlacemark placemark: MKPlacemark) {
             guard let userLocation = self.userLocation else { return }
-            let userPlacemark = MKPlacemark(coordinate: userLocation.coordinate)
             
-            let request = MKDirections.Request()
-            request.source = MKMapItem(placemark: userPlacemark)
-            request.destination = MKMapItem(placemark: placemark)
-            
-            let directions = MKDirections(request: request)
-            
-            directions.calculate { response, err in
-                if let err = err {
-                    print("DEBUG: Failed to generate polyline with error \(err.localizedDescription)")
-                    return
-                }
-                
-                guard let route = response?.routes.first else { return }
-                
-                let expectedTravelTimeInSeconds = route.expectedTravelTime
-                self.configurePickupAndDropOffTime(with: expectedTravelTimeInSeconds)
-                
+            self.parent.contentViewModel.getDestinationRoute(from: userLocation.coordinate, to: destinationCoordinate) { route in
+                self.parent.mapState = .polylineAdded
                 self.parent.mapView.addOverlay(route.polyline)
                 let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
                                                                edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
@@ -164,7 +137,6 @@ extension UberMapViewRepresentable {
             self.parent.mapView.removeAnnotations(parent.mapView.annotations)
             let anno = MKPointAnnotation()
             anno.coordinate = destinationCoordinate
-//            let placemark = MKPlacemark(coordinate: destinationCoordinate)
             
             self.parent.mapView.addAnnotation(anno)
             self.parent.mapView.selectAnnotation(anno, animated: true)

@@ -20,7 +20,7 @@ struct AcceptTripView: View {
         self.region = MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: trip.pickupLocationCoordiantes.latitude,
                                            longitude: trip.pickupLocationCoordiantes.longitude),
-            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            span: MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
         )
         
         self.annotationItem = UberLocation(title: trip.pickupLocationName, coordinate: trip.pickupLocationCoordiantes)
@@ -34,33 +34,44 @@ struct AcceptTripView: View {
                 .padding(.top, 8)
             
             VStack {
-                Text("Would you like to pickup this passenger?")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.bottom)
-                
-                Divider()
-                
-                UserImageAndDetailsView(username: trip.passengerName.uppercased())
-                    .padding(.vertical, 8)
-                
-                Divider()
-                
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Estimated Earnings")
+                HStack {
+                    Text("Would you like to pickup this passenger?")
+                        .font(.headline)
                         .fontWeight(.semibold)
-                        .font(.body)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                        .frame(height: 44)
                     
-                    Text(trip.tripCost.currencyString)
-                        .font(.title)
-                        .fontWeight(.bold)
+                    Spacer()
+                    
+                    EstimatedTimeArrivalView()
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                
+                Divider()
+                
+                if let user = viewModel.user {
+                    HStack {
+                        UserImageAndDetailsView(username: trip.passengerFirstNameUppercased)
+                        
+                        Spacer()
+                        
+                        VStack(spacing: 4) {
+                            Text("Earnings")
+                                .font(.system(size: 15, weight: .semibold))
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.gray)
+                            
+                            Text(trip.tripCost.currencyString)
+                                .font(.system(size: 24, weight: .semibold))
+                        }
+                    }
+                    .padding()
+
+                }
                 
                 Divider()
             }
-            .padding()
             
             VStack(alignment: .leading) {
                 HStack {
@@ -91,12 +102,10 @@ struct AcceptTripView: View {
                 Map(coordinateRegion: $region, annotationItems: [annotationItem]) { item in
                     MapMarker(coordinate: item.coordinate)
                 }
-                .frame(height: 180)
+                .frame(height: 220)
                 .cornerRadius(10)
                 .padding(.horizontal)
-                .shadow(color: .black.opacity(0.6), radius: 5, x: 0, y: 0)
-                
-                    
+                .shadow(color: .black.opacity(0.6), radius: 10, x: 0, y: 0)
             }
             .padding(.vertical)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -121,6 +130,7 @@ struct AcceptTripView: View {
 struct AcceptTripView_Previews: PreviewProvider {
     static var previews: some View {
         AcceptTripView(trip: dev.mockTrip)
+            .environmentObject(dev.contentViewModel)
     }
 }
 
@@ -134,7 +144,7 @@ extension AcceptTripView {
                     .font(.headline)
                     .fontWeight(.bold)
                     .padding()
-                    .frame(width: (UIScreen.main.bounds.width / 2) - 32, height: 50)
+                    .frame(width: (UIScreen.main.bounds.width / 2) - 32, height: 56)
                     .background(.red)
                     .cornerRadius(10)
                     .foregroundColor(.white)
@@ -149,7 +159,7 @@ extension AcceptTripView {
                     .font(.headline)
                     .fontWeight(.bold)
                     .padding()
-                    .frame(width: (UIScreen.main.bounds.width / 2) - 32, height: 50)
+                    .frame(width: (UIScreen.main.bounds.width / 2) - 32, height: 56)
                     .background(.blue)
                     .cornerRadius(10)
                     .foregroundColor(.white)
