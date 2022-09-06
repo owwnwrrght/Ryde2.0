@@ -10,27 +10,7 @@ import SwiftUI
 struct TripInfoView: View {
     var body: some View {
         HStack {
-            Image("male-profile-photo")
-                .resizable()
-                .frame(width: 56, height: 56)
-                .scaledToFill()
-                .cornerRadius(10)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("JOHN DOE")
-                    .fontWeight(.bold)
-                    .font(.body)
-                
-                HStack(alignment: .center, spacing: 2) {
-                    Image(systemName: "star.fill")
-                        .foregroundColor(Color(.systemYellow))
-                        .imageScale(.small)
-                    
-                    Text("4.8")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.gray)
-                }
-            }
+            UserImageAndDetailsView(username: "JOHN DOE")
             
             Spacer()
             

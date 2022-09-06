@@ -81,6 +81,8 @@
 		2BB5A10E28C64AD80056F38E /* VehicleRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A10D28C64AD80056F38E /* VehicleRegistrationView.swift */; };
 		2BB5A11028C64AE50056F38E /* UploadProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A10F28C64AE50056F38E /* UploadProfileImageView.swift */; };
 		2BB5A11228C64B090056F38E /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11128C64B090056F38E /* Vehicle.swift */; };
+		2BB5A11728C6DF570056F38E /* UserImageAndDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */; };
+		2BB5A11928C6E03A0056F38E /* DriverVehicleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */; };
 		2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5828C53B5E002ACFAE /* TripService.swift */; };
 		2BEC6B5B28C55794002ACFAE /* PickupPassengerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */; };
 		2BEC6B5E28C55931002ACFAE /* DriverArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */; };
@@ -153,6 +155,8 @@
 		2BB5A10D28C64AD80056F38E /* VehicleRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleRegistrationView.swift; sourceTree = "<group>"; };
 		2BB5A10F28C64AE50056F38E /* UploadProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProfileImageView.swift; sourceTree = "<group>"; };
 		2BB5A11128C64B090056F38E /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
+		2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageAndDetailsView.swift; sourceTree = "<group>"; };
+		2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverVehicleInfoView.swift; sourceTree = "<group>"; };
 		2BEC6B5828C53B5E002ACFAE /* TripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripService.swift; sourceTree = "<group>"; };
 		2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupPassengerView.swift; sourceTree = "<group>"; };
 		2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverArrivalView.swift; sourceTree = "<group>"; };
@@ -435,6 +439,7 @@
 		2B0E3FAF28BF1C62002DFDA8 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				2BB5A11528C6DF310056F38E /* Components */,
 				2355680E2751A53100D54406 /* Authentication */,
 				23C30553273F47CC005A64A4 /* ContentView */,
 				2BB5A10A28C64A790056F38E /* DriverRegistration */,
@@ -556,6 +561,15 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2BB5A11528C6DF310056F38E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */,
+				2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		2BEC6B5C28C5590F002ACFAE /* Passenger */ = {
@@ -682,6 +696,7 @@
 				23C3057A273F8CFF005A64A4 /* LocationInputActivationView.swift in Sources */,
 				235568142751C93900D54406 /* CustomTextField.swift in Sources */,
 				2BB5A10C28C64ACB0056F38E /* GetStartedView.swift in Sources */,
+				2BB5A11928C6E03A0056F38E /* DriverVehicleInfoView.swift in Sources */,
 				2BEC6B5E28C55931002ACFAE /* DriverArrivalView.swift in Sources */,
 				235D73162755C949000A366E /* UserProfileViewModel.swift in Sources */,
 				2B368B0F28C2769A008D42CE /* AcceptTripView.swift in Sources */,
@@ -707,6 +722,7 @@
 				2355682E2751F5D600D54406 /* SideMenuView.swift in Sources */,
 				2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */,
 				235568192751CD3A00D54406 /* RegistrationView.swift in Sources */,
+				2BB5A11728C6DF570056F38E /* UserImageAndDetailsView.swift in Sources */,
 				235568282751F53B00D54406 /* SideMenuOptionView.swift in Sources */,
 				2B368B0628C1B2BB008D42CE /* LoadingSpinner.swift in Sources */,
 				235D7324275B3A93000A366E /* LocationInputHeaderView.swift in Sources */,

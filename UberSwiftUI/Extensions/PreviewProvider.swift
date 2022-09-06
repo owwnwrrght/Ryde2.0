@@ -31,10 +31,11 @@ class DeveloperPreview {
                         pickupLocation: GeoPoint(latitude: 37.6, longitude: -122.43),
                         dropoffLocation: GeoPoint(latitude: 37.55, longitude: -122.4),
                         dropoffLocationName: "Starbucks",
-                        pickupLocationName: "123 Main St",
+                        pickupLocationName: "Apple Campus",
+                        pickupLocationAddress: "123 Main st",
                         tripCost: 40.00,
                         tripState: .inProgress,
-                        driverName: "John Doe",
+                        driverName: "John Smith",
                         passengerName: "Stephan Dowless",
                         driverImageUrl: "",
                         passengerImageUrl: "")

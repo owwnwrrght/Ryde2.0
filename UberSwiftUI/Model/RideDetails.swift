@@ -18,7 +18,8 @@ struct RideDetails {
 }
 
 
-struct UberLocation {
+struct UberLocation: Identifiable {
+    let id = NSUUID().uuidString
     let title: String
     let coordinate: CLLocationCoordinate2D
 }

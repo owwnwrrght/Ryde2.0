@@ -72,10 +72,13 @@ struct ContentView: View {
                                                 .transition(.move(edge: .bottom))
                                         }
                                     } else {
-                                        withAnimation(.spring()) {
-                                            AcceptTripView()
-                                                .transition(.move(edge: .bottom))
+                                        if let trip = contentViewModel.trip {
+                                            withAnimation(.spring()) {
+                                                AcceptTripView(trip: trip)
+                                                    .transition(.move(edge: .bottom))
+                                            }
                                         }
+                                        
                                     }
                                 } else if contentViewModel.mapState == .tripAccepted, let trip = contentViewModel.trip {
                                     TripInProgressView(

@@ -26,51 +26,19 @@ struct TripInProgressView: View {
                 
                 Divider()
                 
+                
+                // passenger
                 HStack {
-                    Image("male-profile-photo")
-                        .resizable()
-                        .frame(width: 64, height: 64)
-                        .scaledToFill()
-                        .cornerRadius(10)
+                    UserImageAndDetailsView(username: "JOHN DOE")
+                        .padding(.leading)
                     
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("JOHN DOE")
-                            .fontWeight(.bold)
-                            .font(.body)
-                        
-                        HStack(alignment: .center, spacing: 2) {
-                            Image(systemName: "star.fill")
-                                .foregroundColor(Color(.systemYellow))
-                                .imageScale(.small)
-                            
-                            Text("4.8")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(.gray)
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .trailing) {
-                        Image("uber-x")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 116, height: 64)
-                        
-                        HStack(spacing: 2) {
-                            Text("Mercedes S -")
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.gray)
-                            
-                            Text("5G432K")
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                        }
-                    }
-                    .padding(.bottom)
+                    DriverVehicleInfoView()
+                        .padding(.trailing)
                 }
-                .padding(.horizontal)
+                
+                // driver
+                
+                
                 
                 Divider()
                 

@@ -9,6 +9,7 @@ import Foundation
 import CoreLocation
 import GeoFireUtils
 import Firebase
+import SwiftUI
 
 /*
  ContentViewModel and AuthViewModel need user object.
@@ -32,6 +33,7 @@ class ContentViewModel: ObservableObject {
     var didExecuteFetchDrivers = false
     var userLocation: CLLocationCoordinate2D?
     var selectedLocation: UberLocation?
+    var tripCost: Double? 
     
     private var user: User?
     private var driverQueue = [User]()
@@ -61,6 +63,24 @@ class ContentViewModel: ObservableObject {
             guard let placemark = placemarks?.first else { return }
             completion(placemark, nil)
         })
+    }
+    
+    func addressFromPlacemark(_ placemark: CLPlacemark) -> String {
+        var result = ""
+        
+        if let thoroughfare = placemark.thoroughfare {
+             result += thoroughfare
+        }
+        
+        if let subThoroughfare = placemark.subThoroughfare {
+            result += " \(subThoroughfare)"
+        }
+        
+        if let subadministrativeArea = placemark.subAdministrativeArea {
+            result += ", \(subadministrativeArea)"
+        }
+        
+        return result
     }
     
     func createPickupAndDropoffRegionsForTrip() {
@@ -107,6 +127,7 @@ extension ContentViewModel {
         tripService.addTripObserverForDriver { snapshot, error in
             guard let change = snapshot?.documentChanges.first else { return }
             guard let trip = try? change.document.data(as: Trip.self) else { return }
+            
             self.trip = trip
             self.tripService.trip = trip
             
@@ -246,22 +267,25 @@ extension ContentViewModel {
             let dropoffGeoPoint = GeoPoint(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
             
             getPlacemark(forLocation: CLLocation(latitude: pickupGeoPoint.latitude, longitude: pickupGeoPoint.longitude)) { placemark, error in
-                let data: [String: Any] = [
-                    "driverUid": driverUid,
-                    "passengerUid": currentUid,
-                    "pickupLocation": pickupGeoPoint,
-                    "dropoffLocation": dropoffGeoPoint,
-                    "tripCost": 0.0,
-                    "dropoffLocationName": selectedLocation.title,
-                    "pickupLocationName": placemark?.name ?? "Current location",
-                    "tripState": TripState.requested.rawValue,
-                    "driverName": driver.fullname,
-                    "passengerName": user.fullname,
-                    "driverImageUrl": "",
-                    "passengerImageUrl": ""
-                ]
+                guard let placemark = placemark else { return }
+
+                let trip = Trip(driverUid: driverUid,
+                                passengerUid: currentUid,
+                                pickupLocation: pickupGeoPoint,
+                                dropoffLocation: dropoffGeoPoint,
+                                dropoffLocationName: selectedLocation.title,
+                                pickupLocationName: placemark.name ?? "Current location",
+                                pickupLocationAddress: self.addressFromPlacemark(placemark),
+                                tripCost: 0.0,
+                                tripState: .requested,
+                                driverName: driver.fullname,
+                                passengerName: user.fullname,
+                                driverImageUrl: "",
+                                passengerImageUrl: nil)
                 
-                COLLECTION_RIDES.document().setData(data) { _ in
+                guard let encodedTrip = try? Firestore.Encoder().encode(trip) else { return }
+                
+                COLLECTION_RIDES.document().setData(encodedTrip) { _ in
                     self.mapState = .tripRequested
                 }
             }

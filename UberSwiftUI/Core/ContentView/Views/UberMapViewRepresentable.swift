@@ -20,6 +20,8 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     
     let mapView = MKMapView()
     
+    // MARK: - Lifecycle
+    
     init(mapState: Binding<MapViewState>) {
         self._mapState = mapState
     }

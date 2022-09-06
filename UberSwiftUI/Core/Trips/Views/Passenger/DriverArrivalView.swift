@@ -24,7 +24,16 @@ struct DriverArrivalView: View {
             
             Divider()
             
-            driverInfoView
+            HStack {
+                if let trip = contentViewModel.trip {
+                    UserImageAndDetailsView(username: trip.driverName.uppercased())
+                    
+                    Spacer()
+                    
+                    DriverVehicleInfoView()
+                }
+            }
+            .padding(.horizontal)
             
             Divider()
             
@@ -58,56 +67,6 @@ struct DriverArrivalView: View {
 struct DriverArrivalView_Previews: PreviewProvider {
     static var previews: some View {
         DriverArrivalView(viewModel: dev.rideDetailsViewModel)
-    }
-}
-
-extension DriverArrivalView {
-    var driverInfoView: some View {
-        HStack {
-            Image("male-profile-photo")
-                .resizable()
-                .frame(width: 64, height: 64)
-                .scaledToFill()
-                .cornerRadius(10)
-            
-            VStack(alignment: .leading, spacing: 8) {
-                Text("JOHN DOE")
-                    .fontWeight(.bold)
-                    .font(.body)
-                
-                HStack(alignment: .center, spacing: 2) {
-                    Image(systemName: "star.fill")
-                        .foregroundColor(Color(.systemYellow))
-                        .imageScale(.small)
-                    
-                    Text("4.8")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.gray)
-                }
-            }
-            
-            Spacer()
-            
-            VStack(alignment: .trailing) {
-                Image("uber-x")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 116, height: 64)
-                
-                VStack {
-                    Text("Mercedes S")
-                        .font(.system(size: 14))
-                        .fontWeight(.semibold)
-                        .foregroundColor(.gray)
-                    
-                    Text("5G432K")
-                        .font(.system(size: 14))
-                        .fontWeight(.semibold)
-                }
-                .frame(width: 120)
-            }
-//            .padding(.bottom)
-        }
-        .padding(.horizontal)
+            .environmentObject(ContentViewModel())
     }
 }

@@ -17,6 +17,7 @@ struct Trip: Codable, Identifiable {
     let dropoffLocation: GeoPoint
     let dropoffLocationName: String
     let pickupLocationName: String
+    let pickupLocationAddress: String
     let tripCost: Double
     let tripState: TripState
     let driverName: String
