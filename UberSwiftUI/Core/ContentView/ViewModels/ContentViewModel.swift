@@ -41,6 +41,7 @@ class ContentViewModel: ObservableObject {
     private var driverQueue = [User]()
     private var tripService = TripService()
     private var ridePrice = 0.0
+    private var listenersDictionary = [String: ListenerRegistration]()
 
     // MARK: - Lifecycle
     
@@ -242,7 +243,7 @@ extension ContentViewModel {
             guard let change = snapshot?.documentChanges.first, change.type == .added || change.type == .modified else { return }
             switch change.type {
             case .added, .modified:
-                guard var trip = try? change.document.data(as: Trip.self) else { return }
+                guard let trip = try? change.document.data(as: Trip.self) else { return }
                 self.trip = trip
                 self.tripService.trip = trip
                 
@@ -303,7 +304,7 @@ extension ContentViewModel {
         if let trip = trip {
             let updatedData: [String: Any] = [
                 "tripState": TripState.requested.rawValue,
-                "driverUid": driver.id ?? ""
+                "driverUid": driverUid
             ]
             COLLECTION_RIDES.document(trip.tripId).updateData(updatedData) { _ in
                 print("DEBUG: Updated trip data..")
@@ -376,5 +377,30 @@ extension ContentViewModel {
         
         self.drivers.append(contentsOf: drivers)
         self.driverQueue = self.drivers
+        self.addListenerToDrivers()
+    }
+    
+    func addListenerToDrivers() {
+        for i in 0 ..< drivers.count {
+            let driver = drivers[i]
+            
+            var driverListener = COLLECTION_USERS.document(driver.id ?? "").addSnapshotListener { snapshot, error in
+                guard let driver = try? snapshot?.data(as: User.self) else { return }
+                
+                self.drivers[i].coordinates = driver.coordinates
+            }
+            
+            self.listenersDictionary[driver.id ?? ""] = driverListener
+        }
+    }
+    
+    func removeListenersFromDrivers() {
+        guard let trip = trip else { return }
+        
+        listenersDictionary.forEach { uid, listener in
+            if uid != trip.driverUid {
+                listener.remove()
+            }
+        }
     }
 }

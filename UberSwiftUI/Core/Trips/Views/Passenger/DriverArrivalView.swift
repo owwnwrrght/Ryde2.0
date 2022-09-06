@@ -53,7 +53,17 @@ struct DriverArrivalView: View {
             }
             .padding()
             
-            
+            Button {
+                contentViewModel.cancelTrip()
+            } label: {
+                Text("CANCEL TRIP")
+                    .fontWeight(.bold)
+                    .frame(width: UIScreen.main.bounds.width - 64, height: 50)
+                    .background(Color(.systemRed))
+                    .cornerRadius(10)
+                    .foregroundColor(.white)
+            }
+            .padding()
             
             Spacer()
         }

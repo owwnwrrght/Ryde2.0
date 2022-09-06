@@ -38,7 +38,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         
     func updateUIView(_ uiView: UIViewType, context: Context) {
         guard let user = contentViewModel.user else { return }
-                
+                        
         if mapState == .locationSelected && user.accountType == .passenger {
             context.coordinator.addAnnotationAndGeneratePolyline()
             return
@@ -55,6 +55,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         
         if !contentViewModel.drivers.isEmpty && mapState == .noInput {
             context.coordinator.addDriversToMap(contentViewModel.drivers)
+            return
         }
                 
         if mapState == .noInput {
@@ -186,15 +187,26 @@ extension UberMapViewRepresentable {
             }
         }
         
-        func addDriversToMap(_ drivers: [User]) {
-            let driverAnnotations = drivers.map({
-                DriverAnnotation(
-                    uid: $0.id ?? NSUUID().uuidString,
-                    coordinate: CLLocationCoordinate2D(latitude: $0.coordinates.latitude,longitude: $0.coordinates.longitude)
-                )
-            })
-                        
-            self.parent.mapView.addAnnotations(driverAnnotations)
+        func addDriversToMap(_ drivers: [User]) {            
+            drivers.forEach { driver in
+                let driverCoordinate = CLLocationCoordinate2D(latitude: driver.coordinates.latitude,longitude: driver.coordinates.longitude)
+                let annotation = DriverAnnotation( uid: driver.id ?? NSUUID().uuidString, coordinate: driverCoordinate)
+                
+                var driverIsVisible: Bool {
+                    return self.parent.mapView.annotations.contains(where: { annotation -> Bool in
+                        guard let driverAnno = annotation as? DriverAnnotation else { return false }
+                        if driverAnno.uid == driver.id ?? "" {
+                            driverAnno.updatePosition(withCoordinate: driverCoordinate)
+                            return true
+                        }
+                        return false
+                    })
+                }
+                
+                if !driverIsVisible {
+                    self.parent.mapView.addAnnotation(annotation)
+                }
+            }
         }
     }
 }
