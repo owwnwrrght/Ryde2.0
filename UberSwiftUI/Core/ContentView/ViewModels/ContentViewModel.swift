@@ -31,7 +31,6 @@ class ContentViewModel: ObservableObject {
     @Published var pickupTime: String?
     @Published var dropOffTime: String?
     
-    
     let radius: Double = 50 * 1000
     var didExecuteFetchDrivers = false
     var userLocation: CLLocationCoordinate2D?
@@ -138,7 +137,9 @@ class ContentViewModel: ObservableObject {
 
 extension ContentViewModel {
     private func fetchUser() {
-        UserService.fetchUser { user in
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        UserService.fetchUser(withUid: uid) { user in
             self.user = user
             self.tripService.user = user
             
@@ -241,7 +242,7 @@ extension ContentViewModel {
             guard let change = snapshot?.documentChanges.first, change.type == .added || change.type == .modified else { return }
             switch change.type {
             case .added, .modified:
-                guard let trip = try? change.document.data(as: Trip.self) else { return }
+                guard var trip = try? change.document.data(as: Trip.self) else { return }
                 self.trip = trip
                 self.tripService.trip = trip
                 
@@ -310,6 +311,7 @@ extension ContentViewModel {
         } else {
             let pickupGeoPoint = GeoPoint(latitude: userLocation.latitude, longitude: userLocation.longitude)
             let dropoffGeoPoint = GeoPoint(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
+            let driverGeoPoint = GeoPoint(latitude: driver.coordinates.latitude, longitude: driver.coordinates.longitude)
             
             getPlacemark(forLocation: CLLocation(latitude: pickupGeoPoint.latitude, longitude: pickupGeoPoint.longitude)) { placemark, error in
                 guard let placemark = placemark else { return }
@@ -318,6 +320,7 @@ extension ContentViewModel {
                                 passengerUid: currentUid,
                                 pickupLocation: pickupGeoPoint,
                                 dropoffLocation: dropoffGeoPoint,
+                                driverLocation: driverGeoPoint,
                                 dropoffLocationName: selectedLocation.title,
                                 pickupLocationName: placemark.name ?? "Current location",
                                 pickupLocationAddress: self.addressFromPlacemark(placemark),

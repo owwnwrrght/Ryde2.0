@@ -15,6 +15,7 @@ struct Trip: Codable, Identifiable {
     let passengerUid: String
     let pickupLocation: GeoPoint
     let dropoffLocation: GeoPoint
+    var driverLocation: GeoPoint
     let dropoffLocationName: String
     let pickupLocationName: String
     let pickupLocationAddress: String
@@ -24,6 +25,7 @@ struct Trip: Codable, Identifiable {
     let passengerName: String
     let driverImageUrl: String
     let passengerImageUrl: String?
+    
     
     var tripId: String { return id ?? "" }
     

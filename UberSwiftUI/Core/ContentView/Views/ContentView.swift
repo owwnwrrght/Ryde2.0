@@ -82,7 +82,7 @@ struct ContentView: View {
                                         }
                                         
                                     }
-                                } else if contentViewModel.mapState == .tripAccepted {
+                                } else if contentViewModel.mapState == .tripAccepted || contentViewModel.mapState == .polylineAdded {
                                     EnRouteToPickupLocationView()
                                         .transition(.move(edge: .bottom))
                                 }  else if contentViewModel.mapState == .driverArrived {

@@ -30,6 +30,7 @@ class DeveloperPreview {
                         passengerUid: NSUUID().uuidString,
                         pickupLocation: GeoPoint(latitude: 37.6, longitude: -122.43),
                         dropoffLocation: GeoPoint(latitude: 37.55, longitude: -122.4),
+                        driverLocation: GeoPoint(latitude: 37.4, longitude: -122.1),
                         dropoffLocationName: "Starbucks",
                         pickupLocationName: "Apple Campus",
                         pickupLocationAddress: "123 Main st",

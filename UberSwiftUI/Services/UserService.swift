@@ -8,8 +8,7 @@
 import Firebase
 
 struct UserService {
-    static func fetchUser(completion: @escaping(User) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    static func fetchUser(withUid uid: String, completion: @escaping(User) -> Void) {
         
         COLLECTION_USERS.document(uid).getDocument { snapshot, _ in
             guard let snapshot = snapshot else { return }

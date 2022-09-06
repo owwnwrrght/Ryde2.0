@@ -25,20 +25,19 @@ struct EnRouteToPickupLocationView: View {
                             if user.accountType == .passenger {
                                 Text("Meet your driver at \(trip.pickupLocationName)")
                                     .font(.body)
-                                    .padding()
                             } else {
                                 Text("Pickup \(trip.passengerName) at \(trip.pickupLocationName)")
                                     .font(.body)
                                     .multilineTextAlignment(.leading)
                                     .frame(height: 44)
                                     .lineLimit(2)
-                                    .padding()
                             }
                             
                             Spacer()
                             
                             EstimatedTimeArrivalView()
                         }
+                        .padding()
                         
                         Divider()
                             .padding(.top, 8)
@@ -79,7 +78,7 @@ struct EnRouteToPickupLocationView: View {
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 340)
+        .frame(height: 350)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }

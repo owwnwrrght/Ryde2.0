@@ -31,18 +31,26 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
-        mapView.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: "driver")
+        mapView.register(DriverAnnotation.self, forAnnotationViewWithReuseIdentifier: "driver")
                 
         return mapView
     }
         
     func updateUIView(_ uiView: UIViewType, context: Context) {
-//        print("DEBUG: Updating view...")
-        //FIXME: Use map state to prevent updates when trip state is updated
-        
-        if mapState == .locationSelected {
+        guard let user = contentViewModel.user else { return }
+                
+        if mapState == .locationSelected && user.accountType == .passenger {
             context.coordinator.addAnnotationAndGeneratePolyline()
             return
+        }
+        
+        if mapState == .tripAccepted && user.accountType == .driver {
+            context.coordinator.addAnnotationAndGeneratePolylineToPassenger()
+            return
+        }
+        
+        if mapState == .tripAccepted, let trip = contentViewModel.trip, user.accountType == .passenger {
+            context.coordinator.configureMapForTrip(trip)
         }
         
         if !contentViewModel.drivers.isEmpty && mapState == .noInput {
@@ -66,6 +74,7 @@ extension UberMapViewRepresentable {
         let parent: UberMapViewRepresentable
         var currentRegion: MKCoordinateRegion?
         var userLocation: MKUserLocation?
+        var mapViewNeedsPadding = false
         
         private var drivers = [User]()
         
@@ -111,11 +120,10 @@ extension UberMapViewRepresentable {
         
         // MARK: - Helpers
         
-        func configurePolyline() {
-            guard let destinationCoordinate = parent.viewModel.selectedUberLocation?.coordinate else { return }
+        func configurePolyline(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
             guard let userLocation = self.userLocation else { return }
             
-            self.parent.contentViewModel.getDestinationRoute(from: userLocation.coordinate, to: destinationCoordinate) { route in
+            self.parent.contentViewModel.getDestinationRoute(from: userLocation.coordinate, to: coordinate) { route in
                 self.parent.mapState = .polylineAdded
                 self.parent.mapView.addOverlay(route.polyline)
                 let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
@@ -124,24 +132,48 @@ extension UberMapViewRepresentable {
             }
         }
         
-        func configurePickupAndDropOffTime(with expectedTravelTime: Double) {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "hh:mm a"
+        func configureMapForTrip(_ trip: Trip) {
+            let annotations = parent.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
+            let driverAnnotations = parent.mapView.annotations.filter({ $0.isKind(of: DriverAnnotation.self) }) as! [DriverAnnotation]
             
-            self.parent.contentViewModel.pickupTime = formatter.string(from: Date())
-            self.parent.contentViewModel.dropOffTime = formatter.string(from: Date() + expectedTravelTime)
+            parent.mapView.removeAnnotations(annotations)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+            
+            driverAnnotations.forEach { driverAnno in
+                if driverAnno.uid != trip.driverUid {
+                    self.parent.mapView.removeAnnotation(driverAnno)
+                }
+            }
+            
+            parent.mapView.showAnnotations(parent.mapView.annotations, animated: false)
+            parent.mapView.setVisibleMapRect(parent.mapView.visibleMapRect,
+                                             edgePadding: .init(top: 64, left: 32, bottom: 360, right: 32),
+                                             animated: true)
         }
         
         func addAnnotationAndGeneratePolyline() {
             guard let destinationCoordinate = parent.viewModel.selectedUberLocation?.coordinate else { return }
+            let annotations = parent.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
+            self.parent.mapView.removeAnnotations(annotations)
+            addAndSelectAnnotation(withCoordinate: destinationCoordinate)
+            
+            self.configurePolyline(withDestinationCoordinate: destinationCoordinate)
+        }
+        
+        func addAnnotationAndGeneratePolylineToPassenger() {
+            guard let trip = parent.contentViewModel.trip else { return }
             self.parent.mapView.removeAnnotations(parent.mapView.annotations)
+            addAndSelectAnnotation(withCoordinate: trip.pickupLocationCoordiantes)
+            
+            self.configurePolyline(withDestinationCoordinate: trip.pickupLocationCoordiantes)
+        }
+        
+        func addAndSelectAnnotation(withCoordinate coordinate: CLLocationCoordinate2D) {
             let anno = MKPointAnnotation()
-            anno.coordinate = destinationCoordinate
+            anno.coordinate = coordinate
             
             self.parent.mapView.addAnnotation(anno)
             self.parent.mapView.selectAnnotation(anno, animated: true)
-            
-            self.configurePolyline()
         }
         
         func clearMapView() {

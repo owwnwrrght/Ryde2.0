@@ -140,7 +140,9 @@ class AuthViewModel: ObservableObject {
     }
     
     func fetchUser() {
-        UserService.fetchUser { user in
+        guard let uid = userSession?.uid else { return }
+        
+        UserService.fetchUser(withUid: uid) { user in
             self.user = user
         }
     }
