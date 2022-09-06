@@ -17,11 +17,10 @@ struct TripInProgressView: View {
                 .frame(width: 48, height: 6)
                 .padding(8)
             
-            VStack(alignment: .leading) {
-                
-                if let trip = contentViewModel.trip {
+            VStack {
+                if let trip = contentViewModel.trip, let user = contentViewModel.user {
                     HStack {
-                        Text("Meet your driver at \(trip.pickupLocationName)")
+                        Text("En Route to destination")
                             .font(.body)
                             .fontWeight(.semibold)
                             .padding()
@@ -30,89 +29,60 @@ struct TripInProgressView: View {
                         
                         VStack {
                             Text("2")
+                                .bold()
                             
                             Text("min")
+                                .bold()
                         }
-                        .padding()
+                        .frame(width: 56, height: 56)
                         .background(.blue)
+                        .cornerRadius(10)
                         .foregroundColor(.white)
-                    }
-                }
-                
-                Divider()
-                
-                
-                // passenger
-                HStack {
-                    UserImageAndDetailsView(username: "JOHN DOE")
-                        .padding(.leading)
-
-                    DriverVehicleInfoView()
                         .padding(.trailing)
-                }
-                
-                // driver
-//
-//                HStack {
-//                    UserImageAndDetailsView(username: "JOHN DOE")
-//                        .padding()
-//
-//
-//                }
-                
-                Divider()
-                
-//                VStack(alignment: .leading) {
-//                    Text("TRIP")
-//                        .fontWeight(.semibold)
-//                        .font(.body)
-//                    
-//                    TripLocationsView()
-//                        .padding(.bottom)
-//                    
-//                    Divider()
-//                }
-//                .padding()
-                
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("PAYMENT")
-                        .fontWeight(.semibold)
-                        .font(.body)
+                    }
                     
-                    Text("$40.00")
-                        .font(.title)
-                        .fontWeight(.bold)
+                    Divider()
+                    
+                    TripInfoView(trip: trip, user: user)
+                        .padding(.vertical)
+                                        
+                    Divider()
                 }
-                .padding(.leading)
                 
-                Divider()
+                Button {
+                    contentViewModel.cancelTrip()
+                } label: {
+                    Text("CANCEL TRIP")
+                        .fontWeight(.bold)
+                        .frame(width: UIScreen.main.bounds.width - 64, height: 50)
+                        .background(Color(.systemRed))
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
+                }
+                .padding()
+                
+                Spacer()
             }
-            
-            Button {
-                contentViewModel.cancelTrip()
-            } label: {
-                Text("CANCEL TRIP")
-                    .fontWeight(.bold)
-                    .frame(width: UIScreen.main.bounds.width - 64, height: 50)
-                    .background(Color(.systemRed))
-                    .cornerRadius(10)
-                    .foregroundColor(.white)
-            }
-            .padding()
-            
-            Spacer()
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 620)
+        .frame(height: 320)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }
 
 struct TripInProgressView_Previews: PreviewProvider {
+    static var contentViewModel: ContentViewModel {
+        let vm = ContentViewModel()
+        vm.trip = dev.mockTrip
+        vm.user = dev.mockDriver
+        vm.selectedLocation = dev.mockSelectedLocation
+        return vm
+    }
+    
     static var previews: some View {
         TripInProgressView()
-            .environmentObject(ContentViewModel())
+            .environmentObject(contentViewModel)
     }
 }
 

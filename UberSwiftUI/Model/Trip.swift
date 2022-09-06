@@ -38,6 +38,20 @@ struct Trip: Codable, Identifiable {
     var dropoffUberLocation: UberLocation {
         return UberLocation(title: dropoffLocationName, coordinate: dropoffLocationCoordinates)
     }
+    
+    var passengerFirstNameUppercased: String {
+        let components = passengerName.components(separatedBy: " ")
+        guard let firstName = components.first else { return passengerName.uppercased() }
+        
+        return firstName.uppercased()
+    }
+    
+    var driverFirstNameUppercased: String {
+        let components = driverName.components(separatedBy: " ")
+        guard let firstName = components.first else { return driverName.uppercased() }
+        
+        return firstName.uppercased()
+    }
 }
 
 /*

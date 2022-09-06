@@ -10,8 +10,8 @@ import SwiftUI
 struct CompletedTripCell: View {
     var body: some View {
         VStack {
-            TripInfoView()
-                .padding(.vertical, 8)
+//            TripInfoView()
+//                .padding(.vertical, 8)
             
             Divider()
             

@@ -42,8 +42,10 @@ struct TripArrivalView: View {
             
             Divider()
             
-            TripInfoView()
-                .padding(.vertical, 8)
+            if let trip = contentViewModel.trip {
+                TripInfoView(trip: trip, user: user)
+                    .padding(.vertical, 8)
+            }
             
             Divider()
             

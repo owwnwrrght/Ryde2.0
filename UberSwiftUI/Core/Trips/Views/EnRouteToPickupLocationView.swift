@@ -64,7 +64,7 @@ struct EnRouteToPickupLocationView: View {
                             }
                         } else {
                             HStack {
-                                TripInfoView()
+                                TripInfoView(trip: trip, user: user)
                                     .padding(.vertical)
                             }
                         }
@@ -90,7 +90,7 @@ struct EnRouteToPickupLocationView: View {
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 320)
+        .frame(height: 340)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }

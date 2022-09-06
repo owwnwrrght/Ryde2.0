@@ -23,37 +23,39 @@ struct PickupPassengerView: View {
             
             Divider()
             
-            TripInfoView()
-                .padding(.vertical, 8)
-            
-            Divider()
-            
-            VStack(alignment: .leading) {
-                Text("TRIP")
-                    .fontWeight(.semibold)
-                    .font(.body)
-                
-                TripLocationsView()
+            if let trip = contentViewModel.trip, let user = contentViewModel.user {
+                TripInfoView(trip: trip, user: user)
+                    .padding(.vertical, 8)
                 
                 Divider()
-                    .padding(.top)
+                
+                VStack(alignment: .leading) {
+                    Text("TRIP")
+                        .fontWeight(.semibold)
+                        .font(.body)
+                    
+                    TripLocationsView()
+                    
+                    Divider()
+                        .padding(.top)
+                }
+                .padding()
+                
+                Button {
+                    contentViewModel.pickupPassenger()
+                } label: {
+                    Text("PICKUP JOHN")
+                        .fontWeight(.bold)
+                        .frame(width: UIScreen.main.bounds.width - 64, height: 50)
+                        .background(.blue)
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
+                }
+                .padding()
+                .padding(.bottom, 4)
+                
+                Spacer()
             }
-            .padding()
-            
-            Button {
-                contentViewModel.pickupPassenger()
-            } label: {
-                Text("PICKUP JOHN")
-                    .fontWeight(.bold)
-                    .frame(width: UIScreen.main.bounds.width - 64, height: 50)
-                    .background(.blue)
-                    .cornerRadius(10)
-                    .foregroundColor(.white)
-            }
-            .padding()
-            .padding(.bottom, 4)
-            
-            Spacer()
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))

@@ -8,19 +8,22 @@
 import SwiftUI
 
 struct TripInfoView: View {
+    let trip: Trip
+    let user: User
+    
     var body: some View {
         HStack {
-            UserImageAndDetailsView(username: "JOHN DOE")
+            UserImageAndDetailsView(username: user.accountType == .passenger ? trip.driverFirstNameUppercased : trip.passengerFirstNameUppercased)
             
             Spacer()
             
             HStack(spacing: 44) {
                 VStack(spacing: 4) {
-                    Text("Final cost")
+                    Text("Trip cost")
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.gray)
                     
-                    Text("$120.00")
+                    Text(trip.tripCost.currencyString)
                         .font(.system(size: 15, weight: .semibold))
                 }
                 
@@ -40,6 +43,6 @@ struct TripInfoView: View {
 
 struct TripInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        TripInfoView()
+        TripInfoView(trip: dev.mockTrip, user: dev.mockPassenger)
     }
 }
