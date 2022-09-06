@@ -28,6 +28,9 @@ class ContentViewModel: ObservableObject {
     @Published var drivers = [User]()
     @Published var trip: Trip?
     @Published var mapState = MapViewState.noInput
+    @Published var pickupTime: String?
+    @Published var dropOffTime: String?
+    
     
     let radius: Double = 50 * 1000
     var didExecuteFetchDrivers = false
@@ -35,9 +38,10 @@ class ContentViewModel: ObservableObject {
     var selectedLocation: UberLocation?
     var tripCost: Double? 
     
-    private var user: User?
+    var user: User?
     private var driverQueue = [User]()
     private var tripService = TripService()
+    private var ridePrice = 0.0
 
     // MARK: - Lifecycle
     
@@ -87,6 +91,45 @@ class ContentViewModel: ObservableObject {
         guard let trip = trip else { return }
         LocationManager.shared.createPickupRegionForTrip(trip)
         LocationManager.shared.createDropoffRegionForTrip(trip)
+    }
+    
+    func getDestinationRoute(_ destinationCoordinate: CLLocationCoordinate2D, completion: @escaping(MKRoute) -> Void) {
+        guard let userLocation = self.userLocation else { return }
+        let userPlacemark = MKPlacemark(coordinate: userLocation)
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: userPlacemark)
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destinationCoordinate))
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { response, error in
+            if let error = error {
+                print("DEBUG: Failed to generate polyline with error \(error.localizedDescription)")
+                return
+            }
+            
+            guard let route = response?.routes.first else { return }
+            self.configurePickupAndDropOffTime(with: route.expectedTravelTime)
+            completion(route)
+        }
+    }
+    
+    func configurePickupAndDropOffTime(with expectedTravelTime: Double) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        
+        pickupTime = formatter.string(from: Date())
+        dropOffTime = formatter.string(from: Date() + expectedTravelTime)
+    }
+    
+    func ridePriceForType(_ type: RideType) -> Double {
+        guard let selectedLocation = selectedLocation, let userCoordinates = userLocation else { return 0.0 }
+        let userLocation = CLLocation(latitude: userCoordinates.latitude, longitude: userCoordinates.longitude)
+        let distanceInMeters =  userLocation.distance(from: CLLocation(latitude: selectedLocation.coordinate.latitude,
+                                                                       longitude: selectedLocation.coordinate.longitude))
+        return type.price(for: distanceInMeters)
+        
     }
 }
 
@@ -276,7 +319,7 @@ extension ContentViewModel {
                                 dropoffLocationName: selectedLocation.title,
                                 pickupLocationName: placemark.name ?? "Current location",
                                 pickupLocationAddress: self.addressFromPlacemark(placemark),
-                                tripCost: 0.0,
+                                tripCost: self.ridePrice,
                                 tripState: .requested,
                                 driverName: driver.fullname,
                                 passengerName: user.fullname,

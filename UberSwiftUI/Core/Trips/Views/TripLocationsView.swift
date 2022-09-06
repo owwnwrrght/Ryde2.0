@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct TripLocationsView: View {
-    @ObservedObject var viewModel: RideDetailsViewModel
+//    @ObservedObject var viewModel: RideDetailsViewModel
+    @EnvironmentObject var viewModel: ContentViewModel
     
     var body: some View {
         HStack(spacing: 24) {
@@ -28,7 +29,7 @@ struct TripLocationsView: View {
             
             VStack(alignment: .leading, spacing: 24) {
                 HStack {
-                    Text(viewModel.startLocationString)
+                    Text("Current location")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.gray)
                     
@@ -41,7 +42,7 @@ struct TripLocationsView: View {
                 .padding(.bottom, 10)
                 
                 HStack {
-                    Text(viewModel.endLocationString)
+                    Text(viewModel.selectedLocation?.title ?? "")
                         .font(.system(size: 16, weight: .semibold))
                     
                     Spacer()
@@ -59,6 +60,6 @@ struct TripLocationsView: View {
 
 struct TripLocationsView_Previews: PreviewProvider {
     static var previews: some View {
-        TripLocationsView(viewModel: dev.rideDetailsViewModel)
+        TripLocationsView()
     }
 }

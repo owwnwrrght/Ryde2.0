@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PickupPassengerView: View {
-    @ObservedObject var viewModel: RideDetailsViewModel
     @EnvironmentObject var contentViewModel: ContentViewModel
     
     var body: some View {
@@ -34,7 +33,7 @@ struct PickupPassengerView: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-                TripLocationsView(viewModel: viewModel)
+                TripLocationsView()
                 
                 Divider()
                     .padding(.top)
@@ -65,6 +64,6 @@ struct PickupPassengerView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        PickupPassengerView(viewModel: dev.rideDetailsViewModel)
+        PickupPassengerView()
     }
 }

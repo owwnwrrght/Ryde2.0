@@ -40,7 +40,8 @@ struct MapViewActionButton: View {
                 .locationSelected,
                 .tripAccepted,
                 .tripRequested,
-                .tripCompleted:
+                .tripCompleted,
+                .polylineAdded:
             return "arrow.left"
         case .noInput, .tripCancelled:
             return "line.3.horizontal"
@@ -55,7 +56,7 @@ struct MapViewActionButton: View {
             showSideMenu.toggle()
         case .searchingForLocation:
             state = .noInput
-        case .locationSelected:
+        case .locationSelected, .polylineAdded:
             state = .noInput
             viewModel.selectedLocation = nil
         case .tripRequested:

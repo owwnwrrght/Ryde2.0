@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TripArrivalView: View {
-    @ObservedObject var viewModel: RideDetailsViewModel
     @EnvironmentObject var contentViewModel: ContentViewModel
     let user: User
     
@@ -53,7 +52,7 @@ struct TripArrivalView: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-                TripLocationsView(viewModel: viewModel)
+                TripLocationsView()
                 
                 Divider()
                     .padding(.top)
@@ -108,6 +107,6 @@ struct TripArrivalView: View {
 
 struct RideArrivalView_Previews: PreviewProvider {
     static var previews: some View {
-        TripArrivalView(viewModel: dev.rideDetailsViewModel, user: dev.mockPassenger)
+        TripArrivalView(user: dev.mockPassenger)
     }
 }

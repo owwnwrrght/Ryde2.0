@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DriverArrivalView: View {
-    @ObservedObject var viewModel: RideDetailsViewModel
     @EnvironmentObject var contentViewModel: ContentViewModel
     
     var body: some View {
@@ -42,7 +41,7 @@ struct DriverArrivalView: View {
                     .fontWeight(.semibold)
                     .font(.body)
                 
-                TripLocationsView(viewModel: viewModel)
+                TripLocationsView()
                 
                 Divider()
             }
@@ -66,7 +65,7 @@ struct DriverArrivalView: View {
 
 struct DriverArrivalView_Previews: PreviewProvider {
     static var previews: some View {
-        DriverArrivalView(viewModel: dev.rideDetailsViewModel)
+        DriverArrivalView()
             .environmentObject(ContentViewModel())
     }
 }

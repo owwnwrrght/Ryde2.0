@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TripInProgressView: View {
-    @ObservedObject var viewModel: RideDetailsViewModel
     @EnvironmentObject var contentViewModel: ContentViewModel
     
     var body: some View {
@@ -19,10 +18,26 @@ struct TripInProgressView: View {
                 .padding(8)
             
             VStack(alignment: .leading) {
-                Text("Your driver will arrive in 10 minutes")
-                    .font(.body)
-                    .fontWeight(.semibold)
-                    .padding()
+                
+                if let trip = contentViewModel.trip {
+                    HStack {
+                        Text("Meet your driver at \(trip.pickupLocationName)")
+                            .font(.body)
+                            .fontWeight(.semibold)
+                            .padding()
+                        
+                        Spacer()
+                        
+                        VStack {
+                            Text("2")
+                            
+                            Text("min")
+                        }
+                        .padding()
+                        .background(.blue)
+                        .foregroundColor(.white)
+                    }
+                }
                 
                 Divider()
                 
@@ -31,28 +46,33 @@ struct TripInProgressView: View {
                 HStack {
                     UserImageAndDetailsView(username: "JOHN DOE")
                         .padding(.leading)
-                    
+
                     DriverVehicleInfoView()
                         .padding(.trailing)
                 }
                 
                 // driver
-                
-                
+//
+//                HStack {
+//                    UserImageAndDetailsView(username: "JOHN DOE")
+//                        .padding()
+//
+//
+//                }
                 
                 Divider()
                 
-                VStack(alignment: .leading) {
-                    Text("TRIP")
-                        .fontWeight(.semibold)
-                        .font(.body)
-                    
-                    TripLocationsView(viewModel: viewModel)
-                        .padding(.bottom)
-                    
-                    Divider()
-                }
-                .padding()
+//                VStack(alignment: .leading) {
+//                    Text("TRIP")
+//                        .fontWeight(.semibold)
+//                        .font(.body)
+//                    
+//                    TripLocationsView()
+//                        .padding(.bottom)
+//                    
+//                    Divider()
+//                }
+//                .padding()
                 
                 VStack(alignment: .leading, spacing: 16) {
                     Text("PAYMENT")
@@ -91,7 +111,8 @@ struct TripInProgressView: View {
 
 struct TripInProgressView_Previews: PreviewProvider {
     static var previews: some View {
-        TripInProgressView(viewModel: dev.rideDetailsViewModel)
+        TripInProgressView()
+            .environmentObject(ContentViewModel())
     }
 }
 

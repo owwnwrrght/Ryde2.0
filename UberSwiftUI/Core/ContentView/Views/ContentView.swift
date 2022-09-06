@@ -19,6 +19,7 @@ enum MapViewState: Int {
     case arrivedAtDestination
     case tripCompleted
     case tripCancelled
+    case polylineAdded
 }
 
 struct ContentView: View {
@@ -62,7 +63,8 @@ struct ContentView: View {
                             }
                             
                             if let userLocation = userLocation {
-                                if contentViewModel.mapState == .locationSelected, let location = locationViewModel.selectedUberLocation {
+                                if contentViewModel.mapState == .locationSelected || contentViewModel.mapState == .polylineAdded,
+                                    let location = locationViewModel.selectedUberLocation {
                                     BookingView(userLocation: userLocation, selectedLocation: location)
                                         .transition(.move(edge: .bottom))
                                 } else if contentViewModel.mapState == .tripRequested {
@@ -80,33 +82,27 @@ struct ContentView: View {
                                         }
                                         
                                     }
-                                } else if contentViewModel.mapState == .tripAccepted, let trip = contentViewModel.trip {
-                                    TripInProgressView(
-                                        viewModel: RideDetailsViewModel(userLocation: userLocation,
-                                                                        selectedLocation: trip.dropoffUberLocation)
-                                    )
+                                } else if contentViewModel.mapState == .tripAccepted {
+                                    EnRouteToPickupLocationView()
                                         .transition(.move(edge: .bottom))
-                                } else if contentViewModel.mapState == .driverArrived, let trip = contentViewModel.trip {
+                                }  else if contentViewModel.mapState == .driverArrived {
                                     if user.accountType == .passenger {
                                         withAnimation(.spring()) {
-                                            DriverArrivalView(viewModel: RideDetailsViewModel(userLocation: userLocation,
-                                                                                              selectedLocation: trip.dropoffUberLocation))
+                                            DriverArrivalView()
                                                 .transition(.move(edge: .bottom))
                                         }
                                     } else {
                                         withAnimation(.spring()) {
-                                            PickupPassengerView(viewModel: RideDetailsViewModel(userLocation: userLocation,
-                                                                                                selectedLocation: trip.dropoffUberLocation))
+                                            PickupPassengerView()
                                                 .transition(.move(edge: .bottom))
                                         }
                                     }
-                                } else if contentViewModel.mapState == .arrivedAtDestination, let trip = contentViewModel.trip {
-                                    TripArrivalView(
-                                        viewModel: RideDetailsViewModel(userLocation: userLocation,
-                                                                                    selectedLocation: trip.dropoffUberLocation),
-                                        user: user
-                                    )
-                                    .transition(.move(edge: .bottom))
+                                } else if contentViewModel.mapState == .tripInProgress {
+                                    TripInProgressView()
+                                        .transition(.move(edge: .bottom))
+                                } else if contentViewModel.mapState == .arrivedAtDestination {
+                                    TripArrivalView(user: user)
+                                        .transition(.move(edge: .bottom))
                                 }
                             }
                         }

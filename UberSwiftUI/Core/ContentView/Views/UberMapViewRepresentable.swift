@@ -111,6 +111,18 @@ extension UberMapViewRepresentable {
         
         // MARK: - Helpers
         
+        func configurePolyline() {
+            guard let destinationCoordinate = parent.viewModel.selectedUberLocation?.coordinate else { return }
+
+            self.parent.contentViewModel.getDestinationRoute(destinationCoordinate) { route in
+                self.parent.mapState = .polylineAdded
+                self.parent.mapView.addOverlay(route.polyline)
+                let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
+                                                               edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
+                self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+            }
+        }
+        
         func generatePolyline(forPlacemark placemark: MKPlacemark) {
             guard let userLocation = self.userLocation else { return }
             let userPlacemark = MKPlacemark(coordinate: userLocation.coordinate)
@@ -127,13 +139,24 @@ extension UberMapViewRepresentable {
                     return
                 }
                 
-                guard let polyline = response?.routes.first?.polyline else { return }
+                guard let route = response?.routes.first else { return }
                 
-                self.parent.mapView.addOverlay(polyline)
-                let rect = self.parent.mapView.mapRectThatFits(polyline.boundingMapRect,
+                let expectedTravelTimeInSeconds = route.expectedTravelTime
+                self.configurePickupAndDropOffTime(with: expectedTravelTimeInSeconds)
+                
+                self.parent.mapView.addOverlay(route.polyline)
+                let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
                                                                edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
                 self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
             }
+        }
+        
+        func configurePickupAndDropOffTime(with expectedTravelTime: Double) {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "hh:mm a"
+            
+            self.parent.contentViewModel.pickupTime = formatter.string(from: Date())
+            self.parent.contentViewModel.dropOffTime = formatter.string(from: Date() + expectedTravelTime)
         }
         
         func addAnnotationAndGeneratePolyline() {
@@ -141,12 +164,12 @@ extension UberMapViewRepresentable {
             self.parent.mapView.removeAnnotations(parent.mapView.annotations)
             let anno = MKPointAnnotation()
             anno.coordinate = destinationCoordinate
-            let placemark = MKPlacemark(coordinate: destinationCoordinate)
+//            let placemark = MKPlacemark(coordinate: destinationCoordinate)
             
             self.parent.mapView.addAnnotation(anno)
             self.parent.mapView.selectAnnotation(anno, animated: true)
             
-            self.generatePolyline(forPlacemark: placemark)
+            self.configurePolyline()
         }
         
         func clearMapView() {

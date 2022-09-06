@@ -83,6 +83,7 @@
 		2BB5A11228C64B090056F38E /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11128C64B090056F38E /* Vehicle.swift */; };
 		2BB5A11728C6DF570056F38E /* UserImageAndDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */; };
 		2BB5A11928C6E03A0056F38E /* DriverVehicleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */; };
+		2BB5A11B28C7A2E20056F38E /* EnRouteToPickupLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11A28C7A2E20056F38E /* EnRouteToPickupLocationView.swift */; };
 		2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5828C53B5E002ACFAE /* TripService.swift */; };
 		2BEC6B5B28C55794002ACFAE /* PickupPassengerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */; };
 		2BEC6B5E28C55931002ACFAE /* DriverArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */; };
@@ -157,6 +158,7 @@
 		2BB5A11128C64B090056F38E /* Vehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 		2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageAndDetailsView.swift; sourceTree = "<group>"; };
 		2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverVehicleInfoView.swift; sourceTree = "<group>"; };
+		2BB5A11A28C7A2E20056F38E /* EnRouteToPickupLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnRouteToPickupLocationView.swift; sourceTree = "<group>"; };
 		2BEC6B5828C53B5E002ACFAE /* TripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripService.swift; sourceTree = "<group>"; };
 		2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupPassengerView.swift; sourceTree = "<group>"; };
 		2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverArrivalView.swift; sourceTree = "<group>"; };
@@ -439,8 +441,8 @@
 		2B0E3FAF28BF1C62002DFDA8 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				2BB5A11528C6DF310056F38E /* Components */,
 				2355680E2751A53100D54406 /* Authentication */,
+				2BB5A11528C6DF310056F38E /* Components */,
 				23C30553273F47CC005A64A4 /* ContentView */,
 				2BB5A10A28C64A790056F38E /* DriverRegistration */,
 				235D7327275B41B7000A366E /* LocationSearch */,
@@ -473,6 +475,7 @@
 				2B368B0328C1B151008D42CE /* TripLoadingView.swift */,
 				2355680C27519C8F00D54406 /* TripLocationsView.swift */,
 				235D7333275CA02A000A366E /* CompletedTripCell.swift */,
+				2BB5A11A28C7A2E20056F38E /* EnRouteToPickupLocationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				23C30572273F4D3C005A64A4 /* ContentViewModel.swift in Sources */,
 				235D7322275B3A79000A366E /* LocationCell.swift in Sources */,
 				235D73102755C4B3000A366E /* User.swift in Sources */,
+				2BB5A11B28C7A2E20056F38E /* EnRouteToPickupLocationView.swift in Sources */,
 				23C30570273F4BB0005A64A4 /* UberMapViewRepresentable.swift in Sources */,
 				235D731E275B38FA000A366E /* LocationInputEmptyView.swift in Sources */,
 				2B0E3FB128BFD430002DFDA8 /* RideType.swift in Sources */,

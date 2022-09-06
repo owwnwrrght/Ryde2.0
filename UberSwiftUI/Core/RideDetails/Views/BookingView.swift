@@ -9,11 +9,10 @@ import SwiftUI
 import MapKit
 
 struct BookingView: View {
-    @ObservedObject var viewModel: RideDetailsViewModel
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var viewModel: ContentViewModel
     
     init(userLocation: CLLocation, selectedLocation: UberLocation) {
-        self.viewModel = RideDetailsViewModel(userLocation: userLocation,selectedLocation: selectedLocation)
+//        self.viewModel = RideDetailsViewModel(userLocation: userLocation,selectedLocation: selectedLocation)
     }
     
     var body: some View {
@@ -25,7 +24,7 @@ struct BookingView: View {
             
             VStack(alignment: .leading, spacing: 24) {
                 
-                TripLocationsView(viewModel: viewModel)
+                TripLocationsView()
                     .padding(.horizontal)
                 
                 Divider()
@@ -49,7 +48,7 @@ struct BookingView: View {
                                     Text(rideType.description)
                                         .font(.system(size: 14, weight: .semibold))
                                     
-                                    Text(rideType.price(for: viewModel.distanceInMeters).currencyString)
+                                    Text(viewModel.ridePriceForType(rideType).currencyString)
                                         .font(.system(size: 14, weight: .semibold))
                                 }
                                 .padding(.vertical, 8)
@@ -90,7 +89,7 @@ struct BookingView: View {
             }
             
             Button {
-                contentViewModel.requestRide()
+                viewModel.requestRide()
             } label: {
                 Text("CONFIRM RIDE")
                     .fontWeight(.bold)

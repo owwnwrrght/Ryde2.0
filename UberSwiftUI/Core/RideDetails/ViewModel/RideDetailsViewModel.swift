@@ -33,7 +33,7 @@ class RideDetailsViewModel: ObservableObject {
                                                                         longitude: selectedLocation.coordinate.longitude))
                 
         
-        calculateTripTime(forDistance: distanceInMeters)
+//        calculateTripTime(forDistance: distanceInMeters)
     }
     
     func calculateTripTime(forDistance distance: Double) {
