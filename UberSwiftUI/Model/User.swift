@@ -15,11 +15,14 @@ struct User: Codable {
     let fullname: String
     let email: String
     var phoneNumber: String?
-    var imageUrl: String?
+    let imageUrl: String?
     var homeLocation: SavedLocation?
     var workLocation: SavedLocation?
     var accountType: AccountType
     var coordinates: GeoPoint
+    var vehicle: Vehicle?
+    
+    var uid: String { return id ?? "" }
 }
 
 struct SavedLocation: Codable {
