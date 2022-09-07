@@ -231,6 +231,13 @@ extension ContentViewModel {
             self.mapState = .tripCompleted
         }
     }
+    
+    func updateDriverLocation(withCoordinate coordinate: CLLocationCoordinate2D) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let geoPoint = GeoPoint(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        COLLECTION_USERS.document(uid).updateData(["coordinates": geoPoint])
+    }
 }
 
 // MARK: - Passenger API
@@ -384,7 +391,7 @@ extension ContentViewModel {
         for i in 0 ..< drivers.count {
             let driver = drivers[i]
             
-            var driverListener = COLLECTION_USERS.document(driver.id ?? "").addSnapshotListener { snapshot, error in
+            let driverListener = COLLECTION_USERS.document(driver.id ?? "").addSnapshotListener { snapshot, error in
                 guard let driver = try? snapshot?.data(as: User.self) else { return }
                 
                 self.drivers[i].coordinates = driver.coordinates

@@ -38,6 +38,8 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         
     func updateUIView(_ uiView: UIViewType, context: Context) {
         guard let user = contentViewModel.user else { return }
+        
+        print("DEBUG: Updating view..")
                         
         if mapState == .locationSelected && user.accountType == .passenger {
             context.coordinator.addAnnotationAndGeneratePolyline()
@@ -54,7 +56,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         }
         
         if !contentViewModel.drivers.isEmpty && mapState == .noInput {
-            context.coordinator.addDriversToMap(contentViewModel.drivers)
+            context.coordinator.addDriversToMapAndUpdateLocation(contentViewModel.drivers)
             return
         }
                 
@@ -96,6 +98,10 @@ extension UberMapViewRepresentable {
                 span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
             )
             self.currentRegion = region
+            
+            if let user = parent.contentViewModel.user, user.accountType == .driver {
+                parent.contentViewModel.updateDriverLocation(withCoordinate: userLocation.coordinate)
+            }
             
             parent.mapView.setRegion(region, animated: true)
         }
@@ -187,7 +193,7 @@ extension UberMapViewRepresentable {
             }
         }
         
-        func addDriversToMap(_ drivers: [User]) {            
+        func addDriversToMapAndUpdateLocation(_ drivers: [User]) {
             drivers.forEach { driver in
                 let driverCoordinate = CLLocationCoordinate2D(latitude: driver.coordinates.latitude,longitude: driver.coordinates.longitude)
                 let annotation = DriverAnnotation( uid: driver.id ?? NSUUID().uuidString, coordinate: driverCoordinate)
