@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct LocationInputActivationView: View {
-    
-    var animation: Namespace.ID
+//    var animation: Namespace.ID
     
     var body: some View {
         HStack(spacing: 8) {
@@ -31,8 +30,8 @@ struct LocationInputActivationView: View {
     }
 }
 
-//struct LocationInputActivationView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LocationInputActivationView()
-//    }
-//}
+struct LocationInputActivationView_Previews: PreviewProvider {
+    static var previews: some View {
+        LocationInputActivationView()
+    }
+}

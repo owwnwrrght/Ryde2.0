@@ -22,6 +22,7 @@ struct VehicleRegistrationView: View {
                     .font(.system(size: 36))
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(.black)
                     .padding()
                 
                 VStack(spacing: 32) {
@@ -38,6 +39,7 @@ struct VehicleRegistrationView: View {
                     VehicleInputField(text: $type, title: "Vehicle Type", placeholder: "Select type..")
 
                 }
+                .padding(.horizontal, 8)
                 .padding()
                 
                 Button {
@@ -45,7 +47,7 @@ struct VehicleRegistrationView: View {
                 } label: {
                     Text("ADD VEHICLE")
                         .fontWeight(.bold)
-                        .frame(width: UIScreen.main.bounds.width - 32, height: 50)
+                        .frame(width: UIScreen.main.bounds.width - 64, height: 50)
                         .background(.blue)
                         .cornerRadius(10)
                         .foregroundColor(.white)
@@ -67,6 +69,7 @@ struct VehicleInputField: View {
                 .fontWeight(.semibold)
                 .font(.footnote)
                 .opacity(0.87)
+                .foregroundColor(.black)
             
             TextField(placeholder, text: $text)
             

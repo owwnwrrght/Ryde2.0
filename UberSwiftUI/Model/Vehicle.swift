@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Vehicle {
+struct Vehicle: Codable {
     let make: String
     let model: String
     let year: Int
@@ -16,7 +16,7 @@ struct Vehicle {
     let type: RideType
 }
 
-enum VehicleColors: Int {
+enum VehicleColors: Int, Codable {
     case black
     case white
     case red

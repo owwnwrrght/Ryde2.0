@@ -48,7 +48,7 @@ struct ContentView: View {
                                 UberMapViewRepresentable(mapState: $contentViewModel.mapState)
                                 
                                 if contentViewModel.mapState == .noInput {
-                                    LocationInputActivationView(animation: animation)
+                                    LocationInputActivationView()
                                         .matchedGeometryEffect(id: "LocationInput", in: animation)
                                         .onTapGesture {
                                             withAnimation(.spring()) {

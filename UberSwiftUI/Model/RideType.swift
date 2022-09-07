@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RideType: CaseIterable {
+enum RideType: Int, CaseIterable, Codable {
     case uberX
     case black
     case uberXL
