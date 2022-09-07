@@ -14,6 +14,7 @@ struct VehicleRegistrationView: View {
     @State private var licensePlate = ""
     @State private var color = ""
     @State private var type = ""
+    @EnvironmentObject var viewModel: DriverRegistrationViewModel
     
     var body: some View {
         ScrollView {
@@ -25,25 +26,32 @@ struct VehicleRegistrationView: View {
                     .foregroundColor(.black)
                     .padding()
                 
-                VStack(spacing: 32) {
-                    VehicleInputField(text: $make, title: "Vehicle Make", placeholder: "Enter make..")
+                VStack(spacing: 16) {
+                    VehicleInputField(text: $make, title: "Make", placeholder: "Enter make..")
                     
-                    VehicleInputField(text: $model, title: "Vehicle Model", placeholder: "Enter model..")
+                    VehicleInputField(text: $model, title: "Model", placeholder: "Enter model..")
                     
-                    VehicleInputField(text: $year, title: "Vehicle Year", placeholder: "2022")
+                    VehicleInputField(text: $year, title: "Year", placeholder: "Enter year...")
                     
                     VehicleInputField(text: $licensePlate, title: "License Plate", placeholder: "G53XYC")
                     
                     VehicleInputField(text: $color, title: "Color", placeholder: "Enter color..")
                     
-                    VehicleInputField(text: $type, title: "Vehicle Type", placeholder: "Select type..")
+                    VehicleInputField(text: $type, title: "Uber Type", placeholder: "Select type..")
 
                 }
                 .padding(.horizontal, 8)
                 .padding()
                 
                 Button {
-                    
+                    viewModel.uploadVehicle(
+                        make: make,
+                        model: model,
+                        year: Int(year) ?? 0,
+                        color: .black,
+                        licensePlate: licensePlate,
+                        type: .uberX
+                    )
                 } label: {
                     Text("ADD VEHICLE")
                         .fontWeight(.bold)

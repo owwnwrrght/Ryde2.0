@@ -15,11 +15,10 @@ class DriverRegistrationViewModel: ObservableObject {
     
     init(user: User) {
         self.user = user
-        uploadVehicle()
     }
     
-    func uploadVehicle() {
-        let vehicle = Vehicle(make: "Ford", model: "Mustang", year: 2016, color: .black, licensePlateNumber: "3CG4228", type: .black)
+    func uploadVehicle(make: String, model: String, year: Int, color: VehicleColors, licensePlate: String, type: RideType) {
+        let vehicle = Vehicle(make: make, model: model, year: year, color: color, licensePlateNumber: licensePlate, type: type)
         guard let encodedVehicle = try? Firestore.Encoder().encode(vehicle) else { return }
         
         COLLECTION_USERS.document(user.id ?? "").updateData(["vehicle": encodedVehicle]) { _ in

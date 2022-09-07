@@ -15,7 +15,7 @@ struct User: Codable {
     let fullname: String
     let email: String
     var phoneNumber: String?
-    let imageUrl: String?
+    var profileImageUrl: String?
     var homeLocation: SavedLocation?
     var workLocation: SavedLocation?
     var accountType: AccountType
