@@ -10,6 +10,8 @@ import SwiftUI
 struct SideMenuHeaderView: View {
     @Binding var isShowing: Bool
     @State var showDriverRegistrationView = false
+    @EnvironmentObject var viewModel: ContentViewModel
+    @State private var driverIsActive = false
     let user: User
     
     var body: some View {
@@ -36,26 +38,45 @@ struct SideMenuHeaderView: View {
             
             HStack(spacing: 12) {
                 VStack(alignment: .leading) {
-                    Text("Do more with your account")
+                    Text(user.accountType == .passenger ? "Do more with your account" : "UBER DRIVER")
                         .font(.footnote)
                         .fontWeight(.semibold)
                         .opacity(0.87)
                         .padding(.bottom)
                     
-                    Button {
-                        showDriverRegistrationView.toggle()
-                    } label: {
+                    if user.accountType == .passenger {
+                        Button {
+                            showDriverRegistrationView.toggle()
+                        } label: {
+                            HStack {
+                                Image(systemName: "dollarsign.square")
+                                    .font(.title2)
+                                    .imageScale(.medium)
+                                
+                                Text("Make Money Driving" )
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .padding(6)
+                            }
+                        }
+                    } else {
                         HStack {
-                            Image(systemName: "dollarsign.square")
+                            Image(systemName: "car.circle.fill")
                                 .font(.title2)
                                 .imageScale(.medium)
                             
-                            Text("Make Money Driving")
+                            Text("Active")
                                 .font(.system(size: 16, weight: .semibold))
                                 .padding(6)
+                            
+                            Spacer()
+                            
+                            Toggle("", isOn: $driverIsActive)
+                                .tint(.blue)
+                                .padding(.trailing, 32)
+                                
                         }
+                        .frame(maxWidth: 300)
                     }
-                    
                 }
                 .padding(.top, 24)
                 
@@ -63,24 +84,24 @@ struct SideMenuHeaderView: View {
             }
             
             Rectangle()
-                .foregroundColor(.white)
+                .frame(width: 280, height: 0.5)
                 .opacity(0.7)
-                .frame(width: 300, height: 0.75)
-                .padding(.top)
+                .padding(.leading, 32)
             
             Spacer()
         }
         .fullScreenCover(isPresented: $showDriverRegistrationView, content: {
-            DriverRegistrationView()
-                .environmentObject(DriverRegistrationViewModel(user: user))
+            if let user = viewModel.user {
+                DriverRegistrationView()
+                    .environmentObject(DriverRegistrationViewModel(user: user))
+            }
         })
-        .foregroundColor(.white)
         .padding()
     }
 }
 
-//struct SideMenuHeaderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SideMenuHeaderView(isShowing: .constant(true))
-//    }
-//}
+struct SideMenuHeaderView_Previews: PreviewProvider {
+    static var previews: some View {
+        SideMenuHeaderView(isShowing: .constant(true), user: dev.mockDriver)
+    }
+}

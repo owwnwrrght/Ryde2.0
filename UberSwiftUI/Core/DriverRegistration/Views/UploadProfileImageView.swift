@@ -12,11 +12,13 @@ import PhotosUI
 struct UploadProfileImageView: View {
     @State private var selectedItem: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
+    @EnvironmentObject var viewModel: DriverRegistrationViewModel
+    @Environment(\.presentationMode) var mode
+
+    var uiImage: UIImage?
     
     var body: some View {
-        
         VStack {
-                        
             VStack(alignment: .leading, spacing: 12) {
                 Text("Profile Photo")
                     .font(.title)
@@ -67,13 +69,11 @@ struct UploadProfileImageView: View {
                         .clipShape(Circle())
                 }
                 .padding()
-
             }
             
             Spacer()
             
             ZStack {
-                
                 if selectedImageData == nil {
                     PhotosPicker(
                         selection: $selectedItem,
@@ -96,7 +96,7 @@ struct UploadProfileImageView: View {
                         }
                 } else {
                     Button {
-                        print("DEBUG: Upload profile phot here..")
+                        viewModel.uploadProfileImage(selectedImageData)
                     } label: {
                         Text("UPLOAD PHOTO")
                             .fontWeight(.bold)
@@ -111,6 +111,11 @@ struct UploadProfileImageView: View {
             }
         }
         .foregroundColor(.black)
+        .onReceive(viewModel.$hasUploadedProfilePhoto) { success in
+            if success {
+                mode.wrappedValue.dismiss()
+            }
+        }
     }
 }
 

@@ -36,7 +36,7 @@ struct DriverChecklistItem: View {
                     .foregroundColor(isComplete ? .green : .black)
             }
             .foregroundColor(.black)
-            .padding()
+            .padding(10)
         .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGroupedBackground)))
         }
     }

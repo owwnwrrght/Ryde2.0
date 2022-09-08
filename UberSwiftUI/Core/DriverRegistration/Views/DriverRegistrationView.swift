@@ -11,6 +11,10 @@ struct DriverRegistrationView: View {
     @Environment(\.presentationMode) var mode
     @EnvironmentObject var viewModel: DriverRegistrationViewModel
     
+    var hasCompletedAllRegistrationItems: Bool {
+        return viewModel.hasUploadedVehicleInfo && viewModel.hasUploadedProfilePhoto
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -61,7 +65,6 @@ struct DriverRegistrationView: View {
                     }
                     .disabled(viewModel.hasUploadedProfilePhoto)
                     
-                    
                     ZStack {
                         NavigationLink {
                             VehicleRegistrationView()
@@ -74,12 +77,36 @@ struct DriverRegistrationView: View {
                     .disabled(viewModel.hasUploadedVehicleInfo)
                 }
                 .padding()
+                                
+                if hasCompletedAllRegistrationItems {
+                    Button {
+                        viewModel.updateAccountType()
+                    } label: {
+                        HStack {
+                            Text("GET STARTED")
+                                .fontWeight(.bold)
+                            Image(systemName: "arrow.right")
+                        }
+                        .padding()
+                        .background(.blue)
+                        .clipShape(Capsule())
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding()
+                        .shadow(color: .gray, radius: 4, x: 0, y: 0)
+                    }
+                }
                 
                 Spacer()
             }
             .navigationBarHidden(true)
             .ignoresSafeArea()
             .padding(.top, 12)
+            .onReceive(viewModel.$didCompleteRegistration) { didCompleteRegistration in
+                if didCompleteRegistration {
+                    mode.wrappedValue.dismiss()
+                }
+            }
         }
     }
 }

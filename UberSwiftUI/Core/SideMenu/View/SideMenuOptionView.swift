@@ -21,7 +21,7 @@ struct SideMenuOptionView: View {
             
             Spacer()
         }
-        .foregroundColor(.white)
+//        .foregroundColor(.white)
         .padding()
     }
 }

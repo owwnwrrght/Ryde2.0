@@ -104,7 +104,7 @@ struct VehicleRegistrationView: View {
             }
             .foregroundColor(.black)
         }
-        .onReceive(viewModel.$uploadDidComplete) { success in
+        .onReceive(viewModel.$hasUploadedVehicleInfo) { success in
             if success {
                 mode.wrappedValue.dismiss()
             }
