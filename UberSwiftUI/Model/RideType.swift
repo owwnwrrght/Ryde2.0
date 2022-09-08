@@ -7,10 +7,12 @@
 
 import Foundation
 
-enum RideType: Int, CaseIterable, Codable {
+enum RideType: Int, CaseIterable, Identifiable, Codable {
     case uberX
     case black
     case uberXL
+    
+    var id: Int { return rawValue }
     
     var currentGasPricePerGallon: Double { return 4.3 }
     

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DriverRegistrationView: View {
     @Environment(\.presentationMode) var mode
-    @StateObject var viewModel: DriverRegistrationViewModel
+    @EnvironmentObject var viewModel: DriverRegistrationViewModel
     
     var body: some View {
         NavigationView {
@@ -26,7 +26,7 @@ struct DriverRegistrationView: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Make Money \nDriving")
+                        Text("Make Money \nDriving, \(viewModel.userFirstName)")
                             .font(.system(size: 36))
                             .fontWeight(.semibold)
                             .multilineTextAlignment(.leading)
@@ -48,17 +48,30 @@ struct DriverRegistrationView: View {
                     .padding(.bottom)
                 
                 VStack {
-                    NavigationLink {
-                        UploadProfileImageView()
-                    } label: {
-                        DriverChecklistItem(imageName: "person.crop.circle.fill.badge.plus", title: "Profile photo")
+                    ZStack {
+                        NavigationLink {
+                            if #available(iOS 16.0, *) {
+                                UploadProfileImageView()
+                            }
+                        } label: {
+                            DriverChecklistItem(imageName: "person.crop.circle.fill.badge.plus",
+                                                title: "Profile photo",
+                                                isComplete: $viewModel.hasUploadedProfilePhoto)
+                        }
                     }
+                    .disabled(viewModel.hasUploadedProfilePhoto)
                     
-                    NavigationLink {
-                        VehicleRegistrationView()
-                    } label: {
-                        DriverChecklistItem(imageName: "car.circle.fill", title: "Add your vehicle")
+                    
+                    ZStack {
+                        NavigationLink {
+                            VehicleRegistrationView()
+                        } label: {
+                            DriverChecklistItem(imageName: "car.circle.fill",
+                                                title: "Add your vehicle",
+                                                isComplete: $viewModel.hasUploadedVehicleInfo)
+                        }
                     }
+                    .disabled(viewModel.hasUploadedVehicleInfo)
                 }
                 .padding()
                 
@@ -74,38 +87,11 @@ struct DriverRegistrationView: View {
 struct DriverRegistrationView_Preview: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            DriverRegistrationView(viewModel: DriverRegistrationViewModel(user: dev.mockDriver))
+            DriverRegistrationView()
+                .environmentObject(DriverRegistrationViewModel(user: dev.mockDriver))
                 .navigationBarHidden(true)
         }
     }
 }
 
-struct DriverChecklistItem: View {
-    let imageName: String
-    let title: String
-    var body: some View {
-        HStack {
-            Image(systemName: imageName)
-                .font(.title)
-                .imageScale(.small)
-            
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Get started")
-                
-                Text(title)
-                    .font(.system(size: 18))
-                    .fontWeight(.semibold)
-            }
-            .padding(.leading)
-            
-            Spacer()
-            
-            Image(systemName: "chevron.forward.circle.fill")
-                .font(.title)
-                .imageScale(.small)
-        }
-        .foregroundColor(.black)
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGroupedBackground)))
-    }
-}
+

@@ -7,14 +7,20 @@
 
 import SwiftUI
 
+enum InputType {
+    case text
+    case picker([Any])
+}
+
 struct VehicleRegistrationView: View {
     @State private var make = ""
     @State private var model = ""
     @State private var year = ""
     @State private var licensePlate = ""
-    @State private var color = ""
-    @State private var type = ""
+    @State private var color = VehicleColors.black.rawValue
+    @State private var type = RideType.uberX.rawValue
     @EnvironmentObject var viewModel: DriverRegistrationViewModel
+    @Environment(\.presentationMode) var mode
     
     var body: some View {
         ScrollView {
@@ -34,10 +40,44 @@ struct VehicleRegistrationView: View {
                     VehicleInputField(text: $year, title: "Year", placeholder: "Enter year...")
                     
                     VehicleInputField(text: $licensePlate, title: "License Plate", placeholder: "G53XYC")
-                    
-                    VehicleInputField(text: $color, title: "Color", placeholder: "Enter color..")
-                    
-                    VehicleInputField(text: $type, title: "Uber Type", placeholder: "Select type..")
+                                        
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Color")
+                            .fontWeight(.semibold)
+                            .font(.footnote)
+                            .opacity(0.87)
+                            .foregroundColor(.black)
+                        
+                        Picker("", selection: $color) {
+                            ForEach(VehicleColors.allCases) { color in
+                                Text(color.description)
+                            }
+                        }
+                        .labelStyle(.titleOnly)
+                        .accentColor(.black)
+                        .offset(x: -10)
+                        
+                        Divider()
+                    }
+                                        
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Vehicle Type")
+                            .fontWeight(.semibold)
+                            .font(.footnote)
+                            .opacity(0.87)
+                            .foregroundColor(.black)
+                        
+                        Picker("", selection: $type) {
+                            ForEach(RideType.allCases) { type in
+                                Text(type.description)
+                            }
+                        }
+                        .labelStyle(.titleOnly)
+                        .accentColor(.black)
+                        .offset(x: -10)
+                        
+                        Divider()
+                    }
 
                 }
                 .padding(.horizontal, 8)
@@ -61,6 +101,12 @@ struct VehicleRegistrationView: View {
                         .foregroundColor(.white)
                 }
                 .padding(.top)
+            }
+            .foregroundColor(.black)
+        }
+        .onReceive(viewModel.$uploadDidComplete) { success in
+            if success {
+                mode.wrappedValue.dismiss()
             }
         }
     }
@@ -86,10 +132,31 @@ struct VehicleInputField: View {
     }
 }
 
+//struct VehicleSelectionView: View {
+//    let title: String
+//    let content: Content
+//
+//    init(title: String, @ViewBuilder content: () -> Content) {
+//        self.title = title
+//        self.content = content
+//    }
+//
+//    var body: some View {
+//        Text("Vehicle Type")
+//            .fontWeight(.semibold)
+//            .font(.footnote)
+//            .opacity(0.87)
+//            .foregroundColor(.black)
+//
+//        content
+//    }
+//}
+
 struct VehicleRegistrationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             VehicleRegistrationView()
+                .environmentObject(DriverRegistrationViewModel(user: dev.mockDriver))
         }
     }
 }

@@ -67,6 +67,7 @@
 		23F6F56E27515B36002C7733 /* TripArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F6F56D27515B36002C7733 /* TripArrivalView.swift */; };
 		2B0B9DED28C917E5005C9914 /* DriverRegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0B9DEC28C917E5005C9914 /* DriverRegistrationViewModel.swift */; };
 		2B0B9DEF28C9184A005C9914 /* ImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0B9DEE28C9184A005C9914 /* ImageUploader.swift */; };
+		2B0B9DF328C9BC22005C9914 /* DriverChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0B9DF228C9BC22005C9914 /* DriverChecklistItem.swift */; };
 		2B0E3FB128BFD430002DFDA8 /* RideType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0E3FB028BFD430002DFDA8 /* RideType.swift */; };
 		2B0E3FB428BFD6D0002DFDA8 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0E3FB328BFD6D0002DFDA8 /* Double.swift */; };
 		2B368B0428C1B151008D42CE /* TripLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0328C1B151008D42CE /* TripLoadingView.swift */; };
@@ -145,6 +146,7 @@
 		23F6F56D27515B36002C7733 /* TripArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripArrivalView.swift; sourceTree = "<group>"; };
 		2B0B9DEC28C917E5005C9914 /* DriverRegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverRegistrationViewModel.swift; sourceTree = "<group>"; };
 		2B0B9DEE28C9184A005C9914 /* ImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploader.swift; sourceTree = "<group>"; };
+		2B0B9DF228C9BC22005C9914 /* DriverChecklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverChecklistItem.swift; sourceTree = "<group>"; };
 		2B0E3FB028BFD430002DFDA8 /* RideType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideType.swift; sourceTree = "<group>"; };
 		2B0E3FB328BFD6D0002DFDA8 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		2B368B0328C1B151008D42CE /* TripLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLoadingView.swift; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 				2BB5A10B28C64ACB0056F38E /* DriverRegistrationView.swift */,
 				2BB5A10D28C64AD80056F38E /* VehicleRegistrationView.swift */,
 				2BB5A10F28C64AE50056F38E /* UploadProfileImageView.swift */,
+				2B0B9DF228C9BC22005C9914 /* DriverChecklistItem.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				235568282751F53B00D54406 /* SideMenuOptionView.swift in Sources */,
 				2B368B0628C1B2BB008D42CE /* LoadingSpinner.swift in Sources */,
 				235D7324275B3A93000A366E /* LocationInputHeaderView.swift in Sources */,
+				2B0B9DF328C9BC22005C9914 /* DriverChecklistItem.swift in Sources */,
 				23147F022751918B00758446 /* TripInProgressView.swift in Sources */,
 				235D7332275C9EE5000A366E /* TripInfoView.swift in Sources */,
 				2BB5A11028C64AE50056F38E /* UploadProfileImageView.swift in Sources */,

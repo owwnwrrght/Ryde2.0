@@ -71,7 +71,8 @@ struct SideMenuHeaderView: View {
             Spacer()
         }
         .fullScreenCover(isPresented: $showDriverRegistrationView, content: {
-            DriverRegistrationView(viewModel: DriverRegistrationViewModel(user: user))
+            DriverRegistrationView()
+                .environmentObject(DriverRegistrationViewModel(user: user))
         })
         .foregroundColor(.white)
         .padding()
