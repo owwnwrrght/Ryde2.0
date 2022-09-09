@@ -38,9 +38,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         
     func updateUIView(_ uiView: UIViewType, context: Context) {
         guard let user = contentViewModel.user else { return }
-        
-        print("DEBUG: Updating view..")
-                        
+                                
         if mapState == .locationSelected && user.accountType == .passenger {
             context.coordinator.addAnnotationAndGeneratePolyline()
             return

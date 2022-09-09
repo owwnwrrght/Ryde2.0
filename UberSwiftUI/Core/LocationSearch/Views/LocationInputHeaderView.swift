@@ -13,17 +13,16 @@ struct LocationInputHeaderView: View {
     
     var body: some View {
         VStack {
-            
             Text("For Stephan")
             
             HStack {
                 VStack {
                     Circle()
-                        .background(Color(.gray))
+                        .fill(Color(.systemGray3))
                         .frame(width: 6, height: 6)
                     
                     Rectangle()
-                        .background(Color(.gray))
+                        .fill(Color(.systemGray3))
                         .frame(width: 1, height: 24)
                     
                     Rectangle()
@@ -35,18 +34,18 @@ struct LocationInputHeaderView: View {
                 VStack {
                     TextField("Current Location", text: $startLocationText)
                         .frame(height: 32)
-                        .padding(.leading)
                         .background(Color(.systemGroupedBackground))
                         .padding(.trailing)
+                        .disabled(true)
                     
                     TextField("Where to?", text: $destinationText)
                         .frame(height: 32)
-                        .padding(.leading)
                         .background(Color(.systemGray5))
                         .padding(.trailing)
                 }
+                .padding(.leading)
             }
-            .padding(.top, 20)
+            .padding(.top, 36)
         }
         .padding(.top, 12)
     }

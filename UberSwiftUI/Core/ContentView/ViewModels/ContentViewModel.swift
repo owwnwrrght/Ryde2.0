@@ -30,6 +30,7 @@ class ContentViewModel: ObservableObject {
     @Published var mapState = MapViewState.noInput
     @Published var pickupTime: String?
     @Published var dropOffTime: String?
+    @Published var user: User?
     
     let radius: Double = 50 * 1000
     var didExecuteFetchDrivers = false
@@ -37,7 +38,6 @@ class ContentViewModel: ObservableObject {
     var selectedLocation: UberLocation?
     var tripCost: Double? 
     
-    var user: User?
     private var driverQueue = [User]()
     private var tripService = TripService()
     private var ridePrice = 0.0
@@ -232,6 +232,14 @@ extension ContentViewModel {
         }
     }
     
+    func updateDriverActiveState(_ isActive: Bool) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        COLLECTION_USERS.document(uid).updateData(["isActive": isActive]) { _ in
+            self.user?.isActive = isActive
+        }
+    }
+    
     func updateDriverLocation(withCoordinate coordinate: CLLocationCoordinate2D) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -284,10 +292,13 @@ extension ContentViewModel {
     }
     
     func requestRide() {
+        guard let userLocation = userLocation else { return }
+        
         if driverQueue.isEmpty {
             guard let trip = trip else { return }
             updateTripState(trip, state: .rejectedByAllDrivers) { _ in
                 self.deleteTrip()
+                self.fetchNearbyDrivers(withCoordinates: userLocation)
             }
         } else {
             let driver = driverQueue.removeFirst()
@@ -371,7 +382,7 @@ extension ContentViewModel {
         var drivers = [User]()
         
         documents.forEach { doc in
-            guard let driver = try? doc.data(as: User.self), driver.accountType == .driver else { return }
+            guard let driver = try? doc.data(as: User.self), driver.accountType == .driver, driver.isActive else { return }
             let coordinates = CLLocation(latitude: driver.coordinates.latitude, longitude: driver.coordinates.longitude)
             let centerPoint = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
             

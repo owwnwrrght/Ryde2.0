@@ -21,6 +21,7 @@ struct User: Codable {
     var accountType: AccountType
     var coordinates: GeoPoint
     var vehicle: Vehicle?
+    var isActive: Bool
     
     var uid: String { return id ?? "" }
 }

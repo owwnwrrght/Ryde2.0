@@ -61,7 +61,8 @@ class DeveloperPreview {
                              homeLocation: nil,
                              workLocation: nil,
                              accountType: .passenger,
-                             coordinates: GeoPoint(latitude: 37.4, longitude: -122.1))
+                             coordinates: GeoPoint(latitude: 37.4, longitude: -122.1),
+                             isActive: true)
     
     let mockDriver = User(id: NSUUID().uuidString,
                           fullname: "John Doe",
@@ -71,7 +72,8 @@ class DeveloperPreview {
                           homeLocation: nil,
                           workLocation: nil,
                           accountType: .driver,
-                          coordinates: GeoPoint(latitude: 37.41, longitude: -122.1))
+                          coordinates: GeoPoint(latitude: 37.41, longitude: -122.1),
+                          isActive: false)
     
     var contentViewModel: ContentViewModel {
         let vm = ContentViewModel()

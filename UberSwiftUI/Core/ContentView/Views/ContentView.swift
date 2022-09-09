@@ -36,7 +36,7 @@ struct ContentView: View {
         Group {
             if authViewModel.userSession == nil {
                 LoginView()
-            } else if let user = authViewModel.user {
+            } else if let user = contentViewModel.user {
                 NavigationView {
                     ZStack {
                         if showSideMenu {

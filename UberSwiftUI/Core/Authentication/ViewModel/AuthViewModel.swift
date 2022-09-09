@@ -52,7 +52,8 @@ class AuthViewModel: ObservableObject {
             email: email,
             accountType: .passenger,
             coordinates: GeoPoint(latitude: userLocation.coordinate.latitude,
-                                  longitude: userLocation.coordinate.longitude)
+                                  longitude: userLocation.coordinate.longitude),
+            isActive: false
         )
         
         return user
