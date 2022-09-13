@@ -44,7 +44,7 @@ struct EnRouteToPickupLocationView: View {
 
                         if user.accountType == .passenger {
                             HStack {
-                                UserImageAndDetailsView(username: user.accountType == .passenger ? trip.driverName : trip.passengerName)
+                                UserImageAndDetailsView(imageUrl: trip.driverImageUrl, username: trip.driverFirstNameUppercased)
                                     .padding(.leading)
                                 
                                 DriverVehicleInfoView()
@@ -76,7 +76,7 @@ struct EnRouteToPickupLocationView: View {
             
             Spacer()
         }
-        .background(Color(.white))
+        .background(Color.theme.backgroundColor)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
         .frame(height: 350)
         .shadow(color: .black, radius: 10, x: 0, y: 0)

@@ -41,7 +41,7 @@ struct TripLoadingView: View {
             
         }
         .ignoresSafeArea()
-        .background(.white)
+        .background(Color.theme.backgroundColor)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
         .frame(maxHeight: 320)
         .shadow(color: .black, radius: 10, x: 0, y: 0)

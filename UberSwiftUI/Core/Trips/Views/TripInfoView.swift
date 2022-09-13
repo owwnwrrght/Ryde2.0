@@ -11,9 +11,17 @@ struct TripInfoView: View {
     let trip: Trip
     let user: User
     
+    var username: String {
+        return user.accountType == .passenger ? trip.driverFirstNameUppercased : trip.passengerFirstNameUppercased
+    }
+    
+    var imageUrl: String? {
+        return user.accountType == .passenger ? trip.driverImageUrl : trip.passengerImageUrl
+    }
+    
     var body: some View {
         HStack {
-            UserImageAndDetailsView(username: user.accountType == .passenger ? trip.driverFirstNameUppercased : trip.passengerFirstNameUppercased)
+            UserImageAndDetailsView(imageUrl: imageUrl, username: username)
             
             Spacer()
             
@@ -38,7 +46,11 @@ struct TripInfoView: View {
             }
         }
         .padding(.horizontal)
-        .padding(4)    }
+        .padding(4)
+        
+        
+        
+    }
 }
 
 struct TripInfoView_Previews: PreviewProvider {

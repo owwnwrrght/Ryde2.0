@@ -23,8 +23,8 @@ struct TripLocationsView: View {
                     .foregroundColor(.gray)
                 
                 Rectangle()
+                    .background(Color(.black))
                     .frame(width: 8, height: 8)
-                    .foregroundColor(.black)
             }
             
             VStack(alignment: .leading, spacing: 24) {

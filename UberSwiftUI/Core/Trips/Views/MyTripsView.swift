@@ -55,7 +55,7 @@ struct MyTripsView: View {
             .ignoresSafeArea()
         }
         .padding(.bottom)
-        .background(Color(.systemGroupedBackground))
+        .background(Color.theme.backgroundColor)
         .navigationBarHidden(true)
     }
 }

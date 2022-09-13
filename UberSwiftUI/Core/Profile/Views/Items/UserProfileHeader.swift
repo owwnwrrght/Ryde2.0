@@ -12,20 +12,16 @@ struct UserProfileHeader: View {
     
     var body: some View {
         HStack {
-            Image("male-profile-photo")
-                .resizable()
-                .frame(width: 120, height: 120)
-                .clipShape(Circle())
+            ProfileImageView(imageUrl: user.profileImageUrl)
+                .frame(width: 100, height: 100)
             
             VStack(alignment: .leading, spacing: 8) {
                 Text(user.fullname)
-                
-                if let phoneNumber = user.phoneNumber {
-                    Text(phoneNumber)
-                }
+                    .font(.headline)
                 
                 Text(user.email)
-                    .foregroundColor(.black)
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
             }
             
             Spacer()

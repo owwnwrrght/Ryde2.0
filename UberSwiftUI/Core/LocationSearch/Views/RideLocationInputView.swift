@@ -19,7 +19,7 @@ struct RideLocationInputView: View {
             LocationInputHeaderView(startLocationText: $startLocationText, destinationText: $viewModel.queryFragment)
                 .matchedGeometryEffect(id: "LocationInput", in: animation)
                 .frame(height: 200)
-                .background(Color.white)
+                .background(Color.theme.backgroundColor)
             
             LocationResultsView(config: .ride, show: $show)
         }

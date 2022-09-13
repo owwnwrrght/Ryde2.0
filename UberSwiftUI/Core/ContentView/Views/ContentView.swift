@@ -106,7 +106,7 @@ struct ContentView: View {
                                 }
                             }
                         }
-                        .offset(x: showSideMenu ? 300 : 0, y: 0)
+                        .offset(x: showSideMenu ? 316 : 0, y: 0)
                         .shadow(color: showSideMenu ? .black : .clear, radius: 10, x: 0, y: 0)
                         .onReceive(locationViewModel.$selectedUberLocation, perform: { location in
                             if location != nil {

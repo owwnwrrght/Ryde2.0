@@ -15,74 +15,68 @@ struct UserProfileView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            if let user = authViewModel.user {
-                UserProfileHeader(user: user)
-                    .padding()
-                    .background(.white)
-            }
-            
-            Text("Favorites")
-                .padding()
-            
-            VStack {
-                ForEach(SavedLocationOptions.allCases, id: \.self) { option in
-                    NavigationLink {
-                        SavedLocationInputView(show: $show, option: option)
-                            .navigationBarHidden(true)
-                    } label: {
-                        SavedLocationCell(option: option, user: authViewModel.user)
-                            .padding(6)
+            if #available(iOS 16.0, *) {
+                List {
+                    Section {
+                        if let user = authViewModel.user {
+                            HStack {
+                                ProfileImageView(imageUrl: user.profileImageUrl)
+                                    .frame(width: 80, height: 80)
+                                
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(user.fullname)
+                                        .font(.headline)
+                                    
+                                    Text(user.email)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                    .imageScale(.small)
+                                    .font(.title2)
+                                    .foregroundColor(.gray)
+                            }
+                        }
                     }
                     
-                    if option != .work {
-                        Divider()
+                    Section(header: Text("Favorites")) {
+                        ForEach(SavedLocationOptions.allCases, id: \.self) { option in
+                            NavigationLink {
+                                SavedLocationInputView(show: $show, option: option)
+                                    .navigationBarHidden(true)
+                            } label: {
+                                SavedLocationCell(option: option, user: authViewModel.user)
+                            }
+                        }
+                    }
+                    
+                    Section(header: Text("Settings")) {
+                        ForEach(SettingOptionsViewModel.allCases, id: \.self) { option in
+                            SettingItemCell(viewModel: option)
+                                .accentColor(.white)
+                        }
+                    }
+                    
+                    Section(header: Text("Account")) {
+                        ForEach(AccountOptionsViewModel.allCases, id: \.self) { option in
+                            SettingItemCell(viewModel: option)
+                                .accentColor(.white)
+                        }
                     }
                 }
+                .background(Color.theme.systemBackgroundColor)
+                .scrollContentBackground(.hidden)
             }
-            .padding(6)
-            .background(.white)
-            .padding(.leading, 4)
-            
-            Text("Settings")
-                .padding()
-            
-            VStack {
-                ForEach(SettingOptionsViewModel.allCases, id: \.self) { option in
-                    SettingItemCell(viewModel: option)
-                        .padding(6)
-                    
-                    if option != SettingOptionsViewModel.allCases.last {
-                        Divider()
-                    }
-                }
-
-            }
-            .padding(6)
-            .background(.white)
-            .padding(.leading, 4)
-            
-            Button {
-                authViewModel.signOut()
-            } label: {
-                HStack(alignment: .center) {
-                    Text("Sign Out")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(Color(.systemRed))
-                        .padding(.leading, 24)
-                    
-                    Spacer()
-                }
-                .frame(height: 50)
-                .background(.white)
-            }
-            .padding(.top, 40)
             
             Spacer()
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
-        .navigationBarTitle("Settings")
-        .background(Color(.systemGroupedBackground))
+        .navigationTitle("Settings")
+        .background(Color.theme.systemBackgroundColor)
     }
     
     var backButton: some View {
@@ -93,13 +87,16 @@ struct UserProfileView: View {
                 .font(.title)
                 .imageScale(.medium)
                 .padding(.vertical)
-                .foregroundColor(.black)
+                .foregroundColor(Color.theme.primaryTextColor)
         }
     }
 }
 
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        UserProfileView()
+        NavigationView {
+            UserProfileView()
+                .environmentObject(AuthViewModel(window: UIWindow()))
+        }
     }
 }

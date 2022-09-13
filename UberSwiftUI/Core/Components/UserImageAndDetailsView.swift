@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct UserImageAndDetailsView: View {
+    let imageUrl: String?
     let username: String
     
     var body: some View {
         HStack {
-            Image("male-profile-photo")
-                .resizable()
-                .frame(width: 64, height: 64)
-                .scaledToFill()
-                .cornerRadius(10)
+            ProfileImageView(imageUrl: imageUrl)
+                .frame(width: 80, height: 80)
             
             VStack(alignment: .leading, spacing: 8) {
                 Text(username)
@@ -41,6 +39,6 @@ struct UserImageAndDetailsView: View {
 
 struct UserImageAndDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserImageAndDetailsView(username: "John Doe")
+        UserImageAndDetailsView(imageUrl: dev.mockPassenger.profileImageUrl, username: dev.mockPassenger.fullname)
     }
 }

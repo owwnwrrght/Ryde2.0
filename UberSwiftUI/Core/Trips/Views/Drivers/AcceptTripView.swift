@@ -50,25 +50,22 @@ struct AcceptTripView: View {
                 
                 Divider()
                 
-                if let user = viewModel.user {
-                    HStack {
-                        UserImageAndDetailsView(username: trip.passengerFirstNameUppercased)
+                HStack {
+                    UserImageAndDetailsView(imageUrl: trip.passengerImageUrl, username: trip.passengerFirstNameUppercased)
+                    
+                    Spacer()
+                    
+                    VStack(spacing: 4) {
+                        Text("Earnings")
+                            .font(.system(size: 15, weight: .semibold))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.gray)
                         
-                        Spacer()
-                        
-                        VStack(spacing: 4) {
-                            Text("Earnings")
-                                .font(.system(size: 15, weight: .semibold))
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.gray)
-                            
-                            Text(trip.tripCost.currencyString)
-                                .font(.system(size: 24, weight: .semibold))
-                        }
+                        Text(trip.tripCost.currencyString)
+                            .font(.system(size: 24, weight: .semibold))
                     }
-                    .padding()
-
                 }
+                .padding()
                 
                 Divider()
             }
@@ -76,7 +73,7 @@ struct AcceptTripView: View {
             VStack(alignment: .leading) {
                 HStack {
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(trip.dropoffLocationName)
+                        Text(trip.pickupLocationName)
                             .font(.headline)
 
                         Text(trip.pickupLocationAddress)
@@ -120,7 +117,7 @@ struct AcceptTripView: View {
             Spacer()
         }
         .ignoresSafeArea()
-        .background(.white)
+        .background(Color.theme.backgroundColor)
         .frame(height: 640)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
         .shadow(color: .black, radius: 10, x: 0, y: 0)

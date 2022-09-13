@@ -100,7 +100,7 @@ struct TripArrivalView: View {
 
             Spacer()
         }
-        .background(Color(.white))
+        .background(Color.theme.backgroundColor)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
         .frame(height: user.accountType == .driver ? 450 : 560)
         .shadow(color: .black, radius: 10, x: 0, y: 0)

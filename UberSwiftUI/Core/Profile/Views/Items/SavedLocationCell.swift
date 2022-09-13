@@ -14,13 +14,13 @@ struct SavedLocationCell: View {
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: option.imageName)
-                .imageScale(.large)
+                .imageScale(.medium)
                 .font(.title)
                 .foregroundColor(Color(.systemBlue))
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(option.title)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color.theme.primaryTextColor)
                     .font(.system(size: 15))
                     .fontWeight(.semibold)
                 
@@ -28,13 +28,6 @@ struct SavedLocationCell: View {
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
             }
-            
-            Spacer()
-            
-            Image(systemName: "chevron.right")
-                .imageScale(.small)
-                .font(.title2)
-                .foregroundColor(.gray)
         }
     }
     

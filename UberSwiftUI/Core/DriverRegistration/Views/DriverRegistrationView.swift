@@ -26,7 +26,7 @@ struct DriverRegistrationView: View {
                             .font(.title)
                             .imageScale(.medium)
                             .padding()
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.theme.primaryTextColor)
                     }
                     
                     VStack(alignment: .leading, spacing: 12) {
@@ -34,7 +34,7 @@ struct DriverRegistrationView: View {
                             .font(.system(size: 36))
                             .fontWeight(.semibold)
                             .multilineTextAlignment(.leading)
-                            .foregroundColor(.black)
+                            .foregroundColor(Color.theme.primaryTextColor)
                         
                         Text("We just need a few things from you")
                             .font(.system(size: 18))

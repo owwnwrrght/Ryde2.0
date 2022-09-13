@@ -32,8 +32,8 @@ struct LocationResultsView: View {
                 }
             }
         }
-        .background(Color.white)
+        .background(Color.theme.backgroundColor)
         .frame(width: UIScreen.main.bounds.width)
-        .shadow(color: .gray, radius: 12, x: 0, y: 0)
+//        .shadow(color: .gray, radius: 12, x: 0, y: 0)
     }
 }

@@ -53,7 +53,7 @@ struct TripInProgressView: View {
                 Spacer()
             }
         }
-        .background(Color(.white))
+        .background(Color.theme.backgroundColor)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
         .frame(height: 320)
         .shadow(color: .black, radius: 10, x: 0, y: 0)

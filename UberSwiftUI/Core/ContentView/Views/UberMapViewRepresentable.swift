@@ -55,7 +55,6 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         
         if !contentViewModel.drivers.isEmpty && mapState == .noInput {
             context.coordinator.addDriversToMapAndUpdateLocation(contentViewModel.drivers)
-            return
         }
                 
         if mapState == .noInput {
@@ -207,7 +206,7 @@ extension UberMapViewRepresentable {
                     })
                 }
                 
-                if !driverIsVisible {
+                if !driverIsVisible{
                     self.parent.mapView.addAnnotation(annotation)
                 }
             }

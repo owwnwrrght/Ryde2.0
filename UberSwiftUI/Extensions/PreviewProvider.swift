@@ -57,7 +57,7 @@ class DeveloperPreview {
                              fullname: "Stephan Dowless",
                              email: "test@gmail.com",
                              phoneNumber: nil,
-                             profileImageUrl: nil,
+                             profileImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/uberswiftui.appspot.com/o/profile_images%2F25278BB7-63BF-4278-9EBE-A6CD1EA6B584?alt=media&token=19419f9e-64bb-4f87-a5e7-d42d88113de5",
                              homeLocation: nil,
                              workLocation: nil,
                              accountType: .passenger,

@@ -15,8 +15,7 @@ struct LocationCell: View {
         HStack {
             Image(systemName: "mappin.circle.fill")
                 .resizable()
-                .tint(.white)
-                .foregroundColor(Color.gray)
+                .foregroundColor(Color.blue)
                 .frame(width: 40, height: 40)
             
             VStack(alignment: .leading, spacing: 4) {
@@ -29,7 +28,7 @@ struct LocationCell: View {
                 
                 Divider()
             }
-            .padding(.leading, 4)
+            .padding(.leading, 8)
             .padding(.vertical, 8)
             
             Spacer()

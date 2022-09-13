@@ -33,7 +33,7 @@ struct DriverArrivalView: View {
             
             HStack {
                 if let trip = contentViewModel.trip {
-                    UserImageAndDetailsView(username: trip.driverFirstNameUppercased)
+                    UserImageAndDetailsView(imageUrl: trip.driverImageUrl, username: trip.driverFirstNameUppercased)
                     
                     Spacer()
                     
@@ -69,7 +69,7 @@ struct DriverArrivalView: View {
         }
         .background(Color(.white))
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 400)
+        .frame(height: 420)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }

@@ -87,6 +87,8 @@
 		2BB5A11728C6DF570056F38E /* UserImageAndDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */; };
 		2BB5A11928C6E03A0056F38E /* DriverVehicleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */; };
 		2BB5A11B28C7A2E20056F38E /* EnRouteToPickupLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11A28C7A2E20056F38E /* EnRouteToPickupLocationView.swift */; };
+		2BCCFC6728D0E90C00E1F0CC /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCCFC6628D0E90C00E1F0CC /* Color.swift */; };
+		2BEAD49328CBDE4200623111 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEAD49228CBDE4200623111 /* ProfileImageView.swift */; };
 		2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5828C53B5E002ACFAE /* TripService.swift */; };
 		2BEC6B5B28C55794002ACFAE /* PickupPassengerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */; };
 		2BEC6B5E28C55931002ACFAE /* DriverArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */; };
@@ -165,6 +167,8 @@
 		2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageAndDetailsView.swift; sourceTree = "<group>"; };
 		2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverVehicleInfoView.swift; sourceTree = "<group>"; };
 		2BB5A11A28C7A2E20056F38E /* EnRouteToPickupLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnRouteToPickupLocationView.swift; sourceTree = "<group>"; };
+		2BCCFC6628D0E90C00E1F0CC /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		2BEAD49228CBDE4200623111 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		2BEC6B5828C53B5E002ACFAE /* TripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripService.swift; sourceTree = "<group>"; };
 		2BEC6B5A28C55794002ACFAE /* PickupPassengerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickupPassengerView.swift; sourceTree = "<group>"; };
 		2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverArrivalView.swift; sourceTree = "<group>"; };
@@ -464,6 +468,7 @@
 			children = (
 				2B0E3FB328BFD6D0002DFDA8 /* Double.swift */,
 				2B91C81028BFDE050097B73E /* PreviewProvider.swift */,
+				2BCCFC6628D0E90C00E1F0CC /* Color.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -580,6 +585,7 @@
 				2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */,
 				2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */,
 				2B5E4B5C28C7D7B400B9B3D7 /* EstimatedTimeArrivalView.swift */,
+				2BEAD49228CBDE4200623111 /* ProfileImageView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -734,6 +740,7 @@
 				2B91C80F28BFDD630097B73E /* RideDetails.swift in Sources */,
 				2B0E3FB428BFD6D0002DFDA8 /* Double.swift in Sources */,
 				235D731A275B2F3B000A366E /* SocialSignUpView.swift in Sources */,
+				2BCCFC6728D0E90C00E1F0CC /* Color.swift in Sources */,
 				2B91C81528C031430097B73E /* RideDetailsViewModel.swift in Sources */,
 				2355682E2751F5D600D54406 /* SideMenuView.swift in Sources */,
 				2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */,
@@ -748,6 +755,7 @@
 				2BB5A11028C64AE50056F38E /* UploadProfileImageView.swift in Sources */,
 				2BB5A10E28C64AD80056F38E /* VehicleRegistrationView.swift in Sources */,
 				23147F00275190A900758446 /* MapViewActionButton.swift in Sources */,
+				2BEAD49328CBDE4200623111 /* ProfileImageView.swift in Sources */,
 				235568122751A68400D54406 /* LoginView.swift in Sources */,
 				235568162751CA8E00D54406 /* CustomSecureField.swift in Sources */,
 				2355682C2751F56600D54406 /* SideMenuOptionViewModel.swift in Sources */,

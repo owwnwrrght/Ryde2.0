@@ -33,17 +33,17 @@ struct DriverChecklistItem: View {
                 Image(systemName: "\(isComplete ? "checkmark" : "chevron.forward").circle.fill")
                     .font(.title)
                     .imageScale(.small)
-                    .foregroundColor(isComplete ? .green : .black)
+                    .foregroundColor(isComplete ? .green : Color.theme.primaryTextColor)
             }
-            .foregroundColor(.black)
+            .foregroundColor(Color.theme.primaryTextColor)
             .padding(10)
-        .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.theme.secondaryBackgroundColor))
         }
     }
 }
 
-//struct DriverChecklistItem_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DriverChecklistItem()
-//    }
-//}
+struct DriverChecklistItem_Previews: PreviewProvider {
+    static var previews: some View {
+        DriverChecklistItem(imageName: "car.circle.fill", title: "Add your vehicle", isComplete: .constant(false))
+    }
+}

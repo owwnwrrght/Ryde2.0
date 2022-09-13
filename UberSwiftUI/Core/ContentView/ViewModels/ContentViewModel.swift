@@ -42,6 +42,8 @@ class ContentViewModel: ObservableObject {
     private var tripService = TripService()
     private var ridePrice = 0.0
     private var listenersDictionary = [String: ListenerRegistration]()
+    private var tripDistanceInMeters = 0.0
+    private var selectedRideType: RideType = .uberX
 
     // MARK: - Lifecycle
     
@@ -50,7 +52,7 @@ class ContentViewModel: ObservableObject {
     }
     
     // MARK: - Helpers
-        
+            
     private func reset() {
         self.mapState = .noInput
         self.selectedLocation = nil
@@ -127,10 +129,13 @@ class ContentViewModel: ObservableObject {
     func ridePriceForType(_ type: RideType) -> Double {
         guard let selectedLocation = selectedLocation, let userCoordinates = userLocation else { return 0.0 }
         let userLocation = CLLocation(latitude: userCoordinates.latitude, longitude: userCoordinates.longitude)
-        let distanceInMeters =  userLocation.distance(from: CLLocation(latitude: selectedLocation.coordinate.latitude,
-                                                                       longitude: selectedLocation.coordinate.longitude))
-        return type.price(for: distanceInMeters)
-        
+        self.tripDistanceInMeters = userLocation.distance(from: CLLocation(latitude: selectedLocation.coordinate.latitude,
+                                                                           longitude: selectedLocation.coordinate.longitude))
+        return type.price(for: tripDistanceInMeters)
+    }
+    
+    func setRidePrice(_ price: Double) {
+        self.ridePrice = price
     }
 }
 
@@ -268,7 +273,7 @@ extension ContentViewModel {
                 
                 switch trip.tripState {
                 case .rejectedByDriver:
-                    self.requestRide()
+                    self.requestRide(self.selectedRideType)
                 case .accepted:
                     self.mapState = .tripAccepted
                 case .driverArrived:
@@ -291,8 +296,9 @@ extension ContentViewModel {
         }
     }
     
-    func requestRide() {
+    func requestRide(_ rideType: RideType) {
         guard let userLocation = userLocation else { return }
+        self.tripCost = rideType.price(for: self.tripDistanceInMeters)
         
         if driverQueue.isEmpty {
             guard let trip = trip else { return }
@@ -316,7 +322,7 @@ extension ContentViewModel {
     
     private func sendRideRequestToDriver(_ driver: User) {
         guard let user = user, let currentUid = user.id else { return }
-        guard let driverUid = driver.id else { return }
+        guard let driverUid = driver.id, driver.isActive else { return }
         guard let userLocation = userLocation, let selectedLocation = selectedLocation else { return }
         
         if let trip = trip {
@@ -347,8 +353,8 @@ extension ContentViewModel {
                                 tripState: .requested,
                                 driverName: driver.fullname,
                                 passengerName: user.fullname,
-                                driverImageUrl: "",
-                                passengerImageUrl: nil)
+                                driverImageUrl: driver.profileImageUrl ?? "",
+                                passengerImageUrl: user.profileImageUrl)
                 
                 guard let encodedTrip = try? Firestore.Encoder().encode(trip) else { return }
                 
@@ -382,7 +388,7 @@ extension ContentViewModel {
         var drivers = [User]()
         
         documents.forEach { doc in
-            guard let driver = try? doc.data(as: User.self), driver.accountType == .driver, driver.isActive else { return }
+            guard let driver = try? doc.data(as: User.self), driver.accountType == .driver else { return }
             let coordinates = CLLocation(latitude: driver.coordinates.latitude, longitude: driver.coordinates.longitude)
             let centerPoint = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
             
@@ -404,7 +410,6 @@ extension ContentViewModel {
             
             let driverListener = COLLECTION_USERS.document(driver.id ?? "").addSnapshotListener { snapshot, error in
                 guard let driver = try? snapshot?.data(as: User.self) else { return }
-                
                 self.drivers[i].coordinates = driver.coordinates
             }
             

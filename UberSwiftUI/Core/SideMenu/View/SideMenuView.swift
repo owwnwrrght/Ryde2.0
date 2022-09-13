@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct SideMenuView: View {
     @Binding var isShowing: Bool
@@ -31,14 +32,14 @@ struct SideMenuView: View {
                         destination: UserProfileView(),
                         label: {
                             SideMenuOptionView(viewModel: option)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color.theme.primaryTextColor)
                         })
                 } else if option == .trips {
                     NavigationLink(
                         destination: MyTripsView(),
                         label: {
                             SideMenuOptionView(viewModel: option)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color.theme.primaryTextColor)
                         })
                 } else {
                     SideMenuOptionView(viewModel: option)
@@ -47,6 +48,7 @@ struct SideMenuView: View {
             
             Spacer()
         }
+        .background(Color.theme.backgroundColor)
         .navigationBarHidden(true)
     }
 }
@@ -62,7 +64,8 @@ extension SideMenuView {
         VStack(alignment: .leading) {
             if let user = viewModel.user {
                 HStack {
-                    Image("male-profile-photo")
+                    
+                    KFImage(URL(string: user.profileImageUrl ?? ""))
                         .resizable()
                         .scaledToFill()
                         .clipped()
@@ -102,6 +105,7 @@ extension SideMenuView {
                                         .font(.system(size: 16, weight: .semibold))
                                         .padding(6)
                                 }
+                                .foregroundColor(Color.theme.primaryTextColor)
                             }
                         } else {
                             HStack {
@@ -117,7 +121,7 @@ extension SideMenuView {
                                         .font(.caption)
                                         .foregroundColor(Color(.systemGray3))
                                         .multilineTextAlignment(.leading)
-                                        .frame(height: 50)
+                                        .frame(height: 32)
                                 }
                                 .frame(width: 150)
                                 .padding(6)
@@ -126,13 +130,13 @@ extension SideMenuView {
                                 
                                 Toggle("", isOn: $driverIsActive)
                                     .tint(.blue)
-                                    .padding(.trailing, 32)
+                                    .padding(.trailing, 28)
                                     .onChange(of: driverIsActive) { driverIsActive in
                                         viewModel.updateDriverActiveState(driverIsActive)
                                     }
                                     
                             }
-                            .frame(maxWidth: 300)
+                            .frame(maxWidth: 316)
                         }
                     }
                     .padding(.top, 24)
@@ -141,15 +145,17 @@ extension SideMenuView {
                 }
                 
                 Rectangle()
-                    .frame(width: 280, height: 0.5)
+                    .frame(width: 296, height: 0.75)
                     .opacity(0.7)
                     .padding(.top)
                     .foregroundColor(Color(.separator))
+                    .shadow(color: .black.opacity(0.7), radius: 4)
                 
                 Spacer()
             }
         }
         .frame(height: 230)
+        .background(Color.theme.backgroundColor)
         .fullScreenCover(isPresented: $showDriverRegistrationView, content: {
             if let user = user {
                 DriverRegistrationView()
