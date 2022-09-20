@@ -47,6 +47,8 @@ struct EnRouteToPickupLocationView: View {
                                 UserImageAndDetailsView(imageUrl: trip.driverImageUrl, username: trip.driverFirstNameUppercased)
                                     .padding(.leading)
                                 
+                                Spacer()
+                                
                                 DriverVehicleInfoView()
                                     .padding(.trailing)
                             }

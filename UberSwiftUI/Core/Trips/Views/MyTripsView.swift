@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MyTripsView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @StateObject var viewModel = TripsViewModel()
+    let user: User
 
     var body: some View {
         VStack(alignment: .leading, spacing: -16) {
@@ -38,15 +40,14 @@ struct MyTripsView: View {
             
             ScrollView {
                 VStack(alignment: .leading) {
-                    
-                    ForEach(0 ... 5, id: \.self) { index in
-                        Text("TODAY: 4:50 PM")
+                    ForEach(viewModel.trips) { trip in
+                        Text("9/19/22")
                             .fontWeight(.semibold)
                             .font(.body)
                             .padding()
                         
-                        CompletedTripCell()
-                            .padding()
+                        CompletedTripCell(trip: trip, user: user)
+                            .padding(4)
                             .padding(.horizontal, 8)
                     }
                 }
@@ -55,13 +56,13 @@ struct MyTripsView: View {
             .ignoresSafeArea()
         }
         .padding(.bottom)
-        .background(Color.theme.backgroundColor)
+        .background(Color.theme.systemBackgroundColor)
         .navigationBarHidden(true)
     }
 }
 
 struct MyTripsView_Previews: PreviewProvider {
     static var previews: some View {
-        MyTripsView()
+        MyTripsView(user: dev.mockPassenger)
     }
 }

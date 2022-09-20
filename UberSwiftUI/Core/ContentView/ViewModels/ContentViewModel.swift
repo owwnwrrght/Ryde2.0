@@ -36,7 +36,6 @@ class ContentViewModel: ObservableObject {
     var didExecuteFetchDrivers = false
     var userLocation: CLLocationCoordinate2D?
     var selectedLocation: UberLocation?
-    var tripCost: Double? 
     
     private var driverQueue = [User]()
     private var tripService = TripService()
@@ -298,7 +297,7 @@ extension ContentViewModel {
     
     func requestRide(_ rideType: RideType) {
         guard let userLocation = userLocation else { return }
-        self.tripCost = rideType.price(for: self.tripDistanceInMeters)
+        self.ridePrice = rideType.price(for: self.tripDistanceInMeters)
         
         if driverQueue.isEmpty {
             guard let trip = trip else { return }

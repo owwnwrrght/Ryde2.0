@@ -50,15 +50,14 @@ struct UberMapViewRepresentable: UIViewRepresentable {
         }
         
         if mapState == .tripAccepted, let trip = contentViewModel.trip, user.accountType == .passenger {
+            context.coordinator.updateDriverPositionForTrip(trip)
             context.coordinator.configureMapForTrip(trip)
-        }
-        
-        if !contentViewModel.drivers.isEmpty && mapState == .noInput {
-            context.coordinator.addDriversToMapAndUpdateLocation(contentViewModel.drivers)
+            return
         }
                 
         if mapState == .noInput {
             context.coordinator.clearMapView()
+            context.coordinator.addDriversToMapAndUpdateLocation(contentViewModel.drivers)
             return
         }
     }
@@ -74,7 +73,7 @@ extension UberMapViewRepresentable {
         let parent: UberMapViewRepresentable
         var currentRegion: MKCoordinateRegion?
         var userLocation: MKUserLocation?
-        var mapViewNeedsPadding = false
+        var didSetVisibleMapRectForTrip = false
         
         private var drivers = [User]()
         
@@ -137,22 +136,26 @@ extension UberMapViewRepresentable {
         }
         
         func configureMapForTrip(_ trip: Trip) {
-            let annotations = parent.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
-            let driverAnnotations = parent.mapView.annotations.filter({ $0.isKind(of: DriverAnnotation.self) }) as! [DriverAnnotation]
-            
-            parent.mapView.removeAnnotations(annotations)
-            parent.mapView.removeOverlays(parent.mapView.overlays)
-            
-            driverAnnotations.forEach { driverAnno in
-                if driverAnno.uid != trip.driverUid {
-                    self.parent.mapView.removeAnnotation(driverAnno)
+            if !didSetVisibleMapRectForTrip {
+                let annotations = parent.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
+                let driverAnnotations = parent.mapView.annotations.filter({ $0.isKind(of: DriverAnnotation.self) }) as! [DriverAnnotation]
+                
+                parent.mapView.removeAnnotations(annotations)
+                parent.mapView.removeOverlays(parent.mapView.overlays)
+                
+                driverAnnotations.forEach { driverAnno in
+                    if driverAnno.uid != trip.driverUid {
+                        self.parent.mapView.removeAnnotation(driverAnno)
+                    }
                 }
             }
             
             parent.mapView.showAnnotations(parent.mapView.annotations, animated: false)
             parent.mapView.setVisibleMapRect(parent.mapView.visibleMapRect,
-                                             edgePadding: .init(top: 64, left: 32, bottom: 360, right: 32),
-                                             animated: true)
+                                             edgePadding: .init(top: 64, left: 32, bottom: 360, right: 32) ,
+                                             animated: !didSetVisibleMapRectForTrip)
+
+            didSetVisibleMapRectForTrip = true
         }
         
         func addAnnotationAndGeneratePolyline() {
@@ -181,7 +184,10 @@ extension UberMapViewRepresentable {
         }
         
         func clearMapView() {
+            didSetVisibleMapRectForTrip = false
             let annotations = parent.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
+            guard !parent.mapView.overlays.isEmpty, !annotations.isEmpty else { return }
+            
             parent.mapView.removeAnnotations(annotations)
             parent.mapView.removeOverlays(parent.mapView.overlays)
             
@@ -210,6 +216,16 @@ extension UberMapViewRepresentable {
                     self.parent.mapView.addAnnotation(annotation)
                 }
             }
+        }
+        
+        func updateDriverPositionForTrip(_ trip: Trip) {
+            guard let tripDriver = parent.contentViewModel.drivers.first(where: { $0.uid == trip.driverUid }) else { return }
+            let driverAnnotations = parent.mapView.annotations.filter({ $0.isKind(of: DriverAnnotation.self) }) as? [DriverAnnotation]
+            guard let driverAnno = driverAnnotations?.first(where: { $0.uid == trip.driverUid }) else { return }
+            let driverCoordinates = CLLocationCoordinate2D(latitude: tripDriver.coordinates.latitude,longitude: tripDriver.coordinates.longitude)
+            
+            driverAnno.updatePosition(withCoordinate: driverCoordinates)
+
         }
     }
 }

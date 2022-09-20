@@ -33,7 +33,7 @@ enum SettingOptionsViewModel: Int, SettingsViewModelProtocol {
     
     var imageBackgroundColor: UIColor {
         switch self {
-        case .notifications: return .systemRed
+        case .notifications: return .systemPurple
         case .paymentMethods: return .systemBlue
         }
     }
@@ -63,6 +63,13 @@ enum AccountOptionsViewModel: Int, SettingsViewModelProtocol {
         switch self {
         case .makeMoneyDriving, .earnings: return .systemGreen
         case .signout: return .systemRed
+        }
+    }
+    
+    static func optionsForUser(_ user: User) -> [AccountOptionsViewModel] {
+        switch user.accountType {
+        case .passenger: return [.makeMoneyDriving, .signout]
+        case .driver: return [.earnings, .signout]
         }
     }
 }

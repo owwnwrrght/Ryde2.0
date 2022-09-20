@@ -47,9 +47,8 @@ struct ContentView: View {
                             ZStack(alignment: .top) {
                                 UberMapViewRepresentable(mapState: $contentViewModel.mapState)
                                 
-                                if contentViewModel.mapState == .noInput {
+                                if contentViewModel.mapState == .noInput && user.accountType == .passenger {
                                     LocationInputActivationView()
-                                        .matchedGeometryEffect(id: "LocationInput", in: animation)
                                         .onTapGesture {
                                             withAnimation(.spring()) {
                                                 self.contentViewModel.mapState = .searchingForLocation

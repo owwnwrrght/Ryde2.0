@@ -25,7 +25,8 @@ struct PickupPassengerView: View {
             
             if let trip = contentViewModel.trip, let user = contentViewModel.user {
                 TripInfoView(trip: trip, user: user)
-                    .padding(.vertical, 8)
+                    .padding(.trailing)
+                    .padding(.vertical, 4)
                 
                 Divider()
                 
@@ -52,12 +53,12 @@ struct PickupPassengerView: View {
                         .foregroundColor(.white)
                 }
                 .padding()
-                .padding(.bottom, 4)
+                .padding(.bottom, 8)
                 
                 Spacer()
             }
         }
-        .background(Color(.white))
+        .background(Color.theme.backgroundColor)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
         .frame(height: 440)
         .shadow(color: .black, radius: 10, x: 0, y: 0)

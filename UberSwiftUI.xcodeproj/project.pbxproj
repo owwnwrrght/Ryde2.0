@@ -71,7 +71,7 @@
 		2B0E3FB428BFD6D0002DFDA8 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0E3FB328BFD6D0002DFDA8 /* Double.swift */; };
 		2B368B0428C1B151008D42CE /* TripLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0328C1B151008D42CE /* TripLoadingView.swift */; };
 		2B368B0628C1B2BB008D42CE /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0528C1B2BB008D42CE /* LoadingSpinner.swift */; };
-		2B368B0828C2732B008D42CE /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0728C2732B008D42CE /* TripViewModel.swift */; };
+		2B368B0828C2732B008D42CE /* TripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0728C2732B008D42CE /* TripsViewModel.swift */; };
 		2B368B0A28C27424008D42CE /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0928C27424008D42CE /* Trip.swift */; };
 		2B368B0F28C2769A008D42CE /* AcceptTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B0E28C2769A008D42CE /* AcceptTripView.swift */; };
 		2B368B1128C283BD008D42CE /* CountdownCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B1028C283BD008D42CE /* CountdownCircle.swift */; };
@@ -151,7 +151,7 @@
 		2B0E3FB328BFD6D0002DFDA8 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		2B368B0328C1B151008D42CE /* TripLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLoadingView.swift; sourceTree = "<group>"; };
 		2B368B0528C1B2BB008D42CE /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
-		2B368B0728C2732B008D42CE /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
+		2B368B0728C2732B008D42CE /* TripsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsViewModel.swift; sourceTree = "<group>"; };
 		2B368B0928C27424008D42CE /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		2B368B0E28C2769A008D42CE /* AcceptTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptTripView.swift; sourceTree = "<group>"; };
 		2B368B1028C283BD008D42CE /* CountdownCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownCircle.swift; sourceTree = "<group>"; };
@@ -493,7 +493,7 @@
 		2B368B0C28C27553008D42CE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				2B368B0728C2732B008D42CE /* TripViewModel.swift */,
+				2B368B0728C2732B008D42CE /* TripsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -706,7 +706,7 @@
 				23C30570273F4BB0005A64A4 /* UberMapViewRepresentable.swift in Sources */,
 				235D731E275B38FA000A366E /* LocationInputEmptyView.swift in Sources */,
 				2B0E3FB128BFD430002DFDA8 /* RideType.swift in Sources */,
-				2B368B0828C2732B008D42CE /* TripViewModel.swift in Sources */,
+				2B368B0828C2732B008D42CE /* TripsViewModel.swift in Sources */,
 				235D7326275B3D22000A366E /* SavedLocationInputView.swift in Sources */,
 				2B5E4B5D28C7D7B400B9B3D7 /* EstimatedTimeArrivalView.swift in Sources */,
 				23C30575273F844D005A64A4 /* LocationManager.swift in Sources */,

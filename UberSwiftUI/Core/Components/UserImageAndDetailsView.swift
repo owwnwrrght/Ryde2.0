@@ -31,8 +31,6 @@ struct UserImageAndDetailsView: View {
                         .foregroundColor(.gray)
                 }
             }
-            
-            Spacer()
         }
     }
 }

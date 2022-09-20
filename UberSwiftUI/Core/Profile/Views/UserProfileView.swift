@@ -60,10 +60,20 @@ struct UserProfileView: View {
                         }
                     }
                     
-                    Section(header: Text("Account")) {
-                        ForEach(AccountOptionsViewModel.allCases, id: \.self) { option in
-                            SettingItemCell(viewModel: option)
-                                .accentColor(.white)
+                    if let user = authViewModel.user {
+                        Section(header: Text("Account")) {
+                            ForEach(AccountOptionsViewModel.optionsForUser(user), id: \.self) { option in
+                                if option == .signout {
+                                    SettingItemCell(viewModel: option)
+                                        .accentColor(.white)
+                                        .onTapGesture {
+                                            authViewModel.signOut()
+                                        }
+                                } else {
+                                    SettingItemCell(viewModel: option)
+                                        .accentColor(.white)
+                                }
+                            }
                         }
                     }
                 }
@@ -76,6 +86,7 @@ struct UserProfileView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backButton)
         .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(.large)
         .background(Color.theme.systemBackgroundColor)
     }
     

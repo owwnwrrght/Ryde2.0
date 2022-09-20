@@ -36,7 +36,7 @@ struct SideMenuView: View {
                         })
                 } else if option == .trips {
                     NavigationLink(
-                        destination: MyTripsView(),
+                        destination: MyTripsView(user: user),
                         label: {
                             SideMenuOptionView(viewModel: option)
                                 .foregroundColor(Color.theme.primaryTextColor)

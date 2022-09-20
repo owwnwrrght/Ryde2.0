@@ -63,13 +63,14 @@ struct DriverArrivalView: View {
                     .cornerRadius(10)
                     .foregroundColor(.white)
             }
+            .padding(.bottom, 24)
             .padding()
             
             Spacer()
         }
-        .background(Color(.white))
+        .background(Color.theme.backgroundColor)
         .clipShape(RoundedShape(corners: [.topLeft, .topRight]))
-        .frame(height: 420)
+        .frame(height: 450)
         .shadow(color: .black, radius: 10, x: 0, y: 0)
     }
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TripLocationsView: View {
-//    @ObservedObject var viewModel: RideDetailsViewModel
     @EnvironmentObject var viewModel: ContentViewModel
     
     var body: some View {

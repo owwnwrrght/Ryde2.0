@@ -25,7 +25,7 @@ struct TripInfoView: View {
             
             Spacer()
             
-            HStack(spacing: 44) {
+            HStack(spacing: 32) {
                 VStack(spacing: 4) {
                     Text("Trip cost")
                         .font(.system(size: 14, weight: .semibold))
@@ -45,11 +45,6 @@ struct TripInfoView: View {
                 }
             }
         }
-        .padding(.horizontal)
-        .padding(4)
-        
-        
-        
     }
 }
 
