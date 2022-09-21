@@ -59,6 +59,11 @@ struct UberMapViewRepresentable: UIViewRepresentable {
                 context.coordinator.addAnnotationAndGeneratePolylineToPassenger()
             }
             break
+        case .tripInProgress:
+            if user.accountType == .driver {
+                context.coordinator.removeAnnotationsAndOverlays(mapView.annotations)
+                context.coordinator.addDestinationAnnoAndPolyline()
+            }
         default:
             break
         }
@@ -180,6 +185,10 @@ extension UberMapViewRepresentable {
             self.configurePolyline(withDestinationCoordinate: trip.pickupLocationCoordiantes)
         }
         
+        func addDestinationAnnoAndPolyline() {
+            //TODO: Add polyline to destination for driver and get directions
+        }
+        
         func addAndSelectAnnotation(withCoordinate coordinate: CLLocationCoordinate2D) {
             let anno = MKPointAnnotation()
             anno.coordinate = coordinate
@@ -188,13 +197,17 @@ extension UberMapViewRepresentable {
             self.parent.mapView.selectAnnotation(anno, animated: true)
         }
         
+        func removeAnnotationsAndOverlays(_ annotations: [MKAnnotation]) {
+            parent.mapView.removeAnnotations(annotations)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+        }
+        
         func clearMapView() {
             didSetVisibleMapRectForTrip = false
             let annotations = parent.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
             guard !parent.mapView.overlays.isEmpty, !annotations.isEmpty else { return }
             
-            parent.mapView.removeAnnotations(annotations)
-            parent.mapView.removeOverlays(parent.mapView.overlays)
+            removeAnnotationsAndOverlays(annotations)
             
             if let currentRegion = currentRegion {
                 parent.mapView.setRegion(currentRegion, animated: true)
