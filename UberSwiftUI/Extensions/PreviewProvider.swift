@@ -41,12 +41,6 @@ class DeveloperPreview {
                         driverImageUrl: "https://firebasestorage.googleapis.com:443/v0/b/uberswiftui.appspot.com/o/profile_images%2F25278BB7-63BF-4278-9EBE-A6CD1EA6B584?alt=media&token=19419f9e-64bb-4f87-a5e7-d42d88113de5",
                         passengerImageUrl: "")
     
-    let rideDetailsViewModel = RideDetailsViewModel(
-        userLocation: CLLocation(latitude: 37.75, longitude: -122.432),
-        selectedLocation: UberLocation(title: "Starbucks",
-                                       coordinate: CLLocationCoordinate2D(latitude: 37.6, longitude: -122.43))
-    )
-    
     let userLocation = CLLocation(latitude: 37.75, longitude: -122.432)
     
     let rideDetails = RideDetails(startLocation: "Current Location",
@@ -75,8 +69,8 @@ class DeveloperPreview {
                           coordinates: GeoPoint(latitude: 37.41, longitude: -122.1),
                           isActive: false)
     
-    var contentViewModel: ContentViewModel {
-        let vm = ContentViewModel()
+    var homeViewModel: HomeViewModel {
+        let vm = HomeViewModel()
         vm.trip = mockTrip
         vm.user = mockDriver
         vm.selectedLocation = mockSelectedLocation

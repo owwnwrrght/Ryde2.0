@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TripArrivalView: View {
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     let user: User
     
     var body: some View {
@@ -42,7 +42,7 @@ struct TripArrivalView: View {
             
             Divider()
             
-            if let trip = contentViewModel.trip {
+            if let trip = homeViewModel.trip {
                 TripInfoView(trip: trip, user: user)
                     .padding(.vertical, 8)
             }
@@ -63,7 +63,7 @@ struct TripArrivalView: View {
             
             if user.accountType == .driver {
                 Button {
-                    contentViewModel.dropOffPassenger()
+                    homeViewModel.dropOffPassenger()
                 } label: {
                     Text("DROP OFF STEPHAN")
                         .fontWeight(.bold)

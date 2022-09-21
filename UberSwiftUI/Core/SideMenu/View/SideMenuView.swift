@@ -13,7 +13,7 @@ struct SideMenuView: View {
     var user: User
     @State private var driverIsActive = false
     @State private var showDriverRegistrationView = false
-    @EnvironmentObject var viewModel: ContentViewModel
+    @EnvironmentObject var viewModel: HomeViewModel
     
     init(isShowing: Binding<Bool>, user: User) {
         self._isShowing = isShowing

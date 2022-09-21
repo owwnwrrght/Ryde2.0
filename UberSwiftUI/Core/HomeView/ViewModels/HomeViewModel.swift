@@ -1,5 +1,5 @@
 //
-//  ContentViewModel.swift
+//  HomeViewModel.swift
 //  UberSwiftUI
 //
 //  Created by Stephen Dowless on 11/12/21.
@@ -12,7 +12,7 @@ import Firebase
 import SwiftUI
 
 /*
- ContentViewModel and AuthViewModel need user object.
+ HomeViewModel and AuthViewModel need user object.
  Currently running two API calls in each class to get user data
  Need to figure out a way to either combine both view models into 1, or share the user object between them
  Could potentially cache user data??
@@ -21,7 +21,7 @@ import SwiftUI
  Create user service
 */
 
-class ContentViewModel: ObservableObject {
+class HomeViewModel: ObservableObject {
     
     // MARK: - Properties
     
@@ -56,6 +56,37 @@ class ContentViewModel: ObservableObject {
         self.mapState = .noInput
         self.selectedLocation = nil
         self.trip = nil
+    }
+    
+    func viewForState(user: User) -> some View {
+        switch mapState {
+        case .tripRequested:
+            if user.accountType == .passenger {
+                return AnyView(TripLoadingView())
+            } else {
+                if let trip = trip {
+                    return AnyView(AcceptTripView(trip: trip))
+                }
+            }
+        case .tripAccepted:
+            return AnyView(EnRouteToPickupLocationView())
+        case .driverArrived:
+            return user.accountType == .passenger ? AnyView(DriverArrivalView()) : AnyView(PickupPassengerView())
+        case .tripInProgress:
+            return AnyView(TripInProgressView())
+        case .arrivedAtDestination:
+            return AnyView(TripArrivalView(user: user))
+        case .polylineAdded:
+            if trip != nil {
+                return AnyView(EnRouteToPickupLocationView())
+            } else {
+                return AnyView(RideRequestView())
+            }
+        default:
+            break
+        }
+        
+        return AnyView(Text(""))
     }
     
     func getPlacemark(forLocation location: CLLocation, completion: @escaping (CLPlacemark?, Error?) -> Void) {
@@ -140,7 +171,7 @@ class ContentViewModel: ObservableObject {
 
 // MARK: - Shared API
 
-extension ContentViewModel {
+extension HomeViewModel {
     private func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -172,7 +203,7 @@ extension ContentViewModel {
 
 // MARK: - Driver API
 
-extension ContentViewModel {
+extension HomeViewModel {
     func addTripObserverForDriver() {
         tripService.addTripObserverForDriver { snapshot, error in
             guard let change = snapshot?.documentChanges.first else { return }
@@ -188,10 +219,12 @@ extension ContentViewModel {
                 } else if trip.tripState == .cancelled {
                     self.mapState = .tripCancelled
                     self.deleteTrip()
+                } else if trip.tripState == .complete {
+                    self.saveCompletedTrip(trip)
                 }
                 
             case .removed:
-                self.mapState = .tripCancelled
+                self.mapState = .noInput
             }
         }
     }
@@ -254,7 +287,7 @@ extension ContentViewModel {
 
 // MARK: - Passenger API
 
-extension ContentViewModel {
+extension HomeViewModel {
    private func addTripObserverForPassenger() {
         guard let user = user, user.accountType == .passenger, let uid = user.id else { return }
         
@@ -283,6 +316,7 @@ extension ContentViewModel {
                     self.mapState = .arrivedAtDestination
                 case .complete:
                     self.mapState = .tripCompleted
+                    self.saveCompletedTrip(trip)
                 case .cancelled:
                     self.mapState = .noInput
                 default:
@@ -409,7 +443,10 @@ extension ContentViewModel {
             
             let driverListener = COLLECTION_USERS.document(driver.id ?? "").addSnapshotListener { snapshot, error in
                 guard let driver = try? snapshot?.data(as: User.self) else { return }
+                self.drivers[i].isActive = driver.isActive
                 self.drivers[i].coordinates = driver.coordinates
+                
+                print("DEBUG: Driver \(self.drivers[i].fullname) is active \(self.drivers[i].isActive)")
             }
             
             self.listenersDictionary[driver.id ?? ""] = driverListener
@@ -424,5 +461,18 @@ extension ContentViewModel {
                 listener.remove()
             }
         }
+    }
+    
+    func saveCompletedTrip(_ trip: Trip) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let encodedTrip = try? Firestore.Encoder().encode(trip) else { return }
+        
+        COLLECTION_USERS
+            .document(uid)
+            .collection("user-trips")
+            .document(trip.tripId)
+            .setData(encodedTrip) { _ in
+                self.mapState = .noInput
+            }
     }
 }

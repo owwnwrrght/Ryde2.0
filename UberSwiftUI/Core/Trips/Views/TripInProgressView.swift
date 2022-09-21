@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TripInProgressView: View {
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     
     var body: some View {
         VStack {
@@ -18,28 +18,29 @@ struct TripInProgressView: View {
                 .padding(8)
             
             VStack {
-                if let trip = contentViewModel.trip, let user = contentViewModel.user {
+                if let trip = homeViewModel.trip, let user = homeViewModel.user {
                     HStack {
                         Text("En Route to destination")
                             .font(.body)
                             .fontWeight(.semibold)
-                            .padding()
                         
                         Spacer()
                         
-                        EstimatedTimeArrivalView()
+                        EstimatedTimeArrivalView(time: "15")
                     }
+                    .padding(.horizontal)
                     
                     Divider()
                     
                     TripInfoView(trip: trip, user: user)
                         .padding(.vertical)
+                        .padding(.trailing)
                                         
                     Divider()
                 }
                 
                 Button {
-                    contentViewModel.cancelTrip()
+                    homeViewModel.cancelTrip()
                 } label: {
                     Text("CANCEL TRIP")
                         .fontWeight(.bold)
@@ -63,7 +64,7 @@ struct TripInProgressView: View {
 struct TripInProgressView_Previews: PreviewProvider {    
     static var previews: some View {
         TripInProgressView()
-            .environmentObject(dev.contentViewModel)
+            .environmentObject(dev.homeViewModel)
     }
 }
 

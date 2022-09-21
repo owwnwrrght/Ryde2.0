@@ -113,11 +113,20 @@ class AuthViewModel: ObservableObject {
                 }
                 
                 guard let firebaseUser = result?.user else { return }
-                guard let user = self.createUser(withName: profile.name, email: profile.email) else { return }
                 self.userSession = firebaseUser
-                self.isAuthenticating = false
-                                
-                self.uploadUserData(withUid: firebaseUser.uid, user: user)
+
+                COLLECTION_USERS.document(firebaseUser.uid).getDocument { snapshot, _ in
+                    self.isAuthenticating = false
+
+                    if snapshot == nil {
+                        guard let user = self.createUser(withName: profile.name, email: profile.email) else { return }
+                        self.uploadUserData(withUid: firebaseUser.uid, user: user)
+                    } else {
+                        guard let user = try? snapshot?.data(as: User.self) else { return }
+                        print("DEBUG: User is \(user)")
+                        self.user = user
+                    }
+                }
             }
         }
     }

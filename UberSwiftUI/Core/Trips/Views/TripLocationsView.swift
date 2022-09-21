@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TripLocationsView: View {
-    @EnvironmentObject var viewModel: ContentViewModel
+    @EnvironmentObject var viewModel: HomeViewModel
     
     var body: some View {
         HStack(spacing: 24) {

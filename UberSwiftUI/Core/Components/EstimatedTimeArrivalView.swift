@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct EstimatedTimeArrivalView: View {
+    let time: String
+    
     var body: some View {
         VStack {
-            Text("2")
+            Text(time)
                 .bold()
             
             Text("min")
@@ -25,6 +27,6 @@ struct EstimatedTimeArrivalView: View {
 
 struct EstimatedTimeArrivalView_Previews: PreviewProvider {
     static var previews: some View {
-        EstimatedTimeArrivalView()
+        EstimatedTimeArrivalView(time: "15")
     }
 }

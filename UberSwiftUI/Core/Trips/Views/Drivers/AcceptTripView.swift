@@ -10,7 +10,7 @@ import MapKit
 
 struct AcceptTripView: View {
     let trip: Trip
-    @EnvironmentObject var viewModel: ContentViewModel
+    @EnvironmentObject var viewModel: HomeViewModel
     @State private var region: MKCoordinateRegion
     let annotationItem: UberLocation
     
@@ -44,7 +44,7 @@ struct AcceptTripView: View {
                     
                     Spacer()
                     
-                    EstimatedTimeArrivalView()
+                    EstimatedTimeArrivalView(time: "10")
                 }
                 .padding()
                 
@@ -127,7 +127,7 @@ struct AcceptTripView: View {
 struct AcceptTripView_Previews: PreviewProvider {
     static var previews: some View {
         AcceptTripView(trip: dev.mockTrip)
-            .environmentObject(dev.contentViewModel)
+            .environmentObject(dev.homeViewModel)
     }
 }
 

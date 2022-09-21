@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DriverArrivalView: View {
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     
     var body: some View {
         VStack(alignment: .center) {
@@ -32,7 +32,7 @@ struct DriverArrivalView: View {
             Divider()
             
             HStack {
-                if let trip = contentViewModel.trip {
+                if let trip = homeViewModel.trip {
                     UserImageAndDetailsView(imageUrl: trip.driverImageUrl, username: trip.driverFirstNameUppercased)
                     
                     Spacer()
@@ -54,7 +54,7 @@ struct DriverArrivalView: View {
             .padding()
             
             Button {
-                contentViewModel.cancelTrip()
+                homeViewModel.cancelTrip()
             } label: {
                 Text("CANCEL TRIP")
                     .fontWeight(.bold)
@@ -78,6 +78,6 @@ struct DriverArrivalView: View {
 struct DriverArrivalView_Previews: PreviewProvider {
     static var previews: some View {
         DriverArrivalView()
-            .environmentObject(dev.contentViewModel)
+            .environmentObject(dev.homeViewModel)
     }
 }

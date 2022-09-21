@@ -9,23 +9,6 @@ import SwiftUI
 import Firebase
 import GoogleSignIn
 
-//@main
-//struct UberSwiftUIApp: App {
-//
-//    @StateObject var locationViewModel = LocationSearchViewModel()
-//    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-//
-//    init() {
-//        configureAuthentication()
-//    }
-//
-//    var body: some Scene {
-//        WindowGroup {
-//            LoginView()
-//                .environmentObject(locationViewModel)
-//        }
-//    }
-//}
 
 @UIApplicationMain
 class AppDelegate: NSObject, UIApplicationDelegate {

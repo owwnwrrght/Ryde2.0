@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PickupPassengerView: View {
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     
     var body: some View {
         VStack {
@@ -23,7 +23,7 @@ struct PickupPassengerView: View {
             
             Divider()
             
-            if let trip = contentViewModel.trip, let user = contentViewModel.user {
+            if let trip = homeViewModel.trip, let user = homeViewModel.user {
                 TripInfoView(trip: trip, user: user)
                     .padding(.trailing)
                     .padding(.vertical, 4)
@@ -43,7 +43,7 @@ struct PickupPassengerView: View {
                 .padding()
                 
                 Button {
-                    contentViewModel.pickupPassenger()
+                    homeViewModel.pickupPassenger()
                 } label: {
                     Text("PICKUP \(trip.passengerFirstNameUppercased)")
                         .fontWeight(.bold)
@@ -68,6 +68,6 @@ struct PickupPassengerView: View {
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         PickupPassengerView()
-            .environmentObject(dev.contentViewModel)
+            .environmentObject(dev.homeViewModel)
     }
 }

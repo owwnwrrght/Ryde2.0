@@ -15,8 +15,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     // MARK: - Properties
     
     @Binding var mapState: MapViewState
-    @EnvironmentObject var contentViewModel: ContentViewModel
-    @EnvironmentObject var viewModel: LocationSearchViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     
     let mapView = MKMapView()
     
@@ -25,6 +24,8 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     init(mapState: Binding<MapViewState>) {
         self._mapState = mapState
     }
+    
+    // MARK: - Protocol Functions
     
     func makeUIView(context: Context) -> some UIView {
         mapView.isRotateEnabled = false
@@ -37,28 +38,29 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     }
         
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        guard let user = contentViewModel.user else { return }
-                                
-        if mapState == .locationSelected && user.accountType == .passenger {
-            context.coordinator.addAnnotationAndGeneratePolyline()
-            return
-        }
+        guard let user = homeViewModel.user else { return }
         
-        if mapState == .tripAccepted && user.accountType == .driver {
-            context.coordinator.addAnnotationAndGeneratePolylineToPassenger()
-            return
-        }
-        
-        if mapState == .tripAccepted, let trip = contentViewModel.trip, user.accountType == .passenger {
-            context.coordinator.updateDriverPositionForTrip(trip)
-            context.coordinator.configureMapForTrip(trip)
-            return
-        }
-                
-        if mapState == .noInput {
+        switch mapState {
+        case .noInput:
             context.coordinator.clearMapView()
-            context.coordinator.addDriversToMapAndUpdateLocation(contentViewModel.drivers)
-            return
+            context.coordinator.addDriversToMapAndUpdateLocation(homeViewModel.drivers)
+            break
+        case .locationSelected:
+            guard user.accountType == .passenger else { return }
+            context.coordinator.addAnnotationAndGeneratePolyline()
+        case .tripRequested:
+            break
+        case .tripAccepted:
+            if user.accountType == .passenger {
+                guard let trip = homeViewModel.trip else { return }
+                context.coordinator.updateDriverPositionForTrip(trip)
+                context.coordinator.configureMapForTrip(trip)
+            } else {
+                context.coordinator.addAnnotationAndGeneratePolylineToPassenger()
+            }
+            break
+        default:
+            break
         }
     }
     
@@ -70,6 +72,9 @@ struct UberMapViewRepresentable: UIViewRepresentable {
 extension UberMapViewRepresentable {
 
     class MapCoordinator: NSObject, MKMapViewDelegate {
+        
+        // MARK: - Properties
+        
         let parent: UberMapViewRepresentable
         var currentRegion: MKCoordinateRegion?
         var userLocation: MKUserLocation?
@@ -95,8 +100,8 @@ extension UberMapViewRepresentable {
             )
             self.currentRegion = region
             
-            if let user = parent.contentViewModel.user, user.accountType == .driver {
-                parent.contentViewModel.updateDriverLocation(withCoordinate: userLocation.coordinate)
+            if let user = parent.homeViewModel.user, user.accountType == .driver {
+                parent.homeViewModel.updateDriverLocation(withCoordinate: userLocation.coordinate)
             }
             
             parent.mapView.setRegion(region, animated: true)
@@ -126,7 +131,7 @@ extension UberMapViewRepresentable {
         func configurePolyline(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
             guard let userLocation = self.userLocation else { return }
             
-            self.parent.contentViewModel.getDestinationRoute(from: userLocation.coordinate, to: coordinate) { route in
+            self.parent.homeViewModel.getDestinationRoute(from: userLocation.coordinate, to: coordinate) { route in
                 self.parent.mapState = .polylineAdded
                 self.parent.mapView.addOverlay(route.polyline)
                 let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect,
@@ -159,7 +164,7 @@ extension UberMapViewRepresentable {
         }
         
         func addAnnotationAndGeneratePolyline() {
-            guard let destinationCoordinate = parent.viewModel.selectedUberLocation?.coordinate else { return }
+            guard let destinationCoordinate = parent.homeViewModel.selectedLocation?.coordinate else { return }
             let annotations = parent.mapView.annotations.filter({ !$0.isKind(of: DriverAnnotation.self) })
             self.parent.mapView.removeAnnotations(annotations)
             addAndSelectAnnotation(withCoordinate: destinationCoordinate)
@@ -168,7 +173,7 @@ extension UberMapViewRepresentable {
         }
         
         func addAnnotationAndGeneratePolylineToPassenger() {
-            guard let trip = parent.contentViewModel.trip else { return }
+            guard let trip = parent.homeViewModel.trip else { return }
             self.parent.mapView.removeAnnotations(parent.mapView.annotations)
             addAndSelectAnnotation(withCoordinate: trip.pickupLocationCoordiantes)
             
@@ -219,7 +224,7 @@ extension UberMapViewRepresentable {
         }
         
         func updateDriverPositionForTrip(_ trip: Trip) {
-            guard let tripDriver = parent.contentViewModel.drivers.first(where: { $0.uid == trip.driverUid }) else { return }
+            guard let tripDriver = parent.homeViewModel.drivers.first(where: { $0.uid == trip.driverUid }) else { return }
             let driverAnnotations = parent.mapView.annotations.filter({ $0.isKind(of: DriverAnnotation.self) }) as? [DriverAnnotation]
             guard let driverAnno = driverAnnotations?.first(where: { $0.uid == trip.driverUid }) else { return }
             let driverCoordinates = CLLocationCoordinate2D(latitude: tripDriver.coordinates.latitude,longitude: tripDriver.coordinates.longitude)

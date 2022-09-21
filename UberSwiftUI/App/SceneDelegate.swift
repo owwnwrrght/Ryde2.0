@@ -16,10 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             self.window = window
             
-            let contentView = ContentView()
+            let contentView = HomeView()
                 .environmentObject(LocationSearchViewModel())
                 .environmentObject(AuthViewModel(window: window))
-                .environmentObject(ContentViewModel())
+                .environmentObject(HomeViewModel())
             
             window.rootViewController = UIHostingController(rootView: contentView)
             window.makeKeyAndVisible()

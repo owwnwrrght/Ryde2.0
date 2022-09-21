@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EnRouteToPickupLocationView: View {
-    @EnvironmentObject var contentViewModel: ContentViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
     
     var body: some View {
         VStack {
@@ -17,10 +17,10 @@ struct EnRouteToPickupLocationView: View {
                 .frame(width: 48, height: 6)
                 .padding(8)
             
-            if let user = contentViewModel.user {
+            if let user = homeViewModel.user {
                 VStack(alignment: .leading) {
                     
-                    if let trip = contentViewModel.trip {
+                    if let trip = homeViewModel.trip {
                         HStack {
                             if user.accountType == .passenger {
                                 Text("Meet your driver at \(trip.pickupLocationName)")
@@ -35,7 +35,7 @@ struct EnRouteToPickupLocationView: View {
                             
                             Spacer()
                             
-                            EstimatedTimeArrivalView()
+                            EstimatedTimeArrivalView(time: "10")
                         }
                         .padding()
                         
@@ -65,7 +65,7 @@ struct EnRouteToPickupLocationView: View {
             }
             
             Button {
-                contentViewModel.cancelTrip()
+                homeViewModel.cancelTrip()
             } label: {
                 Text("CANCEL TRIP")
                     .fontWeight(.bold)
@@ -88,6 +88,6 @@ struct EnRouteToPickupLocationView: View {
 struct EnRouteToPickupLocationView_Previews: PreviewProvider {
     static var previews: some View {
         EnRouteToPickupLocationView()
-            .environmentObject(dev.contentViewModel)
+            .environmentObject(dev.homeViewModel)
     }
 }

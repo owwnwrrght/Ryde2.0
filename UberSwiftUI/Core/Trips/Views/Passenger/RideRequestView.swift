@@ -8,13 +8,9 @@
 import SwiftUI
 import MapKit
 
-struct BookingView: View {
-    @EnvironmentObject var viewModel: ContentViewModel
+struct RideRequestView: View {
+    @EnvironmentObject var viewModel: HomeViewModel
     @State var selectedRideType: RideType = .uberX
-    
-    init(userLocation: CLLocation, selectedLocation: UberLocation) {
-//        self.viewModel = RideDetailsViewModel(userLocation: userLocation,selectedLocation: selectedLocation)
-    }
     
     var body: some View {
         VStack {
@@ -60,13 +56,13 @@ struct BookingView: View {
     }
 }
 
-struct BookingView_Previews: PreviewProvider {
+struct RideRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        BookingView(userLocation: dev.userLocation, selectedLocation: dev.mockSelectedLocation)
+        RideRequestView()
     }
 }
 
-extension BookingView {
+extension RideRequestView {
     var rideTypeView: some View {
         
         ScrollView(.horizontal) {
