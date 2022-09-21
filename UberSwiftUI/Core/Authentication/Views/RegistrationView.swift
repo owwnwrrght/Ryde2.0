@@ -2,7 +2,7 @@
 //  RegistrationView.swift
 //  UberSwiftUI
 //
-//  Created by Stephen Dowless on 11/26/21.
+//  Created by Stephan Dowless on 11/26/21.
 //
 
 import SwiftUI

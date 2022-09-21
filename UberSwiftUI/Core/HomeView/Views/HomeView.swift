@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  UberSwiftUI
 //
-//  Created by Stephen Dowless on 11/12/21.
+//  Created by Stephan Dowless on 11/12/21.
 //
 
 import SwiftUI

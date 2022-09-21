@@ -2,7 +2,7 @@
 //  BookingView.swift
 //  UberSwiftUI
 //
-//  Created by Stephen Dowless on 11/24/21.
+//  Created by Stephan Dowless on 11/24/21.
 //
 
 import SwiftUI

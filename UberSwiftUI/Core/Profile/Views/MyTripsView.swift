@@ -2,7 +2,7 @@
 //  CompletedTripView.swift
 //  UberSwiftUI
 //
-//  Created by Stephen Dowless on 12/5/21.
+//  Created by Stephan Dowless on 12/5/21.
 //
 
 import SwiftUI

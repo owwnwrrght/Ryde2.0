@@ -2,7 +2,7 @@
 //  SavedLocationOptions.swift
 //  UberSwiftUI
 //
-//  Created by Stephen Dowless on 12/4/21.
+//  Created by Stephan Dowless on 12/4/21.
 //
 
 import Foundation

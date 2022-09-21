@@ -2,7 +2,7 @@
 //  LocationSearchViewModel.swift
 //  UberSwiftUI
 //
-//  Created by Stephen Dowless on 11/21/21.
+//  Created by Stephan Dowless on 11/21/21.
 //
 
 import Foundation
