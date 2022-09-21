@@ -279,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				235D73082755C03C000A366E /* Items */,
+				235D732F275C9BFC000A366E /* MyTripsView.swift */,
 				235D73062755B665000A366E /* UserProfileView.swift */,
 				235D73112755C692000A366E /* EditProfileView.swift */,
 			);
@@ -288,6 +289,7 @@
 		235D73082755C03C000A366E /* Items */ = {
 			isa = PBXGroup;
 			children = (
+				235D7333275CA02A000A366E /* CompletedTripCell.swift */,
 				235D73092755C04A000A366E /* UserProfileHeader.swift */,
 				235D730B2755C08F000A366E /* SavedLocationCell.swift */,
 				235D730D2755C223000A366E /* SettingItemCell.swift */,
@@ -469,12 +471,7 @@
 				2BEC6B5C28C5590F002ACFAE /* Passenger */,
 				2B368B0D28C2768D008D42CE /* Drivers */,
 				23F6F56D27515B36002C7733 /* TripArrivalView.swift */,
-				235D732F275C9BFC000A366E /* MyTripsView.swift */,
 				23147F012751918B00758446 /* TripInProgressView.swift */,
-				235D7331275C9EE5000A366E /* TripInfoView.swift */,
-				2B368B0328C1B151008D42CE /* TripLoadingView.swift */,
-				2355680C27519C8F00D54406 /* TripLocationsView.swift */,
-				235D7333275CA02A000A366E /* CompletedTripCell.swift */,
 				2BB5A11A28C7A2E20056F38E /* EnRouteToPickupLocationView.swift */,
 			);
 			path = Views;
@@ -556,6 +553,8 @@
 		2BB5A11528C6DF310056F38E /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				2355680C27519C8F00D54406 /* TripLocationsView.swift */,
+				235D7331275C9EE5000A366E /* TripInfoView.swift */,
 				2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */,
 				2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */,
 				2B5E4B5C28C7D7B400B9B3D7 /* EstimatedTimeArrivalView.swift */,
@@ -576,6 +575,7 @@
 		2BEC6B5C28C5590F002ACFAE /* Passenger */ = {
 			isa = PBXGroup;
 			children = (
+				2B368B0328C1B151008D42CE /* TripLoadingView.swift */,
 				23F6F568274EFB48002C7733 /* RideRequestView.swift */,
 				2BEC6B5D28C55931002ACFAE /* DriverArrivalView.swift */,
 			);

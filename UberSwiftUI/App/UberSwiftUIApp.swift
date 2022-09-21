@@ -9,6 +9,10 @@ import SwiftUI
 import Firebase
 import GoogleSignIn
 
+/*
+ We use app delegate here instead of SwiftUI methods for Google Sign In capability
+ Root view is configured in SceneDelegate
+*/
 
 @UIApplicationMain
 class AppDelegate: NSObject, UIApplicationDelegate {

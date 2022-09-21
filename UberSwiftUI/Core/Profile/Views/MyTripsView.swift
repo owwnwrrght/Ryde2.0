@@ -41,6 +41,7 @@ struct MyTripsView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     ForEach(viewModel.trips) { trip in
+                        //TODO: Implement trip date
                         Text("9/19/22")
                             .fontWeight(.semibold)
                             .font(.body)
