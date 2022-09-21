@@ -17,7 +17,6 @@ struct RideLocationInputView: View {
     var body: some View {
         VStack(spacing: 0) {
             LocationInputHeaderView(startLocationText: $startLocationText, destinationText: $viewModel.queryFragment)
-                .matchedGeometryEffect(id: "LocationInput", in: animation)
                 .frame(height: 200)
                 .background(Color.theme.backgroundColor)
             

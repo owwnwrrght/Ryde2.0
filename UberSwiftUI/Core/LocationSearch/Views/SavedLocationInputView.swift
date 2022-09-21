@@ -25,7 +25,7 @@ struct SavedLocationInputView: View {
                         .padding()
                 }
                 
-                TextField("Where to?", text: $viewModel.queryFragment)
+                TextField("Search for a location..", text: $viewModel.queryFragment)
                     .frame(height: 32)
                     .padding(.leading)
                     .background(Color(.systemGray5))

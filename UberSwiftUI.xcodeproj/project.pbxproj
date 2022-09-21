@@ -32,9 +32,8 @@
 		235D7318275736A3000A366E /* DriverAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D7317275736A3000A366E /* DriverAnnotation.swift */; };
 		235D731A275B2F3B000A366E /* SocialSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D7319275B2F3A000A366E /* SocialSignUpView.swift */; };
 		235D731C275B2FAA000A366E /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D731B275B2FAA000A366E /* CustomProgressView.swift */; };
-		235D731E275B38FA000A366E /* LocationInputEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D731D275B38FA000A366E /* LocationInputEmptyView.swift */; };
 		235D7320275B3A2E000A366E /* LocationResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D731F275B3A2E000A366E /* LocationResultsView.swift */; };
-		235D7322275B3A79000A366E /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D7321275B3A79000A366E /* LocationCell.swift */; };
+		235D7322275B3A79000A366E /* LocationSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D7321275B3A79000A366E /* LocationSearchResultCell.swift */; };
 		235D7324275B3A93000A366E /* LocationInputHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D7323275B3A93000A366E /* LocationInputHeaderView.swift */; };
 		235D7326275B3D22000A366E /* SavedLocationInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D7325275B3D22000A366E /* SavedLocationInputView.swift */; };
 		235D732B275B41E8000A366E /* SavedLocationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235D732A275B41E8000A366E /* SavedLocationOptions.swift */; };
@@ -59,7 +58,7 @@
 		23C30570273F4BB0005A64A4 /* UberMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C3056F273F4BB0005A64A4 /* UberMapViewRepresentable.swift */; };
 		23C30572273F4D3C005A64A4 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C30571273F4D3C005A64A4 /* HomeViewModel.swift */; };
 		23C30575273F844D005A64A4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C30574273F844C005A64A4 /* LocationManager.swift */; };
-		23C3057A273F8CFF005A64A4 /* LocationInputActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C30579273F8CFE005A64A4 /* LocationInputActivationView.swift */; };
+		23C3057A273F8CFF005A64A4 /* LocationSearchActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C30579273F8CFE005A64A4 /* LocationSearchActivationView.swift */; };
 		23C3057D274493EC005A64A4 /* RideLocationInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C3057C274493EC005A64A4 /* RideLocationInputView.swift */; };
 		23F6F569274EFB48002C7733 /* RideRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F6F568274EFB48002C7733 /* RideRequestView.swift */; };
 		23F6F56C274F0D60002C7733 /* RoundedShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F6F56B274F0D60002C7733 /* RoundedShape.swift */; };
@@ -77,7 +76,7 @@
 		2B368B1128C283BD008D42CE /* CountdownCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B1028C283BD008D42CE /* CountdownCircle.swift */; };
 		2B368B1428C2A33E008D42CE /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B368B1328C2A33E008D42CE /* UserService.swift */; };
 		2B5E4B5D28C7D7B400B9B3D7 /* EstimatedTimeArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E4B5C28C7D7B400B9B3D7 /* EstimatedTimeArrivalView.swift */; };
-		2B91C80F28BFDD630097B73E /* RideDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C80E28BFDD630097B73E /* RideDetails.swift */; };
+		2B91C80F28BFDD630097B73E /* UberLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C80E28BFDD630097B73E /* UberLocation.swift */; };
 		2B91C81128BFDE050097B73E /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B91C81028BFDE050097B73E /* PreviewProvider.swift */; };
 		2BB5A10C28C64ACB0056F38E /* DriverRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A10B28C64ACB0056F38E /* DriverRegistrationView.swift */; };
 		2BB5A10E28C64AD80056F38E /* VehicleRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A10D28C64AD80056F38E /* VehicleRegistrationView.swift */; };
@@ -86,6 +85,8 @@
 		2BB5A11728C6DF570056F38E /* UserImageAndDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */; };
 		2BB5A11928C6E03A0056F38E /* DriverVehicleInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */; };
 		2BB5A11B28C7A2E20056F38E /* EnRouteToPickupLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB5A11A28C7A2E20056F38E /* EnRouteToPickupLocationView.swift */; };
+		2BB9E97B28DB9FA300BBFFC0 /* TripState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB9E97A28DB9FA300BBFFC0 /* TripState.swift */; };
+		2BB9E97D28DB9FC600BBFFC0 /* MapViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB9E97C28DB9FC600BBFFC0 /* MapViewState.swift */; };
 		2BCCFC6728D0E90C00E1F0CC /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCCFC6628D0E90C00E1F0CC /* Color.swift */; };
 		2BEAD49328CBDE4200623111 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEAD49228CBDE4200623111 /* ProfileImageView.swift */; };
 		2BEC6B5928C53B5E002ACFAE /* TripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEC6B5828C53B5E002ACFAE /* TripService.swift */; };
@@ -119,9 +120,8 @@
 		235D7317275736A3000A366E /* DriverAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverAnnotation.swift; sourceTree = "<group>"; };
 		235D7319275B2F3A000A366E /* SocialSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSignUpView.swift; sourceTree = "<group>"; };
 		235D731B275B2FAA000A366E /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
-		235D731D275B38FA000A366E /* LocationInputEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputEmptyView.swift; sourceTree = "<group>"; };
 		235D731F275B3A2E000A366E /* LocationResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResultsView.swift; sourceTree = "<group>"; };
-		235D7321275B3A79000A366E /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		235D7321275B3A79000A366E /* LocationSearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultCell.swift; sourceTree = "<group>"; };
 		235D7323275B3A93000A366E /* LocationInputHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputHeaderView.swift; sourceTree = "<group>"; };
 		235D7325275B3D22000A366E /* SavedLocationInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedLocationInputView.swift; sourceTree = "<group>"; };
 		235D732A275B41E8000A366E /* SavedLocationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedLocationOptions.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		23C3056F273F4BB0005A64A4 /* UberMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberMapViewRepresentable.swift; sourceTree = "<group>"; };
 		23C30571273F4D3C005A64A4 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		23C30574273F844C005A64A4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		23C30579273F8CFE005A64A4 /* LocationInputActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInputActivationView.swift; sourceTree = "<group>"; };
+		23C30579273F8CFE005A64A4 /* LocationSearchActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchActivationView.swift; sourceTree = "<group>"; };
 		23C3057C274493EC005A64A4 /* RideLocationInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideLocationInputView.swift; sourceTree = "<group>"; };
 		23F6F568274EFB48002C7733 /* RideRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideRequestView.swift; sourceTree = "<group>"; };
 		23F6F56B274F0D60002C7733 /* RoundedShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedShape.swift; sourceTree = "<group>"; };
@@ -156,7 +156,7 @@
 		2B368B1028C283BD008D42CE /* CountdownCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownCircle.swift; sourceTree = "<group>"; };
 		2B368B1328C2A33E008D42CE /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		2B5E4B5C28C7D7B400B9B3D7 /* EstimatedTimeArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimatedTimeArrivalView.swift; sourceTree = "<group>"; };
-		2B91C80E28BFDD630097B73E /* RideDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RideDetails.swift; sourceTree = "<group>"; };
+		2B91C80E28BFDD630097B73E /* UberLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberLocation.swift; sourceTree = "<group>"; };
 		2B91C81028BFDE050097B73E /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		2BB5A10B28C64ACB0056F38E /* DriverRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverRegistrationView.swift; sourceTree = "<group>"; };
 		2BB5A10D28C64AD80056F38E /* VehicleRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleRegistrationView.swift; sourceTree = "<group>"; };
@@ -165,6 +165,8 @@
 		2BB5A11628C6DF570056F38E /* UserImageAndDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageAndDetailsView.swift; sourceTree = "<group>"; };
 		2BB5A11828C6E03A0056F38E /* DriverVehicleInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverVehicleInfoView.swift; sourceTree = "<group>"; };
 		2BB5A11A28C7A2E20056F38E /* EnRouteToPickupLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnRouteToPickupLocationView.swift; sourceTree = "<group>"; };
+		2BB9E97A28DB9FA300BBFFC0 /* TripState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripState.swift; sourceTree = "<group>"; };
+		2BB9E97C28DB9FC600BBFFC0 /* MapViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewState.swift; sourceTree = "<group>"; };
 		2BCCFC6628D0E90C00E1F0CC /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		2BEAD49228CBDE4200623111 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		2BEC6B5828C53B5E002ACFAE /* TripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripService.swift; sourceTree = "<group>"; };
@@ -306,11 +308,10 @@
 			isa = PBXGroup;
 			children = (
 				235D7323275B3A93000A366E /* LocationInputHeaderView.swift */,
-				23C30579273F8CFE005A64A4 /* LocationInputActivationView.swift */,
+				23C30579273F8CFE005A64A4 /* LocationSearchActivationView.swift */,
 				23C3057C274493EC005A64A4 /* RideLocationInputView.swift */,
-				235D731D275B38FA000A366E /* LocationInputEmptyView.swift */,
 				235D731F275B3A2E000A366E /* LocationResultsView.swift */,
-				235D7321275B3A79000A366E /* LocationCell.swift */,
+				235D7321275B3A79000A366E /* LocationSearchResultCell.swift */,
 				235D7325275B3D22000A366E /* SavedLocationInputView.swift */,
 			);
 			path = Views;
@@ -387,12 +388,13 @@
 		23C30552273F47A9005A64A4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2BB9E97928DB9F9700BBFFC0 /* Trips */,
 				235D730F2755C4B3000A366E /* User.swift */,
 				235D7317275736A3000A366E /* DriverAnnotation.swift */,
 				2B0E3FB028BFD430002DFDA8 /* RideType.swift */,
-				2B91C80E28BFDD630097B73E /* RideDetails.swift */,
-				2B368B0928C27424008D42CE /* Trip.swift */,
+				2B91C80E28BFDD630097B73E /* UberLocation.swift */,
 				2BB5A11128C64B090056F38E /* Vehicle.swift */,
+				2BB9E97C28DB9FC600BBFFC0 /* MapViewState.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -562,6 +564,15 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		2BB9E97928DB9F9700BBFFC0 /* Trips */ = {
+			isa = PBXGroup;
+			children = (
+				2B368B0928C27424008D42CE /* Trip.swift */,
+				2BB9E97A28DB9FA300BBFFC0 /* TripState.swift */,
+			);
+			path = Trips;
+			sourceTree = "<group>";
+		};
 		2BEC6B5C28C5590F002ACFAE /* Passenger */ = {
 			isa = PBXGroup;
 			children = (
@@ -673,11 +684,10 @@
 				2BEC6B5B28C55794002ACFAE /* PickupPassengerView.swift in Sources */,
 				235D7330275C9BFC000A366E /* MyTripsView.swift in Sources */,
 				23C30572273F4D3C005A64A4 /* HomeViewModel.swift in Sources */,
-				235D7322275B3A79000A366E /* LocationCell.swift in Sources */,
+				235D7322275B3A79000A366E /* LocationSearchResultCell.swift in Sources */,
 				235D73102755C4B3000A366E /* User.swift in Sources */,
 				2BB5A11B28C7A2E20056F38E /* EnRouteToPickupLocationView.swift in Sources */,
 				23C30570273F4BB0005A64A4 /* UberMapViewRepresentable.swift in Sources */,
-				235D731E275B38FA000A366E /* LocationInputEmptyView.swift in Sources */,
 				2B0E3FB128BFD430002DFDA8 /* RideType.swift in Sources */,
 				2B368B0828C2732B008D42CE /* TripsViewModel.swift in Sources */,
 				235D7326275B3D22000A366E /* SavedLocationInputView.swift in Sources */,
@@ -688,9 +698,10 @@
 				23C30543273F476B005A64A4 /* HomeView.swift in Sources */,
 				23C30541273F476B005A64A4 /* UberSwiftUIApp.swift in Sources */,
 				235568212751EA6700D54406 /* SceneDelegate.swift in Sources */,
-				23C3057A273F8CFF005A64A4 /* LocationInputActivationView.swift in Sources */,
+				23C3057A273F8CFF005A64A4 /* LocationSearchActivationView.swift in Sources */,
 				235568142751C93900D54406 /* CustomTextField.swift in Sources */,
 				2BB5A10C28C64ACB0056F38E /* DriverRegistrationView.swift in Sources */,
+				2BB9E97B28DB9FA300BBFFC0 /* TripState.swift in Sources */,
 				2BB5A11928C6E03A0056F38E /* DriverVehicleInfoView.swift in Sources */,
 				2BEC6B5E28C55931002ACFAE /* DriverArrivalView.swift in Sources */,
 				235D73162755C949000A366E /* UserProfileViewModel.swift in Sources */,
@@ -710,7 +721,7 @@
 				235568232751ED2500D54406 /* Constants.swift in Sources */,
 				235D7320275B3A2E000A366E /* LocationResultsView.swift in Sources */,
 				235D732B275B41E8000A366E /* SavedLocationOptions.swift in Sources */,
-				2B91C80F28BFDD630097B73E /* RideDetails.swift in Sources */,
+				2B91C80F28BFDD630097B73E /* UberLocation.swift in Sources */,
 				2B0E3FB428BFD6D0002DFDA8 /* Double.swift in Sources */,
 				235D731A275B2F3B000A366E /* SocialSignUpView.swift in Sources */,
 				2BCCFC6728D0E90C00E1F0CC /* Color.swift in Sources */,
@@ -723,6 +734,7 @@
 				235D7324275B3A93000A366E /* LocationInputHeaderView.swift in Sources */,
 				2B0B9DF328C9BC22005C9914 /* DriverChecklistItem.swift in Sources */,
 				23147F022751918B00758446 /* TripInProgressView.swift in Sources */,
+				2BB9E97D28DB9FC600BBFFC0 /* MapViewState.swift in Sources */,
 				235D7332275C9EE5000A366E /* TripInfoView.swift in Sources */,
 				2BB5A11028C64AE50056F38E /* UploadProfileImageView.swift in Sources */,
 				2BB5A10E28C64AD80056F38E /* VehicleRegistrationView.swift in Sources */,

@@ -11,16 +11,6 @@ import GeoFireUtils
 import Firebase
 import SwiftUI
 
-/*
- HomeViewModel and AuthViewModel need user object.
- Currently running two API calls in each class to get user data
- Need to figure out a way to either combine both view models into 1, or share the user object between them
- Could potentially cache user data??
- 
- Ideal solution:
- Create user service
-*/
-
 class HomeViewModel: ObservableObject {
     
     // MARK: - Properties
@@ -32,11 +22,11 @@ class HomeViewModel: ObservableObject {
     @Published var dropOffTime: String?
     @Published var user: User?
     
-    let radius: Double = 50 * 1000
     var didExecuteFetchDrivers = false
     var userLocation: CLLocationCoordinate2D?
     var selectedLocation: UberLocation?
     
+    private let radius: Double = 50 * 1000
     private var driverQueue = [User]()
     private var tripService = TripService()
     private var ridePrice = 0.0
@@ -162,10 +152,6 @@ class HomeViewModel: ObservableObject {
         self.tripDistanceInMeters = userLocation.distance(from: CLLocation(latitude: selectedLocation.coordinate.latitude,
                                                                            longitude: selectedLocation.coordinate.longitude))
         return type.price(for: tripDistanceInMeters)
-    }
-    
-    func setRidePrice(_ price: Double) {
-        self.ridePrice = price
     }
 }
 

@@ -21,6 +21,7 @@ struct TripLoadingView: View {
                 Text("Connecting you to a driver")
                     .font(.headline)
                 
+                //TODO: Add arrival time for trip
                 Text("Arriving at 1:30 PM")
                     .font(.subheadline)
                     .fontWeight(.semibold)

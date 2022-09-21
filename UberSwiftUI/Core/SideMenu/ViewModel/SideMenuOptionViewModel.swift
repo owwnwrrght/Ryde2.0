@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-protocol Routable {
-    associatedtype Route
-    associatedtype View: SwiftUI.View
-    
-    @ViewBuilder func view(for route: Route) -> Self.View
-}
-
 enum SideMenuOptionViewModel: Int, CaseIterable {
     case trips
     case wallet

@@ -8,8 +8,9 @@
 import SwiftUI
 import MapKit
 
-struct LocationCell: View {
-    let result: MKLocalSearchCompletion
+struct LocationSearchResultCell: View {
+    let title: String
+    let subtitle: String
     
     var body: some View {
         HStack {
@@ -17,12 +18,13 @@ struct LocationCell: View {
                 .resizable()
                 .foregroundColor(Color.blue)
                 .frame(width: 40, height: 40)
+                .accentColor(.white)
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(result.title)
+                Text(title)
                     .font(.body)
                 
-                Text(result.subtitle)
+                Text(subtitle)
                     .font(.system(size: 15))
                     .foregroundColor(Color(.gray))
                 

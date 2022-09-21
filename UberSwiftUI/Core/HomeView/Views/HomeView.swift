@@ -8,20 +8,6 @@
 import SwiftUI
 import MapKit
 
-enum MapViewState: Int {
-    case noInput
-    case searchingForLocation
-    case locationSelected
-    case tripRequested
-    case tripAccepted
-    case driverArrived
-    case tripInProgress
-    case arrivedAtDestination
-    case tripCompleted
-    case tripCancelled
-    case polylineAdded
-}
-
 struct HomeView: View {
     @State private var showLocationInputView = false
     @State private var showSideMenu = false
@@ -48,7 +34,7 @@ struct HomeView: View {
                                 UberMapViewRepresentable(mapState: $homeViewModel.mapState)
                                 
                                 if homeViewModel.mapState == .noInput && user.accountType == .passenger {
-                                    LocationInputActivationView()
+                                    LocationSearchActivationView()
                                         .onTapGesture {
                                             withAnimation(.spring()) {
                                                 self.homeViewModel.mapState = .searchingForLocation
@@ -71,12 +57,18 @@ struct HomeView: View {
                         .offset(x: showSideMenu ? 316 : 0, y: 0)
                         .shadow(color: showSideMenu ? .black : .clear, radius: 10, x: 0, y: 0)
                         .onReceive(locationViewModel.$selectedUberLocation, perform: { location in
+                            /*
+                             Receives selected location from locationViewModel and passes it to homeViewModel
+                             UberMapViewRepresentable then gets selected location from homeViewModel, doesn't need to use locationViewModel
+                             See diagram in github repo for more detailed explanation
+                             */
                             if location != nil {
                                 self.homeViewModel.selectedLocation = location
                                 self.homeViewModel.mapState = .locationSelected
                             }
                         })
                         .onReceive(LocationManager.shared.$userLocation, perform: { userLocation in
+                            /* Receives location from location manager and fetches nearby drivers */
                             self.userLocation = userLocation
                             homeViewModel.userLocation = userLocation?.coordinate
                             guard let userLocation = userLocation, !homeViewModel.didExecuteFetchDrivers else { return }

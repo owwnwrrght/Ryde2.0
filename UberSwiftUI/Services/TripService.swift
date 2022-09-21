@@ -68,3 +68,9 @@ extension TripService {
         updateTripState(trip, state: .complete, completion: completion)
     }
 }
+
+// MARK: - Passenger API
+
+extension TripService {
+    //TODO: Refactor passenger api code from HomeViewModel to here
+}

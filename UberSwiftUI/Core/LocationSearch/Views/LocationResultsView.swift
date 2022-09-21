@@ -22,7 +22,7 @@ struct LocationResultsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(viewModel.searchResults, id: \.self) { result in
-                    LocationCell(result: result)
+                    LocationSearchResultCell(title: result.title, subtitle: result.subtitle)
                         .onTapGesture {
                             withAnimation(.spring()) {
                                 self.viewModel.selectLocation(location: result, forConfig: config)
@@ -34,6 +34,5 @@ struct LocationResultsView: View {
         }
         .background(Color.theme.backgroundColor)
         .frame(width: UIScreen.main.bounds.width)
-//        .shadow(color: .gray, radius: 12, x: 0, y: 0)
     }
 }
