@@ -324,7 +324,8 @@ extension HomeViewModel {
                 }
             case .removed:
                 print("DEBUG: Trip cancelled by driver")
-                self.mapState = .tripCancelled
+                //TODO: Show notification to passenger that trip was cancelled
+                self.mapState = .noInput
             }
         }
     }
@@ -445,8 +446,6 @@ extension HomeViewModel {
                 guard let driver = try? snapshot?.data(as: User.self) else { return }
                 self.drivers[i].isActive = driver.isActive
                 self.drivers[i].coordinates = driver.coordinates
-                
-                print("DEBUG: Driver \(self.drivers[i].fullname) is active \(self.drivers[i].isActive)")
             }
             
             self.listenersDictionary[driver.id ?? ""] = driverListener

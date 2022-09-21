@@ -27,6 +27,7 @@ struct SideMenuView: View {
                 .padding(.top, 24)
             
             ForEach(SideMenuOptionViewModel.allCases, id: \.self) { option in
+                //TODO: Implement iOS 16 navigation stack
                 if option == .settings {
                     NavigationLink(
                         destination: UserProfileView(),

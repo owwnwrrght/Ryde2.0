@@ -44,9 +44,7 @@ class AuthViewModel: ObservableObject {
     
     func createUser(withName name: String, email: String ) -> User? {
         guard let userLocation = LocationManager.shared.userLocation else { return nil }
-        
-        print("DEBUG: User location is \(userLocation.coordinate)")
-        
+                
         let user = User(
             fullname: name,
             email: email,
@@ -123,7 +121,6 @@ class AuthViewModel: ObservableObject {
                         self.uploadUserData(withUid: firebaseUser.uid, user: user)
                     } else {
                         guard let user = try? snapshot?.data(as: User.self) else { return }
-                        print("DEBUG: User is \(user)")
                         self.user = user
                     }
                 }
