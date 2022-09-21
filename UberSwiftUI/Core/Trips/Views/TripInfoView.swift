@@ -31,7 +31,7 @@ struct TripInfoView: View {
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.gray)
                     
-                    Text(trip.tripCost.currencyString)
+                    Text(trip.tripCost.toCurrency())
                         .font(.system(size: 15, weight: .semibold))
                 }
                 

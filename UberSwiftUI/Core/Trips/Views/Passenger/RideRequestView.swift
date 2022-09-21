@@ -77,7 +77,7 @@ extension RideRequestView {
                             Text(rideType.description)
                                 .font(.system(size: 14, weight: .semibold))
                             
-                            Text(viewModel.ridePriceForType(rideType).currencyString)
+                            Text(viewModel.ridePriceForType(rideType).toCurrency())
                                 .font(.system(size: 14, weight: .semibold))
                         }
                         .foregroundColor(rideType == selectedRideType ? .white : Color.theme.primaryTextColor)

@@ -61,7 +61,7 @@ struct AcceptTripView: View {
                             .multilineTextAlignment(.center)
                             .foregroundColor(.gray)
                         
-                        Text(trip.tripCost.currencyString)
+                        Text(trip.tripCost.toCurrency())
                             .font(.system(size: 24, weight: .semibold))
                     }
                 }
