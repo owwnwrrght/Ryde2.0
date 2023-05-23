@@ -134,7 +134,7 @@
 		23C30542273F476B005A64A4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		23C30544273F476E005A64A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23C30547273F476E005A64A4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		23C30555273F4809005A64A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		23C30555273F4809005A64A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "UberSwiftUI/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		23C3056F273F4BB0005A64A4 /* UberMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberMapViewRepresentable.swift; sourceTree = "<group>"; };
 		23C30571273F4D3C005A64A4 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		23C30574273F844C005A64A4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -364,6 +364,7 @@
 				2B368B1228C2A32E008D42CE /* Services */,
 				23C3054E273F479E005A64A4 /* Utils */,
 				2355681D2751E33C00D54406 /* Info.plist */,
+				23C30555273F4809005A64A4 /* GoogleService-Info.plist */,
 				23C30544273F476E005A64A4 /* Assets.xcassets */,
 				23C30546273F476E005A64A4 /* Preview Content */,
 			);
@@ -413,7 +414,6 @@
 		23C30554273F47D4005A64A4 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				23C30555273F4809005A64A4 /* GoogleService-Info.plist */,
 				23C30540273F476B005A64A4 /* UberSwiftUIApp.swift */,
 				235568202751EA6700D54406 /* SceneDelegate.swift */,
 			);

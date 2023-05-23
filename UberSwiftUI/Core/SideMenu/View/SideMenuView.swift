@@ -158,10 +158,8 @@ extension SideMenuView {
         .frame(height: 230)
         .background(Color.theme.backgroundColor)
         .fullScreenCover(isPresented: $showDriverRegistrationView, content: {
-            if let user = user {
-                DriverRegistrationView()
-                    .environmentObject(DriverRegistrationViewModel(user: user))
-            }
+            DriverRegistrationView()
+                .environmentObject(DriverRegistrationViewModel(user: user))
         })
         .padding()
     }

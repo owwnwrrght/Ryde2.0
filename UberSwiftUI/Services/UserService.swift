@@ -12,7 +12,10 @@ struct UserService {
         
         COLLECTION_USERS.document(uid).getDocument { snapshot, _ in
             guard let snapshot = snapshot else { return }
-            guard let user = try? snapshot.data(as: User.self) else { return }
+            guard let user = try? snapshot.data(as: User.self) else {
+                print("DEBUG: Failed to decode user")
+                return
+            }
             
             completion(user)
         }

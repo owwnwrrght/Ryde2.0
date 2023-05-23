@@ -2,14 +2,13 @@
 //  AuthViewModel.swift
 //  UberSwiftUI
 //
-//  Created by Stephan Dowless on 11/26/21.
+//  Created by Stephen Dowless on 11/26/21.
 //
 
 import SwiftUI
 import GoogleSignIn
 import Firebase
 import FirebaseFirestoreSwift
-import GeoFireUtils
 
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
@@ -23,6 +22,18 @@ class AuthViewModel: ObservableObject {
         self.window = window
         userSession = Auth.auth().currentUser
         fetchUser()
+    }
+        
+    func fetchUser() {
+        guard let uid = userSession?.uid else { return }
+        
+        COLLECTION_USERS.document(uid).getDocument { snapshot, _ in
+            guard let snapshot = snapshot else { return }
+            print(snapshot.data())
+            self.user = try? snapshot.data(as: User.self)
+            
+            print("DEBUG: User data \(self.user)")
+        }
     }
     
     func signIn(withEmail email: String, password: String) {
@@ -42,21 +53,6 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func createUser(withName name: String, email: String ) -> User? {
-        guard let userLocation = LocationManager.shared.userLocation else { return nil }
-                
-        let user = User(
-            fullname: name,
-            email: email,
-            accountType: .passenger,
-            coordinates: GeoPoint(latitude: userLocation.coordinate.latitude,
-                                  longitude: userLocation.coordinate.longitude),
-            isActive: false
-        )
-        
-        return user
-    }
-    
     func registerUser(withEmail email: String, fullname: String, password: String) {
         self.isAuthenticating = true
         
@@ -68,13 +64,14 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-            guard let firebaseUser = result?.user else { return }
-            guard let user = self.createUser(withName: fullname, email: email) else { return }
-                    
-            self.userSession = firebaseUser
+            guard let user = result?.user else { return }
+            self.userSession = user
             self.isAuthenticating = false
             
-            self.uploadUserData(withUid: firebaseUser.uid, user: user)
+            let data: [String: Any] = ["email": email,
+                                       "fullname": fullname]
+            
+            self.uploadUserData(user: user, data: data)
         }
     }
     
@@ -112,18 +109,12 @@ class AuthViewModel: ObservableObject {
                 
                 guard let firebaseUser = result?.user else { return }
                 self.userSession = firebaseUser
-
-                COLLECTION_USERS.document(firebaseUser.uid).getDocument { snapshot, _ in
-                    self.isAuthenticating = false
-
-                    if snapshot == nil {
-                        guard let user = self.createUser(withName: profile.name, email: profile.email) else { return }
-                        self.uploadUserData(withUid: firebaseUser.uid, user: user)
-                    } else {
-                        guard let user = try? snapshot?.data(as: User.self) else { return }
-                        self.user = user
-                    }
-                }
+                self.isAuthenticating = false
+                
+                let data: [String: Any] = ["email": profile.email,
+                                           "fullname": profile.name]
+                
+                self.uploadUserData(user: firebaseUser, data: data)
             }
         }
     }
@@ -138,20 +129,9 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    private func uploadUserData(withUid uid: String, user: User) {
-        guard let encodedUser = try? Firestore.Encoder().encode(user) else { return }
-        
-        COLLECTION_USERS.document(uid).setData(encodedUser) { _ in
+    private func uploadUserData(user: FirebaseAuth.User, data: [String: Any]) {
+        COLLECTION_USERS.document(user.uid).setData(data) { _ in
             self.fetchUser()
-        }
-    }
-    
-    func fetchUser() {
-        guard let uid = userSession?.uid else { return }
-        
-        UserService.fetchUser(withUid: uid) { user in
-            print("DEBUG: User is \(user)")
-            self.user = user
         }
     }
 }

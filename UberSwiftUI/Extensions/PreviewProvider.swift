@@ -43,10 +43,6 @@ class DeveloperPreview {
     
     let userLocation = CLLocation(latitude: 37.75, longitude: -122.432)
     
-    let rideDetails = RideDetails(startLocation: "Current Location",
-                                  endLocation: "123 Main St",
-                                  userLocation: CLLocation(latitude: 37.75, longitude: -122.432))
-    
     let mockPassenger = User(id: NSUUID().uuidString,
                              fullname: "Stephan Dowless",
                              email: "test@gmail.com",

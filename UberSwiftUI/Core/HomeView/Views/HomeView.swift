@@ -47,11 +47,9 @@ struct HomeView: View {
                                 MapViewActionButton(state: $homeViewModel.mapState, showSideMenu: $showSideMenu)
                             }
                             
-                            if let view = homeViewModel.viewForState(user: user) {
-                                withAnimation(.spring()) {
-                                    view
-                                        .transition(.move(edge: .bottom))
-                                }
+                            withAnimation(.spring()) {
+                                homeViewModel.viewForState(user: user)
+                                    .transition(.move(edge: .bottom))
                             }
                         }
                         .offset(x: showSideMenu ? 316 : 0, y: 0)
