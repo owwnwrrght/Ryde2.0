@@ -73,6 +73,7 @@ class AuthViewModel: ObservableObject {
                     
             self.userSession = firebaseUser
             self.isAuthenticating = false
+            self.user = user
             
             self.uploadUserData(withUid: firebaseUser.uid, user: user)
         }
