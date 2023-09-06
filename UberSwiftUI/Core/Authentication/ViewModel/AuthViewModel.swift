@@ -42,20 +42,34 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func createUser(withName name: String, email: String ) -> User? {
-        guard let userLocation = LocationManager.shared.userLocation else { return nil }
-                
+    func createUser(withName name: String, email: String) -> User? {
+        print("Collecting location")
+        
+    
+        
+//        // Check if userLocation is available
+//        guard let userLocation = LocationManager.shared.userLocation else {
+//            // Handle the case where user location is not available
+//            print("User location not available")
+//            self.isAuthenticating = false
+//            return nil
+//        }
+//
+//        print("User location latitude:", userLocation.coordinate.latitude)
+        
         let user = User(
             fullname: name,
             email: email,
             accountType: .passenger,
-            coordinates: GeoPoint(latitude: userLocation.coordinate.latitude,
-                                  longitude: userLocation.coordinate.longitude),
+            coordinates: GeoPoint(latitude: 4.081052,
+                                  longitude: 9.776989),
             isActive: false
         )
         
+        print("User fullname:", user.fullname)
         return user
     }
+
     
     func registerUser(withEmail email: String, fullname: String, password: String) {
         self.isAuthenticating = true
@@ -74,6 +88,8 @@ class AuthViewModel: ObservableObject {
             self.userSession = firebaseUser
             self.isAuthenticating = false
             self.user = user
+            
+            print(user)
             
             self.uploadUserData(withUid: firebaseUser.uid, user: user)
         }

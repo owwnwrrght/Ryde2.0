@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DA534552A9AA8930009A0E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DA534542A9AA8930009A0E3 /* GoogleService-Info.plist */; };
 		23147F00275190A900758446 /* MapViewActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23147EFF275190A900758446 /* MapViewActionButton.swift */; };
 		23147F022751918B00758446 /* TripInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23147F012751918B00758446 /* TripInProgressView.swift */; };
 		2355680D27519C8F00D54406 /* TripLocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2355680C27519C8F00D54406 /* TripLocationsView.swift */; };
@@ -45,7 +46,6 @@
 		23C30543273F476B005A64A4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C30542273F476B005A64A4 /* HomeView.swift */; };
 		23C30545273F476E005A64A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23C30544273F476E005A64A4 /* Assets.xcassets */; };
 		23C30548273F476E005A64A4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23C30547273F476E005A64A4 /* Preview Assets.xcassets */; };
-		23C30556273F4809005A64A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23C30555273F4809005A64A4 /* GoogleService-Info.plist */; };
 		23C30559273F48EA005A64A4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 23C30558273F48EA005A64A4 /* FirebaseAuth */; };
 		23C3055B273F48EA005A64A4 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 23C3055A273F48EA005A64A4 /* FirebaseFirestore */; };
 		23C3055D273F48EA005A64A4 /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 23C3055C273F48EA005A64A4 /* FirebaseFirestoreSwift-Beta */; };
@@ -95,6 +95,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0DA534542A9AA8930009A0E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		23147EFF275190A900758446 /* MapViewActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewActionButton.swift; sourceTree = "<group>"; };
 		23147F012751918B00758446 /* TripInProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripInProgressView.swift; sourceTree = "<group>"; };
 		2355680C27519C8F00D54406 /* TripLocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLocationsView.swift; sourceTree = "<group>"; };
@@ -134,7 +135,6 @@
 		23C30542273F476B005A64A4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		23C30544273F476E005A64A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23C30547273F476E005A64A4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		23C30555273F4809005A64A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "UberSwiftUI/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		23C3056F273F4BB0005A64A4 /* UberMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberMapViewRepresentable.swift; sourceTree = "<group>"; };
 		23C30571273F4D3C005A64A4 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		23C30574273F844C005A64A4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -364,7 +364,7 @@
 				2B368B1228C2A32E008D42CE /* Services */,
 				23C3054E273F479E005A64A4 /* Utils */,
 				2355681D2751E33C00D54406 /* Info.plist */,
-				23C30555273F4809005A64A4 /* GoogleService-Info.plist */,
+				0DA534542A9AA8930009A0E3 /* GoogleService-Info.plist */,
 				23C30544273F476E005A64A4 /* Assets.xcassets */,
 				23C30546273F476E005A64A4 /* Preview Content */,
 			);
@@ -660,7 +660,7 @@
 			files = (
 				23C30548273F476E005A64A4 /* Preview Assets.xcassets in Resources */,
 				23C30545273F476E005A64A4 /* Assets.xcassets in Resources */,
-				23C30556273F4809005A64A4 /* GoogleService-Info.plist in Resources */,
+				0DA534552A9AA8930009A0E3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -873,11 +873,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UberSwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = LF78THV97C;
+				DEVELOPMENT_TEAM = 6GVA6KWGT4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UberSwiftUI/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow us to access your location to find you nearby drivers and rides";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -887,7 +888,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stephandowless.UberSwiftUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daevin.uberso;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -903,11 +904,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UberSwiftUI/Preview Content\"";
-				DEVELOPMENT_TEAM = LF78THV97C;
+				DEVELOPMENT_TEAM = 6GVA6KWGT4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = UberSwiftUI/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow us to access your location to find you nearby drivers and rides";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -917,7 +919,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stephandowless.UberSwiftUI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daevin.uberso;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -970,7 +972,7 @@
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				minimumVersion = 7.6.2;
 			};
 		};
 		23C30567273F49D8005A64A4 /* XCRemoteSwiftPackageReference "geofire-objc" */ = {

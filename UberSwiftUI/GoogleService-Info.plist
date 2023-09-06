@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>946384201280-bedka79v4ie74tp7h4ad4t2bds3mfbd2.apps.googleusercontent.com</string>
+	<string>1013085610293-s4lom91msjqt5qrm30ttkms9o1s6rq54.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.946384201280-bedka79v4ie74tp7h4ad4t2bds3mfbd2</string>
+	<string>com.googleusercontent.apps.1013085610293-s4lom91msjqt5qrm30ttkms9o1s6rq54</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCzdOuc4uB2BooM0Au2b5sR-XSTTDLDQMU</string>
+	<string>AIzaSyCt0-g-svrmRHtYtoCnSeQuu_L7tSSAVAA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>946384201280</string>
+	<string>1013085610293</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.stephandowless.UberSwiftUI</string>
+	<string>com.daevin.uber</string>
 	<key>PROJECT_ID</key>
-	<string>uberswiftui</string>
+	<string>uber-c6695</string>
 	<key>STORAGE_BUCKET</key>
-	<string>uberswiftui.appspot.com</string>
+	<string>uber-c6695.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:946384201280:ios:9b2100b2146e4c9e7b61a5</string>
+	<string>1:1013085610293:ios:3720865ff7f6cae6c2ec7c</string>
 </dict>
 </plist>
